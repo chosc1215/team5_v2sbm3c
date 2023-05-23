@@ -45,7 +45,7 @@ public class DatabaseConfiguration {
         sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mybatis/**/*.xml"));
         
         return sqlSessionFactoryBean.getObject();
-    }
+    }  
     
     @Bean
     public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory){
