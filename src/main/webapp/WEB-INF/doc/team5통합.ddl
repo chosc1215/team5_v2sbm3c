@@ -161,38 +161,15 @@ COMMENT ON TABLE 김상진 is '김상진';
 
 
 /**********************************/
-/* Table Name: 공지사항 카테고리 */
-/**********************************/
-CREATE TABLE NOTESCATE(
-		NOTESCATENO                   		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
-		NAME                          		VARCHAR2(30)		 NOT NULL,
-		CNT                           		NUMBER(10)		 NOT NULL,
-		RDATE                         		DATE		 NOT NULL,
-		UDATE                         		DATE		 NULL ,
-		SEQNO                         		NUMBER(10)		 NOT NULL,
-		visible                       		CHAR(1)		 DEFAULT 'N'		 NOT NULL
-);
-
-COMMENT ON TABLE NOTESCATE is '공지사항 카테고리';
-COMMENT ON COLUMN NOTESCATE.NOTESCATENO is '공지사항 카테고리번호';
-COMMENT ON COLUMN NOTESCATE.NAME is '공지사항 카테고리 이름';
-COMMENT ON COLUMN NOTESCATE.CNT is '관련 자료수';
-COMMENT ON COLUMN NOTESCATE.RDATE is '등록일';
-COMMENT ON COLUMN NOTESCATE.UDATE is '수정일';
-COMMENT ON COLUMN NOTESCATE.SEQNO is '출력 순서';
-COMMENT ON COLUMN NOTESCATE.visible is '출력 모드';
-
-
-/**********************************/
 /* Table Name: 공지사항 */
 /**********************************/
 CREATE TABLE NOTES(
 		NOTESNO                       		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
-		NOTESCATENO                   		NUMBER(10)		 NOT NULL,
 		ADMINNO                       		NUMBER(10)		 NOT NULL,
 		TITLE                         		VARCHAR2(200)		 NOT NULL,
 		CONTENT                       		CLOB(4000)		 NOT NULL,
 		CNT                           		NUMBER(7)		 NOT NULL,
+		WORD                          		VARCHAR2(300)		 NULL ,
 		PASSWD                        		VARCHAR2(15)		 NOT NULL,
 		RDATE                         		DATE		 NOT NULL,
 		FILE1                         		VARCHAR2(100)		 NULL ,
@@ -201,17 +178,16 @@ CREATE TABLE NOTES(
 		SIZE1                         		NUMBER(10)		 NULL ,
 		MAP                           		VARCHAR2(1000)		 NULL ,
 		YOUTUBE                       		VARCHAR2(1000)		 NULL ,
-  FOREIGN KEY (NOTESCATENO) REFERENCES NOTESCATE (NOTESCATENO),
   FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO)
 );
 
 COMMENT ON TABLE NOTES is '공지사항';
 COMMENT ON COLUMN NOTES.NOTESNO is '공지사항 번호';
-COMMENT ON COLUMN NOTES.NOTESCATENO is '공지사항 카테고리번호';
 COMMENT ON COLUMN NOTES.ADMINNO is '관리자 번호';
 COMMENT ON COLUMN NOTES.TITLE is '제목';
 COMMENT ON COLUMN NOTES.CONTENT is '내용';
 COMMENT ON COLUMN NOTES.CNT is '조회수';
+COMMENT ON COLUMN NOTES.WORD is '검색어';
 COMMENT ON COLUMN NOTES.PASSWD is '패스워드';
 COMMENT ON COLUMN NOTES.RDATE is '등록일';
 COMMENT ON COLUMN NOTES.FILE1 is '메인 이미지';
