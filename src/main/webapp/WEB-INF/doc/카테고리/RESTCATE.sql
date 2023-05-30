@@ -1,214 +1,126 @@
-/**********************************/
-/* Table Name: 회원 */
-/**********************************/
-CREATE TABLE MEMBER(
-		MEMBERNO                      		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
-		ID                            		VARCHAR2(20)		 NOT NULL,
-		PASSWD                        		VARCHAR2(60)		 NOT NULL,
-		MNAME                         		VARCHAR2(30)		 NOT NULL,
-		TEL                           		VARCHAR2(14)		 NOT NULL,
-		ZIPCODE                       		VARCHAR2(5)		 NULL ,
-		ADDRESS1                      		VARCHAR2(80)		 NULL ,
-		ADDRESS2                      		VARCHAR2(50)		 NULL ,
-		MDATE                         		DATE		 NOT NULL,
-		GRADE                         		NUMBER(2)		 NOT NULL
-);
-
-COMMENT ON TABLE MEMBER is '회원';
-COMMENT ON COLUMN MEMBER.MEMBERNO is '회원 번호';
-COMMENT ON COLUMN MEMBER.ID is '아이디';
-COMMENT ON COLUMN MEMBER.PASSWD is '패스워드';
-COMMENT ON COLUMN MEMBER.MNAME is '성명';
-COMMENT ON COLUMN MEMBER.TEL is '전화번호';
-COMMENT ON COLUMN MEMBER.ZIPCODE is '우편번호';
-COMMENT ON COLUMN MEMBER.ADDRESS1 is '주소1';
-COMMENT ON COLUMN MEMBER.ADDRESS2 is '주소2';
-COMMENT ON COLUMN MEMBER.MDATE is '가입일';
-COMMENT ON COLUMN MEMBER.GRADE is '등급';
-
-
-/**********************************/
-/* Table Name: 관리자 */
-/**********************************/
-CREATE TABLE ADMIN(
-		ADMINNO                       		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
-		ID                            		VARCHAR2(20)		 NOT NULL,
-		PASSWD                        		VARCHAR2(15)		 NOT NULL,
-		MNAME                         		VARCHAR2(20)		 NOT NULL,
-		MDATE                         		DATE		 NOT NULL,
-		GRADE                         		NUMBER(2)		 NOT NULL
-);
-
-COMMENT ON TABLE ADMIN is '관리자';
-COMMENT ON COLUMN ADMIN.ADMINNO is '관리자 번호';
-COMMENT ON COLUMN ADMIN.ID is '아이디(UQ)';
-COMMENT ON COLUMN ADMIN.PASSWD is '패스워드';
-COMMENT ON COLUMN ADMIN.MNAME is '성명';
-COMMENT ON COLUMN ADMIN.MDATE is '가입일';
-COMMENT ON COLUMN ADMIN.GRADE is '등급';
-
-
-/**********************************/
+ /**********************************/
 /* Table Name: 카테고리 */
 /**********************************/
-CREATE TABLE RESTCATE(
-		RESTCATENO                    		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
-		NAME                          		VARCHAR2(30)		 NOT NULL,
-		CNT                           		NUMBER(10)		 NOT NULL,
-		RDATE                         		DATE		 NOT NULL,
-		UDATE                         		DATE		 NULL ,
-		SEQNO                         		NUMBER(10)		 NOT NULL,
-		visible                       		CHAR(1)		 DEFAULT 'N'		 NOT NULL
+DROP TABLE restcate CASCADE CONSTRAINTS;
+DROP TABLE restcate;
+CREATE TABLE restcate(
+    restcateno                  NUMBER(10)		 NOT NULL	PRIMARY KEY,
+    name                   VARCHAR2(30)		 NOT NULL,
+    cnt                      NUMBER(7)		 DEFAULT 0	NOT NULL,
+    rdate                    DATE		         NOT NULL,
+    udate                   DATE	         	     NULL,
+    seqno                   NUMBER(10)        DEFAULT 0  NOT NULL,    
+    visible                   CHAR(1)    DEFAULT 'N'     NOT NULL
 );
 
-COMMENT ON TABLE RESTCATE is '카테고리';
-COMMENT ON COLUMN RESTCATE.RESTCATENO is '카테고리번호';
-COMMENT ON COLUMN RESTCATE.NAME is '카테고리 이름';
-COMMENT ON COLUMN RESTCATE.CNT is '관련 자료수';
-COMMENT ON COLUMN RESTCATE.RDATE is '등록일';
-COMMENT ON COLUMN RESTCATE.UDATE is '수정일';
-COMMENT ON COLUMN RESTCATE.SEQNO is '출력 순서';
-COMMENT ON COLUMN RESTCATE.visible is '출력 모드';
+COMMENT ON TABLE restcate is '카테고리';
+COMMENT ON COLUMN restcate.restcateno is '카테고리번호';
+COMMENT ON COLUMN restcate.name is '카테고리 이름';
+COMMENT ON COLUMN restcate.cnt is '관련 자료수';
+COMMENT ON COLUMN restcate.rdate is '등록일';
+COMMENT ON COLUMN restcate.udate is '수정일';
+COMMENT ON COLUMN restcate.seqno is '출력 순서';
+COMMENT ON COLUMN restcate.visible is '출력 모드';
 
+DROP SEQUENCE restcate_seq;
 
-/**********************************/
-/* Table Name: 맛집 컨텐츠 */
-/**********************************/
-CREATE TABLE RESTCONTENTS(
-		RESTCONTENTSNO                		NUMBER(20)		 NOT NULL		 PRIMARY KEY,
-		TITLE                         		VARCHAR2(200)		 NOT NULL,
-		CONTENT                       		CLOB(4000)		 NOT NULL,
-		RECOM                         		NUMBER(7)		 NOT NULL,
-		CNT                           		NUMBER(7)		 NOT NULL,
-		REPLYCNT                      		NUMBER(7)		 NOT NULL,
-		PASSWD                        		VARCHAR2(15)		 NOT NULL,
-		WORD                          		VARCHAR2(100)		 NULL ,
-		RDATE                         		DATE		 NOT NULL,
-		FILE1                         		VARCHAR2(100)		 NULL ,
-		FILE1SAVED                    		VARCHAR2(100)		 NULL ,
-		THUMB1                        		VARCHAR2(100)		 NULL ,
-		SIZE1                         		NUMBER(10)		 NULL ,
-		MAP                           		VARCHAR2(1000)		 NULL ,
-		YOUTUBE                       		VARCHAR2(1000)		 NULL ,
-		ADMINNO                       		NUMBER(10)		 NULL ,
-		RESTCATENO                    		NUMBER(10)		 NULL ,
-		NOTESNO                       		NUMBER(10)		 NULL ,
-  FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO),
-  FOREIGN KEY (RESTCATENO) REFERENCES RESTCATE (RESTCATENO)
-);
+CREATE SEQUENCE restcate_seq
+  START WITH 1         -- 시작 번호
+  INCREMENT BY 1       -- 증가값
+  MAXVALUE 9999999999  -- 최대값: 9999999999 --> NUMBER(10) 대응
+  CACHE 2              -- 2번은 메모리에서만 계산
+  NOCYCLE;             -- 다시 1부터 생성되는 것을 방지
+  
+-- CREATE -> SELECT LIST -> SELECT READ -> UPDATE -> DELETE -> COUNT(*)
+-- CREATE
+INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.nextval, '강릉', 0, sysdate, 0);
+INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.nextval, '양양', 0, sysdate, 0);
+INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.nextval, '속초', 0, sysdate, 0);
+INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.nextval, '춘천', 0, sysdate, 0);
+INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.nextval, '동해', 0, sysdate, 0);
+commit;
 
-COMMENT ON TABLE RESTCONTENTS is '맛집 컨텐츠';
-COMMENT ON COLUMN RESTCONTENTS.RESTCONTENTSNO is '맛집 컨텐츠 번호';
-COMMENT ON COLUMN RESTCONTENTS.TITLE is '제목';
-COMMENT ON COLUMN RESTCONTENTS.CONTENT is '내용';
-COMMENT ON COLUMN RESTCONTENTS.RECOM is '추천수';
-COMMENT ON COLUMN RESTCONTENTS.CNT is '조회수';
-COMMENT ON COLUMN RESTCONTENTS.REPLYCNT is '댓글수';
-COMMENT ON COLUMN RESTCONTENTS.PASSWD is '패스워드';
-COMMENT ON COLUMN RESTCONTENTS.WORD is '검색어';
-COMMENT ON COLUMN RESTCONTENTS.RDATE is '등록일';
-COMMENT ON COLUMN RESTCONTENTS.FILE1 is '메인 이미지';
-COMMENT ON COLUMN RESTCONTENTS.FILE1SAVED is '실제 저장된 메인 이미지';
-COMMENT ON COLUMN RESTCONTENTS.THUMB1 is '메인 이미지 Preview';
-COMMENT ON COLUMN RESTCONTENTS.SIZE1 is '메인 이미지 크기';
-COMMENT ON COLUMN RESTCONTENTS.MAP is '지도';
-COMMENT ON COLUMN RESTCONTENTS.YOUTUBE is 'Youtube 영상';
-COMMENT ON COLUMN RESTCONTENTS.ADMINNO is '관리자 번호';
-COMMENT ON COLUMN RESTCONTENTS.RESTCATENO is '카테고리번호';
-COMMENT ON COLUMN RESTCONTENTS.NOTESNO is '공지사항 번호';
+select*from restcate; 
+-- SELECT LIST
+SELECT restcateno, name, cnt, rdate, seqno, visible FROM restcate ORDER BY restcateno ASC;
+    restcateNO NAME                                  CNT RDATE              
+---------- ------------------------------ ---------- -------------------
+         1 여행                                    0 2023-03-21 12:10:00
+         2 영화                                    0 2023-03-21 12:10:00
+         3 바다                                    0 2023-03-21 12:10:00
+         4 산                                      0 2023-03-21 12:10:00
+         
+-- SELECT READ
+SELECT restcateno, name, cnt, rdate, seqno, visible FROM restcate WHERE restcateno=1;
+    restcateNO NAME                                  CNT RDATE              
+---------- ------------------------------ ---------- -------------------
+         1 여행                                    0 2023-03-21 12:10:00
+         
+-- UPDATE
+UPDATE restcate SET name='캠핑', seqno=5 WHERE restcateno=4;
+commit;
+SELECT * FROM restcate;
+    restcateNO NAME                                  CNT RDATE              
+---------- ------------------------------ ---------- -------------------
+         1 여행                                    0 2023-03-21 12:18:26
+         2 영화                                    0 2023-03-21 12:18:26
+         3 바다                                    0 2023-03-21 12:18:26
+         4 캠핑                                    0 2023-03-21 12:18:26
 
+-- DELETE
+-- DELETE FROM restcate;
+-- COMMIT;
 
-/**********************************/
-/* Table Name: 예약 */
-/**********************************/
-CREATE TABLE RESERVE(
-		RESERVENO                     		NUMBER(20)		 NOT NULL		 PRIMARY KEY,
-		COMMENTNO                     		NUMBER(10)		 NULL ,
-		MEMBERNO                      		NUMBER(10)		 NULL ,
-		RESTCONTENTSNO                		NUMBER(20)		 NULL ,
-  FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO),
-  FOREIGN KEY (RESTCONTENTSNO) REFERENCES RESTCONTENTS (RESTCONTENTSNO)
-);
+DELETE FROM restcate WHERE restcateno=6;
+commit;
 
-COMMENT ON TABLE RESERVE is '예약';
-COMMENT ON COLUMN RESERVE.RESERVENO is '예약번호';
-COMMENT ON COLUMN RESERVE.COMMENTNO is '댓글 번호';
-COMMENT ON COLUMN RESERVE.MEMBERNO is '회원 번호';
-COMMENT ON COLUMN RESERVE.RESTCONTENTSNO is '맛집 컨텐츠 번호';
+SELECT * FROM restcate;
+    restcateNO NAME                                  CNT RDATE              
+---------- ------------------------------ ---------- -------------------
+         1 여행                                    0 2023-03-21 12:18:26
+         2 영화                                    0 2023-03-21 12:18:26
+         3 바다                                    0 2023-03-21 12:18:26
 
+-- COUNT(*)
+SELECT COUNT(*) as cnt FROM restcate;
+       CNT
+----------
+         3
 
-/**********************************/
-/* Table Name: 댓글 */
-/**********************************/
-CREATE TABLE COMMENT(
-		COMMENTNO                     		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
-		RESTCONTENTSNO                		NUMBER(20)		 NULL ,
-		MEMBERNO                      		NUMBER(10)		 NULL ,
-  FOREIGN KEY (RESTCONTENTSNO) REFERENCES RESTCONTENTS (RESTCONTENTSNO),
-  FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO)
-);
+-- ------------------------------------------------------------------
+-- 출력 순서 변경 관련 SQL
+-- ------------------------------------------------------------------
+-- 출력 순서 상향(10등 -> 1등), seqno 컬럼의 값 감소, id: update_seqno_decrease
+UPDATE restcate SET seqno = seqno - 1 WHERE restcateno=1;
 
-COMMENT ON TABLE COMMENT is '댓글';
-COMMENT ON COLUMN COMMENT.COMMENTNO is '댓글 번호';
-COMMENT ON COLUMN COMMENT.RESTCONTENTSNO is '맛집 컨텐츠 번호';
-COMMENT ON COLUMN COMMENT.MEMBERNO is '회원 번호';
+-- 출력 순서 하향(1등 -> 10등), seqno 컬럼의 값 증가, id: update_seqno_increase
+UPDATE restcate SET seqno = seqno + 1 WHERE restcateno=1;
 
+commit;
+-- seqno 컬럼 기준 오름차순 정렬 SELECT LIST, id: list_all
+SELECT restcateno, name, cnt, rdate, seqno, visible FROM restcate ORDER BY seqno ASC;
 
-/**********************************/
-/* Table Name: 김상진 */
-/**********************************/
-CREATE TABLE 김상진(
+-- 한번에 다수의 컬럼값 수정은 사용자가 불편을 느낄수 있음으로 필요시 컬럼을 분할하여 값 변경
+-- 예) 패스워드 변경, 별명 변경, 이름 변경등
+-- 출력, id: update_visible_Y
+UPDATE restcate SET visible='Y' WHERE restcateno=1;
 
-);
+-- 숨김, id: update_visible_N
+UPDATE restcate SET visible='N' WHERE restcateno=2;
+commit;
 
-COMMENT ON TABLE 김상진 is '김상진';
+SELECT * FROM restcate;
 
+-- 비회원/회원 SELECT LIST, id: list_all_y
+SELECT restcateno, name, cnt, rdate, seqno, visible 
+FROM restcate 
+WHERE visible='Y'
+ORDER BY restcateno ASC;
 
-/**********************************/
-/* Table Name: 공지사항 */
-/**********************************/
-CREATE TABLE NOTES(
-		NOTESNO                       		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
-		TITLE                         		VARCHAR2(200)		 NOT NULL,
-		CONTENT                       		CLOB(4000)		 NOT NULL,
-		CNT                           		NUMBER(7)		 NOT NULL,
-		WORD                          		VARCHAR2(300)		 NULL ,
-		PASSWD                        		VARCHAR2(15)		 NOT NULL,
-		RDATE                         		DATE		 NOT NULL,
-		FILE1                         		VARCHAR2(100)		 NULL ,
-		FILE1SAVED                    		VARCHAR2(100)		 NULL ,
-		THUMB1                        		VARCHAR2(100)		 NULL ,
-		SIZE1                         		NUMBER(10)		 NULL ,
-		MAP                           		VARCHAR2(1000)		 NULL ,
-		YOUTUBE                       		VARCHAR2(1000)		 NULL ,
-		ADMINNO                       		NUMBER(10)		 NULL ,
-  FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO)
-);
+-- 자료수 증가, cnt 커럼 1씩 증가, id: update_cnt_add
+UPDATE restcate SET cnt = cnt + 1 WHERE restcateno=1;
 
-COMMENT ON TABLE NOTES is '공지사항';
-COMMENT ON COLUMN NOTES.NOTESNO is '공지사항 번호';
-COMMENT ON COLUMN NOTES.TITLE is '제목';
-COMMENT ON COLUMN NOTES.CONTENT is '내용';
-COMMENT ON COLUMN NOTES.CNT is '조회수';
-COMMENT ON COLUMN NOTES.WORD is '검색어';
-COMMENT ON COLUMN NOTES.PASSWD is '패스워드';
-COMMENT ON COLUMN NOTES.RDATE is '등록일';
-COMMENT ON COLUMN NOTES.FILE1 is '메인 이미지';
-COMMENT ON COLUMN NOTES.FILE1SAVED is '실제 저장된 메인 이미지';
-COMMENT ON COLUMN NOTES.THUMB1 is '메인 이미지 Preview';
-COMMENT ON COLUMN NOTES.SIZE1 is '메인 이미지 크기';
-COMMENT ON COLUMN NOTES.MAP is '지도';
-COMMENT ON COLUMN NOTES.YOUTUBE is 'Youtube 영상';
-COMMENT ON COLUMN NOTES.ADMINNO is '관리자 번호';
-
-
-/**********************************/
-/* Table Name: 조성철 */
-/**********************************/
-CREATE TABLE 조성철(
-
-);
-
-COMMENT ON TABLE 조성철 is '조성철';
+-- 자료수 감소, cnt 커럼 1씩 감소, id: update_cnt_sub
+UPDATE restcate SET cnt = cnt - 1 WHERE restcateno=1;
 
 
