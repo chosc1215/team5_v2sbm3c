@@ -1,7 +1,6 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=58e02e121204a4b074f744cfd8a58edad9d97e96
 eclipse.preferences.version=1
-<<<<<<< HEAD
-encoding//src/main/webapp/WEB-INF/doc/team5\uD1B5\uD569.ddl=MS949
-encoding//src/main/webapp/WEB-INF/doc/\uCE74\uD14C\uACE0\uB9AC/RESTCATE.sql=UTF-8
-=======
 encoding//src/main/webapp/WEB-INF/doc/team5\uD1B5\uD569.ddl=UTF-8
->>>>>>> 58e02e121204a4b074f744cfd8a58edad9d97e96
+encoding//src/main/webapp/WEB-INF/doc/\uCE74\uD14C\uACE0\uB9AC/RESTCATE.sql=UTF-8
