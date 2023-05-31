@@ -23,8 +23,8 @@
       <constraint>
         <height>-1</height>
         <width>-1</width>
-        <x>752</x>
-        <y>67</y>
+        <x>925</x>
+        <y>228</y>
       </constraint>
       <sourceConnections/>
       <targetConnections>
@@ -51,8 +51,8 @@
             <constraint>
               <height>-1</height>
               <width>-1</width>
-              <x>791</x>
-              <y>559</y>
+              <x>964</x>
+              <y>720</y>
             </constraint>
             <sourceConnections>
               <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -80,8 +80,8 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>159</x>
-                    <y>431</y>
+                    <x>332</x>
+                    <y>592</y>
                   </constraint>
                   <sourceConnections>
                     <net.java.amateras.db.visual.model.ForeignKeyModel>
@@ -108,8 +108,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>388</x>
-                          <y>76</y>
+                          <x>581</x>
+                          <y>212</y>
                         </constraint>
                         <sourceConnections/>
                         <targetConnections>
@@ -137,8 +137,8 @@
                               <constraint>
                                 <height>-1</height>
                                 <width>-1</width>
-                                <x>61</x>
-                                <y>91</y>
+                                <x>254</x>
+                                <y>227</y>
                               </constraint>
                               <sourceConnections>
                                 <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -472,8 +472,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>542</x>
-                          <y>150</y>
+                          <x>735</x>
+                          <y>286</y>
                         </constraint>
                         <sourceConnections/>
                         <targetConnections>
@@ -610,8 +610,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>569</x>
-                          <y>341</y>
+                          <x>762</x>
+                          <y>477</y>
                         </constraint>
                         <sourceConnections>
                           <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>
@@ -1238,10 +1238,42 @@
       </backgroundColor>
       <sql></sql>
     </net.java.amateras.db.visual.model.TableModel>
+    <net.java.amateras.db.visual.model.TableModel>
+      <listeners serialization="custom">
+        <java.beans.PropertyChangeSupport>
+          <default>
+            <source class="net.java.amateras.db.visual.model.TableModel" reference="../../../.."/>
+            <propertyChangeSupportSerializedDataVersion>2</propertyChangeSupportSerializedDataVersion>
+          </default>
+          <null/>
+        </java.beans.PropertyChangeSupport>
+      </listeners>
+      <constraint>
+        <height>-1</height>
+        <width>-1</width>
+        <x>313</x>
+        <y>62</y>
+      </constraint>
+      <sourceConnections/>
+      <targetConnections/>
+      <error></error>
+      <linkedPath></linkedPath>
+      <tableName>NOTES</tableName>
+      <logicalName>공지사항 카테고리</logicalName>
+      <description></description>
+      <columns/>
+      <indices/>
+      <backgroundColor>
+        <red>255</red>
+        <green>255</green>
+        <blue>206</blue>
+      </backgroundColor>
+      <sql></sql>
+    </net.java.amateras.db.visual.model.TableModel>
   </children>
   <dommains/>
   <dialectName>Oracle</dialectName>
-  <logicalMode>false</logicalMode>
+  <logicalMode>true</logicalMode>
   <jarFile>C:\kd\setup\ojdbc8.jar</jarFile>
   <jdbcDriver>oracle.jdbc.driver.OracleDriver</jdbcDriver>
   <jdbcUrl>jdbc:oracle:thin:@43.201.106.87:1521:XE</jdbcUrl>
