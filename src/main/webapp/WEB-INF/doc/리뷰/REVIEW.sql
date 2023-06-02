@@ -1,0 +1,22 @@
+/**********************************/
+/* Table Name: 리뷰 */
+/**********************************/
+CREATE TABLE REVIEW(
+		REVIEWNO                      		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
+		RESTCONTENTSNO                		NUMBER(20)		 NOT NULL,
+		MEMBERNO                      		NUMBER(10)		 NOT NULL,
+		RECONTENT                     		CLOB    		 NOT NULL,
+		RATING                        		INTEGER 		 NULL ,
+  FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO),
+  FOREIGN KEY (RESTCONTENTSNO) REFERENCES RESTCONTENTS (RESTCONTENTSNO)
+);
+
+COMMENT ON TABLE REVIEW is '리뷰';
+COMMENT ON COLUMN REVIEW.REVIEWNO is '리뷰번호';
+COMMENT ON COLUMN REVIEW.RESTCONTENTSNO is '맛집 컨텐츠 번호';
+COMMENT ON COLUMN REVIEW.MEMBERNO is '회원 번호';
+COMMENT ON COLUMN REVIEW.RECONTENT is '리뷰내용';
+COMMENT ON COLUMN REVIEW.RATING is '평점';
+
+
+
