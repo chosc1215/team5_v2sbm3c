@@ -14,10 +14,10 @@ public class RestcateVO {
   private int seqno;
   private String visible;
   
-  public int getCateno() {
+  public int getRestcateno() {
     return restcateno;
   }
-  public void setCateno(int restcateno) {
+  public void setRestcateno(int restcateno) {
     this.restcateno = restcateno;
   }
   public String getName() {
