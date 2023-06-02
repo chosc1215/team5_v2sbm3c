@@ -121,27 +121,27 @@ COMMENT ON COLUMN RESTCONTENTS.YOUTUBE is 'Youtube 영상';
 /**********************************/
 CREATE TABLE RESERVE(
 		RESERVENO                     		NUMBER(20)		 NOT NULL		 PRIMARY KEY,
+		MEMBERNO                      		NUMBER(10)		 NOT NULL,
+		RESTCONTENTSNO                		NUMBER(20)		 NOT NULL,
 		COMMENTNO                     		NUMBER(10)		 NULL ,
-		MEMBERNO                      		NUMBER(10)		 NULL ,
-		RESTCONTENTSNO                		NUMBER(20)		 NULL ,
   FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO),
   FOREIGN KEY (RESTCONTENTSNO) REFERENCES RESTCONTENTS (RESTCONTENTSNO)
 );
 
 COMMENT ON TABLE RESERVE is '예약';
 COMMENT ON COLUMN RESERVE.RESERVENO is '예약번호';
-COMMENT ON COLUMN RESERVE.COMMENTNO is '댓글 번호';
 COMMENT ON COLUMN RESERVE.MEMBERNO is '회원 번호';
 COMMENT ON COLUMN RESERVE.RESTCONTENTSNO is '맛집 컨텐츠 번호';
+COMMENT ON COLUMN RESERVE.COMMENTNO is '댓글 번호';
 
 
 /**********************************/
 /* Table Name: 댓글 */
 /**********************************/
-CREATE TABLE COMMENT(
-		COMMENTNO                     		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
-		RESTCONTENTSNO                		NUMBER(20)		 NULL ,
-		MEMBERNO                      		NUMBER(10)		 NULL ,
+CREATE TABLE COMMENTS(
+		COMMENTSNO                    		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
+		RESTCONTENTSNO                		NUMBER(20)		 NOT NULL,
+		MEMBERNO                      		NUMBER(10)		 NOT NULL,
 		CONTENT                       		VARCHAR2(2000)		 NULL ,
 		PASSWD                        		VARCHAR2(20)		 NOT NULL,
 		RDATE                         		DATE		 NULL ,
@@ -149,13 +149,13 @@ CREATE TABLE COMMENT(
   FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO)
 );
 
-COMMENT ON TABLE COMMENT is '댓글';
-COMMENT ON COLUMN COMMENT.COMMENTNO is '댓글 번호';
-COMMENT ON COLUMN COMMENT.RESTCONTENTSNO is '맛집 컨텐츠 번호';
-COMMENT ON COLUMN COMMENT.MEMBERNO is '회원 번호';
-COMMENT ON COLUMN COMMENT.CONTENT is '내용';
-COMMENT ON COLUMN COMMENT.PASSWD is '비밀번호';
-COMMENT ON COLUMN COMMENT.RDATE is '등록일';
+COMMENT ON TABLE COMMENTS is '댓글';
+COMMENT ON COLUMN COMMENTS.COMMENTSNO is '댓글 번호';
+COMMENT ON COLUMN COMMENTS.RESTCONTENTSNO is '맛집 컨텐츠 번호';
+COMMENT ON COLUMN COMMENTS.MEMBERNO is '회원 번호';
+COMMENT ON COLUMN COMMENTS.CONTENT is '내용';
+COMMENT ON COLUMN COMMENTS.PASSWD is '비밀번호';
+COMMENT ON COLUMN COMMENTS.RDATE is '등록일';
 
 
 /**********************************/
@@ -169,10 +169,35 @@ COMMENT ON TABLE 김상진 is '김상진';
 
 
 /**********************************/
+/* Table Name: 공지사항 카테고리 */
+/**********************************/
+CREATE TABLE NOTESCATE(
+		NOTESCATENO                   		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
+		NAME                          		VARCHAR2(50)		 NOT NULL,
+		CNT                           		NUMERIC(7)		 NOT NULL,
+		RDATE                         		DATE		 NULL ,
+		UDATE                         		DATE		 NULL ,
+		SEQNO                         		NUMERIC(5)		 NOT NULL,
+		VISIBLE                       		CHAR(1)		 NOT NULL
+);
+
+COMMENT ON TABLE NOTESCATE is '공지사항 카테고리';
+COMMENT ON COLUMN NOTESCATE.NOTESCATENO is '공지사항 카테고리 번호';
+COMMENT ON COLUMN NOTESCATE.NAME is '카테고리 이름';
+COMMENT ON COLUMN NOTESCATE.CNT is '관련자료수';
+COMMENT ON COLUMN NOTESCATE.RDATE is '등록일';
+COMMENT ON COLUMN NOTESCATE.UDATE is '수정일';
+COMMENT ON COLUMN NOTESCATE.SEQNO is '출력 순서';
+COMMENT ON COLUMN NOTESCATE.VISIBLE is '출력 모드';
+
+
+/**********************************/
 /* Table Name: 공지사항 */
 /**********************************/
 CREATE TABLE NOTES(
 		NOTESNO                       		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
+		ADMINNO                       		NUMBER(10)		 NULL ,
+		NOTESCATENO                   		NUMBER(10)		 NOT NULL,
 		TITLE                         		VARCHAR2(200)		 NOT NULL,
 		CONTENT                       		CLOB(4000)		 NOT NULL,
 		CNT                           		NUMBER(7)		 NOT NULL,
@@ -185,12 +210,14 @@ CREATE TABLE NOTES(
 		SIZE1                         		NUMBER(10)		 NULL ,
 		MAP                           		VARCHAR2(1000)		 NULL ,
 		YOUTUBE                       		VARCHAR2(1000)		 NULL ,
-		ADMINNO                       		NUMBER(10)		 NULL ,
-  FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO)
+  FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO),
+  FOREIGN KEY (NOTESCATENO) REFERENCES NOTESCATE (NOTESCATENO)
 );
 
 COMMENT ON TABLE NOTES is '공지사항';
 COMMENT ON COLUMN NOTES.NOTESNO is '공지사항 번호';
+COMMENT ON COLUMN NOTES.ADMINNO is '관리자 번호';
+COMMENT ON COLUMN NOTES.NOTESCATENO is '공지사항 카테고리 번호';
 COMMENT ON COLUMN NOTES.TITLE is '제목';
 COMMENT ON COLUMN NOTES.CONTENT is '내용';
 COMMENT ON COLUMN NOTES.CNT is '조회수';
@@ -203,7 +230,6 @@ COMMENT ON COLUMN NOTES.THUMB1 is '메인 이미지 Preview';
 COMMENT ON COLUMN NOTES.SIZE1 is '메인 이미지 크기';
 COMMENT ON COLUMN NOTES.MAP is '지도';
 COMMENT ON COLUMN NOTES.YOUTUBE is 'Youtube 영상';
-COMMENT ON COLUMN NOTES.ADMINNO is '관리자 번호';
 
 
 /**********************************/
@@ -214,5 +240,26 @@ CREATE TABLE 조성철(
 );
 
 COMMENT ON TABLE 조성철 is '조성철';
+
+
+/**********************************/
+/* Table Name: 리뷰 */
+/**********************************/
+CREATE TABLE REVIEW(
+		REVIEWNO                      		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
+		RESTCONTENTSNO                		NUMBER(20)		 NOT NULL,
+		MEMBERNO                      		NUMBER(10)		 NOT NULL,
+		RECONTENT                     		CLOB(2000)		 NOT NULL,
+		RATING                        		INTEGER(10)		 NULL ,
+  FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO),
+  FOREIGN KEY (RESTCONTENTSNO) REFERENCES RESTCONTENTS (RESTCONTENTSNO)
+);
+
+COMMENT ON TABLE REVIEW is '리뷰';
+COMMENT ON COLUMN REVIEW.REVIEWNO is '리뷰번호';
+COMMENT ON COLUMN REVIEW.RESTCONTENTSNO is '맛집 컨텐츠 번호';
+COMMENT ON COLUMN REVIEW.MEMBERNO is '회원 번호';
+COMMENT ON COLUMN REVIEW.RECONTENT is '리뷰내용';
+COMMENT ON COLUMN REVIEW.RATING is '평점';
 
 
