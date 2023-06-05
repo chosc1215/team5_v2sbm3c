@@ -125,6 +125,12 @@
     text-align: center; 
     clear: both;  /* 앞쪽 태그의 float 효과를 제거함. */    
   }
+  .copyright1 {
+    margin-top: 11px;
+    border-top: solid 1px #999999;
+    text-align: center; 
+    clear: both;  /* 앞쪽 태그의 float 효과를 제거함. */    
+  }
   
   .li_none {
     list-style: none;

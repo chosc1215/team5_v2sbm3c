@@ -5,8 +5,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
+<title>동서울 터미널과 함께하는 맛집리스트</title>
 <!-- /static 기준 -->
+<link rel="shortcut icon" href="/images/star.jpg" /> <%-- /static 기준 --%>
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -20,8 +21,9 @@
   
   <DIV style='width: 100%; margin: 30px auto; text-align: center;'>
     <%-- /static/images/main.jpg --%>
-    <IMG src='/images/main.jpg' style='width: 50%;'>
-  </DIV>
+    <IMG src='/images/main1.jpg' style='width: 95%; height: auto;'>
+    <!-- <IMG src='/images/main1.jpg' style='width: 1100px; height: 600px;'> -->
+  </DIV> 
    
   <DIV style='margin: 0px auto; width: 90%;'>
     <DIV style='float: left; width: 50%;'>
