@@ -6,10 +6,10 @@ package dev.mvc.restcate;
 //    cnt                               NUMBER(7)    DEFAULT 0     NOT NULL,
 //    rdate                             DATE     NOT NULL
 //);
-public class RestcateVO {
+public class RestcateVO { 
   private int restcateno;
   private String name;
-  private int cnt;
+  private int cnt; 
   private String rdate;
   private int seqno;
   private String visible;

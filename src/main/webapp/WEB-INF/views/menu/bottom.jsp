@@ -4,7 +4,7 @@
 
   
   <%-- 화면 하단 메뉴 --%>
-  <DIV class='copyright'>
+  <DIV class='copyright1'>
     Powered by Spring Boot + MyBATIS + AWS EC2 + Docker + Oracle + Ubuntu 20.00.
   </DIV>
   

@@ -11,10 +11,10 @@
   
   <!-- 목록(관리자 접근): RestcateVO 객체를 생성하여 변수에 컬럼의 값을 저장 후, 
                ArrayList<RestcateVO> 객체를 생성한후 add까지 자동 진행하여 ArrayList 객체를 return -->
-  <select id="list_all" resultType="dev.mvc.restcate.RestcateVO">
+  <select id="list_all" resultType="dev.mvc.restcate.RestcateVO"> 
     SELECT restcateno, name, cnt, rdate, seqno, visible 
     FROM restcate 
-    ORDER BY seqno ASC
+    ORDER BY seqno ASC 
   </select>
   
   <!-- 읽기 -->
