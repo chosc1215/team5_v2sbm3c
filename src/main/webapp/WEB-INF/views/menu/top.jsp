@@ -2,15 +2,16 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="dev.mvc.restcate.RestcateVO" %> 
- 
+<%@ page import="dev.mvc.restcate.RestcateVO" %>
+
 <DIV class='container_main'> 
     <!-- 헤더 start -->
     <div class="header">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="/">Resort 3.0</a>
+            <a class="navbar-brand" href="/"><IMG src='/images/logo.jpg' style='width: 65%;'></a>
+            
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle Navigation">
-              <span class="navbar-toggler-icon"></span>
+              <span class="navbar-toggler-icon"></span> 
             </button>    
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">

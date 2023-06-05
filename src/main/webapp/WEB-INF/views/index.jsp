@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -7,8 +6,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
 <title>Resort world</title>
-<link rel="shortcut icon" href="/images/star.png" /> <%-- /static 기준 --%>
-<link href="/css/style.css" rel="Stylesheet" type="text/css"> <!-- /static 기준 -->
+<!-- /static 기준 -->
+<link href="/css/style.css" rel="Stylesheet" type="text/css">
  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  
@@ -17,14 +16,13 @@
     
 </head>
 <body>
-<%-- <jsp:include page="../menu/top.jsp" flush='false' /> --%>
-<c:import url="/menu/top.do" />
-
-  <DIV style='width: 100%; margin: 30px auto; text-align: center;'>
-    <%-- /static/images/resort01.jpg --%>
-    <IMG src='/images/resort01.jpg' style='width: 60%;'>
-  </DIV>
+<jsp:include page="./menu/top.jsp" flush='false' />
   
+  <DIV style='width: 100%; margin: 30px auto; text-align: center;'>
+    <%-- /static/images/main.jpg --%>
+    <IMG src='/images/main.jpg' style='width: 50%;'>
+  </DIV>
+   
   <DIV style='margin: 0px auto; width: 90%;'>
     <DIV style='float: left; width: 50%;'>
      </DIV>
@@ -39,5 +37,3 @@
  
 </body>
 </html>
-
-
