@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -17,7 +18,8 @@
     
 </head>
 <body>
-<jsp:include page="./menu/top.jsp" flush='false' />
+<jsp:include page="./menu/top.jsp" flush='false' /> 
+<c:import url="/menu/top.do" /> 
   
   <DIV style='width: 100%; margin: 30px auto; text-align: center;'>
     <%-- /static/images/main.jpg --%>
