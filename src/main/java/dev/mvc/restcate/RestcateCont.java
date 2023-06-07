@@ -13,15 +13,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.admin.AdminProcInter;
+import dev.mvc.restcontents.Restcontents;
+import dev.mvc.restcontents.RestcontentsProcInter;
+import dev.mvc.restcontents.RestcontentsVO;
+import dev.mvc.tool.Tool;
 
 @Controller
 public class RestcateCont {
   @Autowired
-  @Qualifier("dev.mvc.admin.AdminProc")  // @Component("dev.mvc.restcate.RestcateProc")
-  private AdminProcInter adminProc; // RestcateProc 객체가 자동 생성되어 할당됨.
+  @Qualifier("dev.mvc.restcate.RestcateProc")  // @Component("dev.mvc.restcate.RestcateProc")
+  private RestcateProcInter restcateProc; // RestcateProc 객체가 자동 생성되어 할당됨.
+  
   @Autowired
-  @Qualifier("dev.mvc.restcate.RestcateProc")
-  private RestcateProcInter restcateProc;
+  @Qualifier("dev.mvc.admin.AdminProc") 
+  private AdminProcInter adminProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.restcontents.RestcontentsProc") 
+  private RestcontentsProcInter restcontentsProc;
   
   public RestcateCont() {
     System.out.println("-> RestcateCont created.");
@@ -36,11 +45,13 @@ public class RestcateCont {
     ModelAndView mav = new ModelAndView();
     
     if (this.adminProc.isAdmin(session) == true) {
-      mav.setViewName("/restcate/create"); // /WEB-INF/views/restcate/create.jsp
+      // spring.mvc.view.prefix=/WEB-INF/views/
+      // spring.mvc.view.suffix=.jsp
+      mav.setViewName("/restcate/create"); // /WEB-INF/views/restcate/create.jsp      
     } else {
-      mav.setViewName("/admin/login_need");
+      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
     }
-    
+
     return mav;
   }
 
@@ -49,7 +60,7 @@ public class RestcateCont {
   @RequestMapping(value="/restcate/create.do", method=RequestMethod.POST)
   public ModelAndView create(HttpSession session, RestcateVO restcateVO) { // <form> 태그의 값이 자동으로 저장됨
     // request.getParameter("name"); 자동으로 실행
-    System.out.println("-> name: " + restcateVO.getName());
+    // System.out.println("-> name: " + restcateVO.getName());
     
     ModelAndView mav = new ModelAndView();
     
@@ -71,13 +82,12 @@ public class RestcateCont {
       // request.setAttribute("cnt", cnt);
       mav.addObject("cnt", cnt);
     } else {
-      mav.setViewName("/admin/login_need");
+      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
     }
     
     return mav;
   }
   
-  // http://localhost:9091/restcate/list_all.do
   // http://localhost:9091/restcate/list_all.do
   @RequestMapping(value="/restcate/list_all.do", method=RequestMethod.GET)
   public ModelAndView list_all(HttpSession session) {
@@ -106,8 +116,7 @@ public class RestcateCont {
       RestcateVO restcateVO = this.restcateProc.read(restcateno);
       mav.addObject("restcateVO", restcateVO);
     } else {
-      
-      mav.setViewName("/admin/login_need");
+      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
     }
     
     return mav;
@@ -128,10 +137,11 @@ public class RestcateCont {
       mav.addObject("restcateVO", restcateVO);
       
       ArrayList<RestcateVO> list = this.restcateProc.list_all(); // 목록 출력용 데이터
-      mav.addObject("list", list); 
+      mav.addObject("list", list);
       
     } else {
-      mav.setViewName("/admin/login_need");      
+      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+      
     }
     
     return mav;
@@ -140,12 +150,12 @@ public class RestcateCont {
   // 수정 처리
   @RequestMapping(value="/restcate/update.do", method=RequestMethod.POST)
   public ModelAndView update(HttpSession session, RestcateVO restcateVO) { // <form> 태그의 값이 자동으로 저장됨
-    System.out.println("-> restcateno: " + restcateVO.getRestcateno());
-    System.out.println("-> name: " + restcateVO.getName());
+//    System.out.println("-> restcateno: " + restcateVO.getRestcateno());
+//    System.out.println("-> name: " + restcateVO.getName());
     
     ModelAndView mav = new ModelAndView();
-    if (this.adminProc.isAdmin(session)==true) {
-      
+
+    if (this.adminProc.isAdmin(session) == true) {
       int cnt = this.restcateProc.update(restcateVO);
       
       if (cnt == 1) {
@@ -161,72 +171,101 @@ public class RestcateCont {
       
       // request.setAttribute("cnt", cnt);
       mav.addObject("cnt", cnt);
+      
     } else {
-      mav.setViewName("/admin/login_need");      
+      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
     }
-            
+    
     return mav;
   }
  
-  // 삭제폼, 수정폼을 복사하여 개발 
-  // http://localhost:9091/restcate/read_delete.do?restcateno=1
-  @RequestMapping(value="/restcate/read_delete.do", method=RequestMethod.GET)
-  public ModelAndView read_delete(HttpSession session, int restcateno) {
-    ModelAndView mav = new ModelAndView();
-    
-    if (this.adminProc.isAdmin(session)==true) {
-      mav.setViewName("/restcate/read_delete"); // /WEB-INF/views/restcate/read_delete.jsp
-      
-      RestcateVO restcateVO = this.restcateProc.read(restcateno); // 수정용 데이터
-      mav.addObject("restcateVO", restcateVO);
-      
-      ArrayList<RestcateVO> list = this.restcateProc.list_all(); // 목록 출력용 데이터
-      mav.addObject("list", list);     
-      
-    } else {
-      mav.setViewName("/admin/login_need");    
-      
-    }
-
-    
-    return mav;
-  }
-  
-  // 삭제 처리, 수정 처리를 복사하여 개발 
-  @RequestMapping(value="/restcate/delete.do", method=RequestMethod.POST)
-  public ModelAndView delete(HttpSession session, int restcateno) { // <form> 태그의 값이 자동으로 저장됨
-//    System.out.println("-> restcateno: " + restcateVO.getRestcateno());
-//    System.out.println("-> name: " + restcateVO.getName());
-    
-    ModelAndView mav = new ModelAndView();
-    
-    if (this.adminProc.isAdmin(session)==true) {
-      
-      int cnt = this.restcateProc.delete(restcateno);
-      
-      if (cnt == 1) {
-        mav.setViewName("redirect:/restcate/list_all.do");       // 자동 주소 이동, Spring 재호출
-        
-      } else {
-        mav.addObject("code", "delete_fail");
-        mav.setViewName("/restcate/msg"); // /WEB-INF/views/restcate/msg.jsp
-      }
-      
-      mav.addObject("cnt", cnt); 
-    } else {
-      mav.setViewName("/admin/login_need");    
-    }
-    
-    return mav;
-  }
-  
-  /**
-   * 출력 순서 올림(상향, 10 등 -> 1 등), seqno: 10 -> 1
-   * http://localhost:9091/restcate/update_seqno_decrease.do?restcateno=1
-   * http://localhost:9091/restcate/update_seqno_decrease.do?restcateno=2
-   * @param restcateno
-   * @return
-   */
+//  // 삭제폼, 수정폼을 복사하여 개발 
+//  // http://localhost:9091/restcate/read_delete.do?restcateno=1
+//  @RequestMapping(value="/restcate/read_delete.do", method=RequestMethod.GET)
+//  public ModelAndView read_delete(HttpSession session, int restcateno) {
+//    ModelAndView mav = new ModelAndView();
+//    
+//    if (this.adminProc.isAdmin(session) == true) {
+//      RestcateVO restcateVO = this.restcateProc.read(restcateno); // 수정용 데이터
+//      mav.addObject("restcateVO", restcateVO);
+//      
+//      ArrayList<RestcateVO> list = this.restcateProc.list_all(); // 목록 출력용 데이터
+//      mav.addObject("list", list);
+//      
+//      // 특정 카테고리에 속한 레코드 갯수를 리턴
+//      int count_by_restcateno = this.restcontentsProc.count_by_restcateno(restcateno);
+//      mav.addObject("count_by_restcateno", count_by_restcateno);
+//      
+//      mav.setViewName("/restcate/read_delete"); // /WEB-INF/views/restcate/read_delete.jsp
+//      
+//    } else {
+//      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+//    }
+//    
+//    return mav;
+//  }
+//   
+//  // 삭제 처리, 수정 처리를 복사하여 개발
+//  // 자식 테이블 레코드 삭제 -> 부모 테이블 레코드 삭제
+//  /**
+//   * 카테고리 삭제
+//   * @param session
+//   * @param restcateno 삭제할 카테고리 번호
+//   * @return
+//   */
+//  @RequestMapping(value="/restcate/delete.do", method=RequestMethod.POST)
+//  public ModelAndView delete(HttpSession session, int restcateno) { // <form> 태그의 값이 자동으로 저장됨
+////    System.out.println("-> restcateno: " + restcateVO.getRestcateno());
+////    System.out.println("-> name: " + restcateVO.getName());
+//    
+//    ModelAndView mav = new ModelAndView();
+//    
+//    if (this.adminProc.isAdmin(session) == true) {
+//      ArrayList<RestcontentsVO> list = this.restcontentsProc.list_by_restcateno(restcateno); // 자식 레코드 목록 읽기
+//      
+//      for(RestcontentsVO restcontentsVO : list) { // 자식 레코드 관련 파일 삭제
+//        // -------------------------------------------------------------------
+//        // 파일 삭제 시작
+//        // -------------------------------------------------------------------
+//        String file1saved = restcontentsVO.getFile1saved();
+//        String thumb1 = restcontentsVO.getThumb1();
+//        
+//        String uploadDir = Restcontents.getUploadDir();
+//        Tool.deleteFile(uploadDir, file1saved);  // 실제 저장된 파일삭제
+//        Tool.deleteFile(uploadDir, thumb1);     // preview 이미지 삭제
+//        // -------------------------------------------------------------------
+//        // 파일 삭제 종료
+//        // -------------------------------------------------------------------
+//      }
+//      
+//      this.restcontentsProc.delete_by_restcateno(restcateno); // 자식 레코드 삭제     
+//            
+//      int cnt = this.restcateProc.delete(restcateno); // 카테고리 삭제
+//      
+//      if (cnt == 1) {
+//        mav.setViewName("redirect:/restcate/list_all.do");       // 자동 주소 이동, Spring 재호출
+//        
+//      } else {
+//        mav.addObject("code", "delete_fail");
+//        mav.setViewName("/restcate/msg"); // /WEB-INF/views/restcate/msg.jsp
+//      }
+//      
+//      mav.addObject("cnt", cnt);
+//      
+//    } else {
+//      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+//    }
+//    
+//    return mav;
+//  }
+//  
+//  /**
+//   * 출력 순서 올림(상향, 10 등 -> 1 등), seqno: 10 -> 1
+//   * http://localhost:9091/restcate/update_seqno_decrease.do?restcateno=1
+//   * http://localhost:9091/restcate/update_seqno_decrease.do?restcateno=2
+//   * @param restcateno
+//   * @return
+//   */
   @RequestMapping(value = "/restcate/update_seqno_decrease.do", method = RequestMethod.GET)
   public ModelAndView update_seqno_decrease(int restcateno) {
     ModelAndView mav = new ModelAndView();
