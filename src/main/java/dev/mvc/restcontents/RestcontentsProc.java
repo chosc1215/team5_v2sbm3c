@@ -3,6 +3,8 @@ package dev.mvc.restcontents;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import dev.mvc.tool.Tool;
+
 @Component("dev.mvc.restcontents.RestcontentsProc")
 public class RestcontentsProc implements RestcontentsProcInter {
   @Autowired
