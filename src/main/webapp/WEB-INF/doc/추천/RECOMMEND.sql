@@ -1,0 +1,21 @@
+/**********************************/
+/* Table Name: 추천 */
+/**********************************/
+CREATE TABLE RECOMMEND(
+		RECOMMENDNO                   		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
+		SEQ                           		NUMBER(2)		 DEFAULT 1		 NOT NULL,
+		RDATE                         		DATE		 NOT NULL,
+		RESTCATENO                    		NUMBER(10)		 NULL ,
+		MEMBERNO                      		NUMBER(10)		 NULL ,
+  FOREIGN KEY (RESTCATENO) REFERENCES RESTCATE (RESTCATENO),
+  FOREIGN KEY (MEMBERNO) REFERENCES MEMBER (MEMBERNO)
+);
+
+COMMENT ON TABLE RECOMMEND is '추천';
+COMMENT ON COLUMN RECOMMEND.RECOMMENDNO is '추천번호';
+COMMENT ON COLUMN RECOMMEND.SEQ is '추천우선순위';
+COMMENT ON COLUMN RECOMMEND.RDATE is '추천날짜';
+COMMENT ON COLUMN RECOMMEND.RESTCATENO is '카테고리번호';
+COMMENT ON COLUMN RECOMMEND.MEMBERNO is '회원 번호';
+
+
