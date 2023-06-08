@@ -18,12 +18,12 @@
                     <c:set var="restcateno" value="${restcateVO.restcateno }" />
                     <c:set var="name" value="${restcateVO.name }" />
                     <li class="nav-item"> <%-- 서브 메뉴가 없는 독립메뉴 --%>
-                      <a class="nav-link" href="/contents/list_by_restcateno.do?restcateno=${restcateno }&now_page=1" >${name }</a>
+                      <a class="nav-link" href="/restcontents/list_by_restcateno.do?restcateno=${restcateno }&now_page=1" >${name }</a>
                     </li>
                   </c:forEach>
                   
                   <li class="nav-item"> <%-- 서브 메뉴가 없는 독립메뉴 --%>
-                    <a class="nav-link" href="/contents/list_all.do">전체 글 목록</a>
+                    <a class="nav-link" href="/restcontents/list_all.do">전체 글 목록</a>
                   </li>
 
                   <li class="nav-item"> <%-- 서브 메뉴가 없는 독립메뉴 --%>

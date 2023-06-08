@@ -10,4 +10,23 @@
     VALUES(restcontents_seq.nextval, #{adminno}, #{restcateno}, #{title}, #{content}, #{passwd}, #{word},
                 #{file1}, #{file1saved}, #{thumb1}, #{size1}, sysdate)
   </insert>
+  
+  <!-- 모든 카테고리의 등록된 글목록 -->
+  <select id="list_all" resultType="dev.mvc.restcontents.RestcontentsVO">
+    SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, passwd, word, rdate,
+               file1, file1saved, thumb1, size1
+    FROM restcontents
+    ORDER BY restcontentsno DESC
+  </select>
+  
+  <!-- 특정 카테고리의 등록된 글목록 -->
+  <select id="list_by_restcateno" resultType="dev.mvc.restcontents.RestcontentsVO" parameterType="int">
+    SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, passwd, word, rdate,
+               file1, file1saved, thumb1, size1, map, youtube
+    FROM restcontents
+    WHERE restcateno=#{restcateno}
+    ORDER BY restcontentsno DESC
+
+  </select>
+  
 </mapper>
