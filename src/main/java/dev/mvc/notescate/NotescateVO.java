@@ -1,18 +1,18 @@
 package dev.mvc.notescate;
 
 public class NotescateVO {
-  private int notesno;
+  private int notescateno;
   private String name;
   private int cnt;
   private String rdate;
   private int seqno;
   private String visible;
   
-  public int getNotesno() {
-    return notesno;
+  public int getNotescateno() {
+    return notescateno;
   }
-  public void setNotesno(int notesno) {
-    this.notesno = notesno;
+  public void setNotescateno(int notescateno) {
+    this.notescateno = notescateno;
   }
   public String getName() {
     return name;

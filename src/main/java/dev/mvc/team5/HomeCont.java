@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import dev.mvc.notescate.NotescateProcInter;
 import dev.mvc.restcate.RestcateProcInter;
 import dev.mvc.restcate.RestcateVO;
 
@@ -18,6 +19,10 @@ public class HomeCont {
   @Autowired
   @Qualifier("dev.mvc.restcate.RestcateProc")  // @Component("dev.mvc.restcate.RestcateProc")
   private RestcateProcInter restcateProc; // RestcateProc 객체가 자동 생성되어 할당됨.
+  
+  @Autowired
+  @Qualifier("dev.mvc.notescate.NotescateProc")  // @Component("dev.mvc.restcate.RestcateProc")
+  private NotescateProcInter notscateProc; // RestcateProc 객체가 자동 생성되어 할당됨.
   
   public HomeCont() {
     System.out.println("-> HomeCont created.");
@@ -42,6 +47,8 @@ public class HomeCont {
 
     ArrayList<RestcateVO> list = this.restcateProc.list_all_y();
     mav.addObject("list", list);
+    
+    
     
     mav.setViewName("/menu/top"); // /WEB-INF/views/menu/top.jsp
     
