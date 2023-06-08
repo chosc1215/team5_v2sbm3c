@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="dev.mvc.notes.NotesDAOInter">
+  <!-- 등록: 추가한 레코드 갯수를 리턴 -->
+  <insert id="create" parameterType="dev.mvc.notes.NotesVO">
+    INSERT INTO notes(notesno, name, cnt, rdate, seqno) 
+    VALUES(notes_seq.nextval, #{name}, 0, sysdate, #{seqno})
+  </insert>
+  
+  <!-- 목록(관리자 접근): NotesVO 객체를 생성하여 변수에 컬럼의 값을 저장 후, 
+               ArrayList<NotesVO> 객체를 생성한후 add까지 자동 진행하여 ArrayList 객체를 return -->
+  <select id="list_all" resultType="dev.mvc.notes.NotesVO">
+    SELECT notesno, name, cnt, rdate, seqno, visible 
+    FROM notes 
+    ORDER BY seqno ASC
+  </select>
+  
+  <!-- 읽기 -->
+  <select id="read" resultType="dev.mvc.notes.NotesVO" parameterType="int">
+    SELECT notesno, name, cnt, rdate, seqno, visible 
+    FROM notes 
+    WHERE notesno=#{notesno}
+  </select>
+  
+  <!-- 수정, 수정된 레코드 갯수를 리턴, notesno는 레코드를 고유하게 구분해주는 역활을 함 -->
+  <update id="update" parameterType="dev.mvc.notes.NotesVO">
+    UPDATE notes 
+    SET name=#{name}, seqno=#{seqno} 
+    WHERE notesno=#{notesno}  
+  </update>
+  
+  <!-- 삭제, 삭제된 레코드 갯수를 리턴 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM notes 
+    WHERE notesno=#{notesno}
+  </delete>
+  
+  <!-- 출력 순서 올림(상향, 10 등 -> 1 등), seqno: 10 -> 1 -->
+  <update id="update_seqno_decrease" parameterType="int">
+    UPDATE notes
+    SET seqno = seqno - 1
+    WHERE notesno = #{notesno}
+  </update>
+
+  <!-- 출력 순서 내림(상향, 1 등 -> 10 등), seqno: 1 -> 10 -->
+  <update id="update_seqno_increase" parameterType="int">
+    UPDATE notes
+    SET seqno = seqno + 1
+    WHERE notesno = #{notesno}
+  </update>
+
+  <!-- 공개 -->
+  <update id="update_visible_y" parameterType="int">
+    UPDATE notes 
+    SET visible='Y'
+    WHERE notesno=#{notesno}
+  </update>
+   
+  <!-- 비공개 -->
+  <update id="update_visible_n" parameterType="int">
+    UPDATE notes 
+    SET visible='N'
+    WHERE notesno=#{notesno}
+  </update>
+
+  <!-- 목록(사용자 접근): visible이 'Y'인 레코드만 출력
+        NotesVO 객체를 생성하여 변수에 컬럼의 값을 저장 후, 
+        ArrayList<NotesVO> 객체를 생성한후 add까지 자동 진행하여 ArrayList 객체를 return -->
+  <select id="list_all_y" resultType="dev.mvc.notes.NotesVO">
+    SELECT notesno, name, cnt, rdate, seqno, visible 
+    FROM notes 
+    WHERE visible='Y'
+    ORDER BY notesno ASC
+  </select>
+  
+  <!-- 자료수 증가, cnt 컬럼 1씩 증가, id: update_cnt_add -->
+  <update id="update_cnt_add" parameterType="int">
+    UPDATE notes 
+    SET cnt = cnt + 1 
+    WHERE notesno = #{notesno}
+  </update>
+
+  <!-- 자료수 감소, cnt 컬럼 1씩 증가, id: update_cnt_add -->
+  <update id="update_cnt_sub" parameterType="int">
+    UPDATE notes 
+    SET cnt = cnt - 1 
+    WHERE notesno = #{notesno}
+  </update>
+
+          
+</mapper>
+
+
+
+
+
+

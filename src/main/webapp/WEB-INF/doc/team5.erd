@@ -23,8 +23,8 @@
       <constraint>
         <height>-1</height>
         <width>-1</width>
-        <x>938</x>
-        <y>184</y>
+        <x>1100</x>
+        <y>139</y>
       </constraint>
       <sourceConnections/>
       <targetConnections>
@@ -80,8 +80,8 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>261</x>
-                    <y>384</y>
+                    <x>322</x>
+                    <y>343</y>
                   </constraint>
                   <sourceConnections>
                     <net.java.amateras.db.visual.model.ForeignKeyModel>
@@ -108,8 +108,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>470</x>
-                          <y>178</y>
+                          <x>523</x>
+                          <y>99</y>
                         </constraint>
                         <sourceConnections/>
                         <targetConnections>
@@ -166,8 +166,8 @@
                                     <constraint>
                                       <height>-1</height>
                                       <width>-1</width>
-                                      <x>216</x>
-                                      <y>23</y>
+                                      <x>249</x>
+                                      <y>13</y>
                                     </constraint>
                                     <sourceConnections/>
                                     <targetConnections>
@@ -639,8 +639,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>689</x>
-                          <y>175</y>
+                          <x>788</x>
+                          <y>84</y>
                         </constraint>
                         <sourceConnections/>
                         <targetConnections>
