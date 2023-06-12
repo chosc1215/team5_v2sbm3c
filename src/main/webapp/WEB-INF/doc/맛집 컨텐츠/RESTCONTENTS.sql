@@ -45,9 +45,9 @@ COMMENT ON COLUMN RESTCONTENTS.SIZE1 is '메인 이미지 크기';
 COMMENT ON COLUMN RESTCONTENTS.MAP is '지도';
 COMMENT ON COLUMN RESTCONTENTS.YOUTUBE is 'Youtube 영상';
 
-DROP SEQUENCE contents_seq;
+DROP SEQUENCE restcontents_seq;
 
-CREATE SEQUENCE contents_seq
+CREATE SEQUENCE restcontents_seq
   START WITH 1                -- 시작 번호
   INCREMENT BY 1            -- 증가값
   MAXVALUE 9999999999  -- 최대값: 9999999999 --> NUMBER(10) 대응
@@ -55,13 +55,13 @@ CREATE SEQUENCE contents_seq
   NOCYCLE; 
 
 -- 등록
-INSERT INTO restcontents(restcontentsno, restcateno, adminno, title, 
-        content, recom, cnt, replycnt, passwd, word, rdate)
-VALUES(contents_seq.nextval, 1, 1, '제목 타이틀', '맛집 내용', 0, 0, 0, '1234', '맛집', sysdate);  
+INSERT INTO restcontents(restcontentsno, adminno, restcateno, title, 
+        content, recom, cnt, replycnt, passwd, word, rdate, file1, file1saved, thumb1, size1)
+VALUES(restcontents_seq.nextval, 1, 1, '제목 타이틀', '맛집 내용', 0, 0, 0, '1234', '맛집', sysdate, 'space.jpg', 'space_1.jpg', 'space_t.jpg', 1000);  
 
 INSERT INTO restcontents(restcontentsno, restcateno, adminno, title, 
         content, recom, cnt, replycnt, passwd, word, rdate)
-VALUES(contents_seq.nextval, 2, 1, '제목 타이틀2', '맛집 내용2', 0, 0, 0, '1234', '제목', sysdate);     
+VALUES(restcontents_seq.nextval, 2, 1, '제목 타이틀2', '맛집 내용2', 0, 0, 0, '1234', '제목', sysdate);     
 
 -- 목록 (전체 글 목록)
 SELECT restcontentsno, restcateno, adminno, title, content, recom, cnt, replycnt, word, rdate
@@ -87,7 +87,7 @@ WHERE restcontentsno = 1;
 
 -- 삭제
 DELETE FROM restcontents
-WHERE restcontentsno = 2;
+WHERE restcontentsno = 1;
 commit;
 
 -------------------------------------------------------

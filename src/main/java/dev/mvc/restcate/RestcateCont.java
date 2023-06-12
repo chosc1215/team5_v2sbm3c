@@ -178,6 +178,56 @@ public class RestcateCont {
     
     return mav;
   }
+  
+  // 삭제폼, 수정폼을 복사하여 개발 
+  // http://localhost:9091/cate/read_delete.do?cateno=1
+  @RequestMapping(value="/restcate/read_delete.do", method=RequestMethod.GET)
+  public ModelAndView read_delete(HttpSession session, int restcateno) {
+    ModelAndView mav = new ModelAndView();
+    
+    if (this.adminProc.isAdmin(session) == true) {
+      mav.setViewName("/restcate/read_delete"); // /WEB-INF/views/cate/read_delete.jsp
+      
+      RestcateVO restcateVO = this.restcateProc.read(restcateno); // 수정용 데이터
+      mav.addObject("restcateVO", restcateVO);
+      
+      ArrayList<RestcateVO> list = this.restcateProc.list_all(); // 목록 출력용 데이터
+      mav.addObject("list", list);
+      
+    } else {
+      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+    }
+    
+    return mav;
+  }
+  
+  // 삭제 처리, 수정 처리를 복사하여 개발 
+  @RequestMapping(value="/restcate/delete.do", method=RequestMethod.POST)
+  public ModelAndView delete(HttpSession session, int restcateno) { // <form> 태그의 값이 자동으로 저장됨
+//    System.out.println("-> cateno: " + cateVO.getCateno());
+//    System.out.println("-> name: " + cateVO.getName());
+    
+    ModelAndView mav = new ModelAndView();
+    
+    if (this.adminProc.isAdmin(session) == true) {
+      int cnt = this.restcateProc.delete(restcateno);
+      
+      if (cnt == 1) {
+        mav.setViewName("redirect:/restcate/list_all.do");       // 자동 주소 이동, Spring 재호출
+        
+      } else {
+        mav.addObject("code", "delete_fail");
+        mav.setViewName("/restcate/msg"); // /WEB-INF/views/cate/msg.jsp
+      }
+      
+      mav.addObject("cnt", cnt);
+      
+    } else {
+      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+    }
+    
+    return mav;
+  }  
  
 // 삭제폼, 수정폼을 복사하여 개발 
 // http://localhost:9091/restcate/read_delete.do?restcateno=1
