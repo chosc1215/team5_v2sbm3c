@@ -87,16 +87,11 @@ public class NotescateCont {
   @RequestMapping(value="/notescate/list_all.do", method=RequestMethod.GET)
   public ModelAndView list_all(HttpSession session) {
     ModelAndView mav = new ModelAndView();
-    
-    if (this.adminProc.isAdmin(session) == true) {
-      mav.setViewName("/notescate/list_all"); // /WEB-INF/views/notescate/list_all.jsp
+    mav.setViewName("/notescate/list_all"); // /WEB-INF/views/notescate/list_all.jsp
       
-      ArrayList<NotescateVO> list = this.notescateProc.list_all();
-      mav.addObject("list", list);      
-    } else {
-      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
-    }
-    
+    ArrayList<NotescateVO> list = this.notescateProc.list_all();
+    mav.addObject("list", list);      
+
     return mav;
   }
   
