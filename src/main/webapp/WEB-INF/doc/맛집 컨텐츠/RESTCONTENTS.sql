@@ -5,21 +5,21 @@ DROP TABLE restcontents CASCADE CONSTRAINTS; -- 자식 무시하고 삭제 가�
 DROP TABLE restcontents;
 
 CREATE TABLE RESTCONTENTS(
-		RESTCONTENTSNO                		NUMBER(20)		 NOT NULL		 PRIMARY KEY,
-		ADMINNO                       		NUMBER(10)		 NOT NULL,
-		RESTCATENO                    		NUMBER(10)		 NOT NULL,
+		RESTCONTENTSNO                		NUMBER(20)		     NOT NULL		 PRIMARY KEY,
+		ADMINNO                       		NUMBER(10)		     NOT NULL,
+		RESTCATENO                    		NUMBER(10)		     NOT NULL,
 		TITLE                         		VARCHAR2(200)		 NOT NULL,
-		CONTENT                       		CLOB  		 NOT NULL,
-		RECOM                         		NUMBER(7)		 NOT NULL,
-		CNT                           		NUMBER(7)		 NOT NULL,
-		REPLYCNT                      		NUMBER(7)		 NOT NULL,
+		CONTENT                       		CLOB  		         NOT NULL,
+		RECOM                         		NUMBER(7)           DEFAULT 0		 NOT NULL,
+		CNT                           		NUMBER(7)		    DEFAULT 0        NOT NULL,
+		REPLYCNT                      		NUMBER(7)		    DEFAULT 0        NOT NULL,
 		PASSWD                        		VARCHAR2(15)		 NOT NULL,
 		WORD                          		VARCHAR2(100)		 NULL ,
 		RDATE                         		DATE		 NOT NULL,
 		FILE1                         		VARCHAR2(100)		 NULL ,
 		FILE1SAVED                    		VARCHAR2(100)		 NULL ,
 		THUMB1                        		VARCHAR2(100)		 NULL ,
-		SIZE1                         		NUMBER(10)		 NULL ,
+		SIZE1                         		NUMBER(10)	         DEFAULT 0	     NULL ,
 		MAP                           		VARCHAR2(1000)		 NULL ,
 		YOUTUBE                       		VARCHAR2(1000)		 NULL ,
   FOREIGN KEY (ADMINNO) REFERENCES ADMIN (ADMINNO),
@@ -91,4 +91,4 @@ WHERE restcontentsno = 1;
 commit;
 
 -------------------------------------------------------
-
+DESC restcontents;
