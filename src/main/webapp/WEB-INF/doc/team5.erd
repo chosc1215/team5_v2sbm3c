@@ -80,7 +80,7 @@
                   <constraint>
                     <height>-1</height>
                     <width>-1</width>
-                    <x>322</x>
+                    <x>276</x>
                     <y>343</y>
                   </constraint>
                   <sourceConnections>
@@ -668,7 +668,7 @@
                               <constraint>
                                 <height>-1</height>
                                 <width>-1</width>
-                                <x>1010</x>
+                                <x>1031</x>
                                 <y>8</y>
                               </constraint>
                               <sourceConnections>
@@ -774,9 +774,9 @@
                               </columns>
                               <indices/>
                               <backgroundColor>
-                                <red>255</red>
+                                <red>0</red>
                                 <green>255</green>
-                                <blue>206</blue>
+                                <blue>255</blue>
                               </backgroundColor>
                               <sql></sql>
                             </source>
@@ -911,8 +911,8 @@
                         <constraint>
                           <height>-1</height>
                           <width>-1</width>
-                          <x>732</x>
-                          <y>326</y>
+                          <x>692</x>
+                          <y>367</y>
                         </constraint>
                         <sourceConnections>
                           <net.java.amateras.db.visual.model.ForeignKeyModel reference="../../.."/>

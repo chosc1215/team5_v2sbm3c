@@ -5,8 +5,8 @@
 <mapper namespace="dev.mvc.restcontents.RestcontentsDAOInter">
   <!-- 등록한 레코드 갯수 1 리턴 -->
   <insert id="create" parameterType="dev.mvc.restcontents.RestcontentsVO">
-    INSERT INTO restcontents(restcontentsno, adminno, restcateno, title, content, passwd, word,
-                                  file1, file1saved, thumb1, size1, rdate)
+    INSERT INTO restcontents(restcontentsno, adminno, restcateno, title, 
+            content, passwd, word, file1, file1saved, thumb1, size1, rdate)
     VALUES(restcontents_seq.nextval, #{adminno}, #{restcateno}, #{title}, #{content}, #{passwd}, #{word},
                 #{file1}, #{file1saved}, #{thumb1}, #{size1}, sysdate)
   </insert>
