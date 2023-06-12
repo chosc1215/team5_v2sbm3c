@@ -181,7 +181,7 @@ public class RestcateCont {
   
   // 삭제폼, 수정폼을 복사하여 개발 
   // http://localhost:9091/cate/read_delete.do?cateno=1
-  @RequestMapping(value="/cate/read_delete.do", method=RequestMethod.GET)
+  @RequestMapping(value="/restcate/read_delete.do", method=RequestMethod.GET)
   public ModelAndView read_delete(HttpSession session, int restcateno) {
     ModelAndView mav = new ModelAndView();
     
