@@ -194,7 +194,7 @@ public class RestcateCont {
       ArrayList<RestcateVO> list = this.restcateProc.list_all(); // 목록 출력용 데이터
       mav.addObject("list", list);
       
-    } else {
+    } else { 
       mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
     }
     
@@ -437,7 +437,7 @@ public class RestcateCont {
   }
   
 }
-
+ 
 
 
 
