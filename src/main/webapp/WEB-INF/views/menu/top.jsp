@@ -8,12 +8,19 @@
     <!-- 헤더 start -->
     <div class="header">
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="/">Resort 3.0</a>
+            <a class="navbar-brand" href="/">동서울터미널과 함께하는 맛집</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle Navigation">
               <span class="navbar-toggler-icon"></span>
             </button>    
+            
+            
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
+                
+                <li class="nav-item"> <%-- 서브 메뉴가 없는 독립메뉴 --%>
+                    <a class="nav-link" href="/notescate/list_all.do">공지사항</a>
+                  </li>
+                  
                   <c:forEach var="restcateVO" items="${list}">
                     <c:set var="restcateno" value="${restcateVO.restcateno }" />
                     <c:set var="name" value="${restcateVO.name }" />
@@ -22,10 +29,13 @@
                     </li>
                   </c:forEach>
                   
+                  
+                  
                   <li class="nav-item"> <%-- 서브 메뉴가 없는 독립메뉴 --%>
                     <a class="nav-link" href="/restcontents/list_all.do">전체 글 목록</a>
                   </li>
-
+                  
+                    
                   <li class="nav-item"> <%-- 서브 메뉴가 없는 독립메뉴 --%>
                       <c:choose>
                           <c:when test="${sessionScope.id == null}">
