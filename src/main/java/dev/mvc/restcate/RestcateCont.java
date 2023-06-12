@@ -184,7 +184,7 @@ public class RestcateCont {
   @RequestMapping(value="/restcate/read_delete.do", method=RequestMethod.GET)
   public ModelAndView read_delete(HttpSession session, int restcateno) {
     ModelAndView mav = new ModelAndView();
-    
+     
     if (this.adminProc.isAdmin(session) == true) {
       mav.setViewName("/restcate/read_delete"); // /WEB-INF/views/cate/read_delete.jsp
       
