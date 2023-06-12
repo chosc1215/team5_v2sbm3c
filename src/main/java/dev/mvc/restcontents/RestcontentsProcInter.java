@@ -24,5 +24,11 @@ public interface RestcontentsProcInter {
    */
   public ArrayList<RestcontentsVO> list_by_restcateno(int restcateno);
 
+  /**
+   * 조회
+   * @param restcontentsno
+   * @return
+   */
+  public RestcontentsVO read(int restcontentsno);
 
 }

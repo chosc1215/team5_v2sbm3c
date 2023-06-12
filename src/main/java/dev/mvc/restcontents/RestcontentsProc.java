@@ -56,5 +56,14 @@ public class RestcontentsProc implements RestcontentsProcInter {
     }     
     return list;
   }
+  
+  /**
+   * 조회
+   */
+  @Override
+  public RestcontentsVO read(int restcontentsno) {
+    RestcontentsVO restcontentsVO = this.restcontentsDAO.read(restcontentsno);
+    return restcontentsVO;
+  }
 
 }
