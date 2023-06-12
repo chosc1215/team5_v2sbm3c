@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.notescate.NotescateProcInter;
+import dev.mvc.notescate.NotescateVO;
 import dev.mvc.restcate.RestcateProcInter;
 import dev.mvc.restcate.RestcateVO;
 
@@ -47,6 +48,8 @@ public class HomeCont {
 
     ArrayList<RestcateVO> list = this.restcateProc.list_all_y();
     mav.addObject("list", list);
+    
+    
     
     
     
