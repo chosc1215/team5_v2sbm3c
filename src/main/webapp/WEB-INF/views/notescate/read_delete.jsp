@@ -2,12 +2,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="dev.mvc.restcate.RestcateVO" %>
+<%@ page import="dev.mvc.notescate.NotescateVO" %>
 
 <%
 // 목록시 출력시 for문에서 restacateVO를 사용하고 있음으로 여기서는 restacateVO_read 라고 다르게 해야함.
 // 삭제할 카테고리 정보를 읽어옴
-RestcateVO restacateVO_read = (RestcateVO)request.getAttribute("restacateVO");
+NotescateVO restacateVO_read = (NotescateVO)request.getAttribute("restacateVO");
 %>
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -31,7 +31,7 @@ RestcateVO restacateVO_read = (RestcateVO)request.getAttribute("restacateVO");
 <DIV class='content_body'>
   <DIV id='panel_delete' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
     <FORM name='frm_delete' id='frm_delete' method='POST' action='./delete.do'>
-      <input type="hidden" name="restacateno" value="<%=restacateVO_read.getRestcateno() %>"> <%-- 삭제할 카테고리 번호 --%>
+      <input type="hidden" name="restacateno" value="<%=restacateVO_read.getNotescateno() %>"> <%-- 삭제할 카테고리 번호 --%>
 
       <c:choose>
         <c:when test="${count_by_restacateno >= 1 }"> <%-- 자식 레코드가 있는 상황 --%>
@@ -79,10 +79,10 @@ RestcateVO restacateVO_read = (RestcateVO)request.getAttribute("restacateVO");
     
     <tbody>
     <%
-    ArrayList<RestcateVO> list = (ArrayList<RestcateVO>)request.getAttribute("list");
+    ArrayList<NotescateVO> list = (ArrayList<NotescateVO>)request.getAttribute("list");
     
     for (int i=0; i < list.size(); i++) {
-      RestcateVO restacateVO = list.get(i);
+      NotescateVO restacateVO = list.get(i);
     %>
       <TR>
         <TD class='td_bs'><%= restacateVO.getSeqno() %></TD>
@@ -90,8 +90,8 @@ RestcateVO restacateVO_read = (RestcateVO)request.getAttribute("restacateVO");
         <TD class='td_bs'><%=restacateVO.getCnt() %></TD>
         <TD class='td_bs'><%=restacateVO.getRdate().substring(0, 10) %></TD>
         <TD>
-          <A href="./read_update.do?restacateno=<%=restacateVO.getRestcateno() %>" title="수정"><IMG src="/restacate/images/update.png" class="icon"></A>
-          <A href="./read_delete.do?restacateno=<%=restacateVO.getRestcateno() %>" title="삭제"><IMG src="/restacate/images/delete.png" class="icon"></A>
+          <A href="./read_update.do?restacateno=<%=restacateVO.getNotescateno() %>" title="수정"><IMG src="/restacate/images/update.png" class="icon"></A>
+          <A href="./read_delete.do?restacateno=<%=restacateVO.getNotescateno() %>" title="삭제"><IMG src="/restacate/images/delete.png" class="icon"></A>
         </TD>
       </TR>
     <%  
