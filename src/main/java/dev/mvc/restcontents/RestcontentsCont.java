@@ -193,6 +193,34 @@ public class RestcontentsCont {
     
     return mav;
   }  
+  
+  @RequestMapping(value = "/restcontents/read.do", method = RequestMethod.GET)
+  public ModelAndView read(int restcontentsno) {
+    ModelAndView mav = new ModelAndView();
+    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+    
+    String title = restcontentsVO.getTitle();
+    String content = restcontentsVO.getContent();
+    
+    title = Tool.convertChar(title); // 특수 문자 처리
+    content = Tool.convertChar(content);
+    
+    restcontentsVO.setTitle(title);
+    restcontentsVO.setContent(content);
+    
+    long size1 = restcontentsVO.getSize1();
+    restcontentsVO.setSize1_label(Tool.unit(size1));
+    
+    mav.addObject("restcontentsVO", restcontentsVO);
+    
+    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+    mav.addObject("restcateVO", restcateVO);
+    
+    mav.setViewName("/restcontents/read"); // /WEB-INF/views/restcontents/read.jsp
+    
+    return mav;
+    
+  }
 
   
   
