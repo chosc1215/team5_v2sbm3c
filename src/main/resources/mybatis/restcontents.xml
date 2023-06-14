@@ -36,4 +36,22 @@
     WHERE restcontentsno = #{restcontentsno} 
   </select>
   
+  <!-- Map 등록, 수정, 삭제 -->
+  <update id="map" parameterType="dev.mvc.restcontents.RestcontentsVO">
+    UPDATE restcontents 
+    SET map=#{map} 
+    WHERE restcontentsno=#{restcontentsno}
+  </update>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
 </mapper>

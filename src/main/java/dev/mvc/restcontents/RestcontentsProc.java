@@ -66,4 +66,10 @@ public class RestcontentsProc implements RestcontentsProcInter {
     return restcontentsVO;
   }
 
+  @Override
+  public int map(RestcontentsVO restcontentsVO) {
+    int cnt = this.restcontentsDAO.map(restcontentsVO);
+    return cnt;
+  }
+
 }
