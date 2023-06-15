@@ -19,51 +19,33 @@
 <c:import url="/menu/top.do" />
  
 <DIV class='title_line'>
-  전체 글 목록
+  ${notescateVO.name }
 </DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
-    <A href="javascript:location.reload();">새로고침</A>
-
-
-  </ASIDE>
   
-  <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='get' action='./list_by_notescateno.do'>
-      <input type='hidden' name='cateno' value='${notescateVO.notescateno }'>  <%-- 게시판의 구분 --%>
-      
-      <c:choose>
-        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='word' id='word' value='${param.word }' class='input_word'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='word' id='word' value='' class='input_word'>
-        </c:otherwise>
-      </c:choose>
-      <button type='submit' class='btn btn-info btn-sm'>검색</button>
-      <c:if test="${param.word.length() > 0 }">
-        <button type='button' class='btn btn-info btn-sm' 
-                    onclick="location.href='./list_by_notescateno.do?notescateno=${notescateVO.notescateno}&word='">검색 취소</button>  
-      </c:if>    
-    </form>
-  </DIV>
+    <%-- 관리자로 로그인해야 메뉴가 출력됨 --%>
+    <c:if test="${sessionScope.admin_id != null }">
+      <%--
+      http://localhost:9091/restcontents/create.do?notescateno=1
+      http://localhost:9091/restcontents/create.do?notescateno=2
+      http://localhost:9091/restcontents/create.do?notescateno=3
+      --%>
+      <A href="./create.do?notescateno=${notescateVO.notescateno }">등록</A>
+      <span class='menu_divide' >│</span>
+    </c:if>
+    
+    <A href="javascript:location.reload();">새로고침</A>
+  </ASIDE> 
 
   <DIV class='menu_line'></DIV>
   
   <table class="table table-striped" style='width: 100%;'>
     <colgroup>
-      <c:choose>
-        <c:when test="${sessionScope.admin_id != null }">
-          <col style="width: 10%;"></col>
-          <col style="width: 80%;"></col>
-          <col style="width: 10%;"></col>        
-        </c:when>
-        <c:otherwise>
-          <col style="width: 10%;"></col>
-          <col style="width: 90%;"></col>
-        </c:otherwise>
-      </c:choose>
+      <col style="width: 10%;"></col>
+      <col style="width: 80%;"></col>
+      <col style="width: 10%;"></col>
     </colgroup>
 
 <!--     <thead>
@@ -83,7 +65,7 @@
         <c:set var="restcontentsno" value="${restcontentsVO.restcontentsno }" />
         <c:set var="thumb1" value="${restcontentsVO.thumb1 }" />
         
-        <tr style="height: 112px;" onclick="location.href='./read.do?restcontentsno=${restcontentsno }&now_page=${param.now_page == null ? 1 : param.now_page}'" class='hover'>
+         <tr style="height: 112px;" onclick="http://localhost:9093/notescate/list_by_notescateno.do?cateno=${notescateno }'" class='hover'> 
           <td style='vertical-align: middle; text-align: center; '>
             <c:choose>
               <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> <%-- 이미지인지 검사 --%>
@@ -105,21 +87,11 @@
                   ${content}
               </c:when>
             </c:choose>
+          </td> 
+          <td style='vertical-align: middle; text-align: center;'>
+            <A href="/restcontents/map.do?notescateno=${notescateno }&restcontentsno=${restcontentsno}" title="지도"><IMG src="/restcontents/images/map.png" class="icon"></A>
+            <A href="/restcontents/youtube.do?notescateno=${notescateno }&restcontentsno=${restcontentsno}" title="Youtube"><IMG src="/restcontents/images/youtube.png" class="icon"></A>
           </td>
-          
-          <c:choose>
-            <c:when test="${sessionScope.admin_id != null }"> 
-              <td style='vertical-align: middle; text-align: center;'>
-                <A href="/restcontents/map.do?notescateno=${notescateno }&restcontentsno=${restcontentsno}&now_page=${param.now_page == null ? 1 : param.now_page}" title="지도"><IMG src="/restcontents/images/map.png" class="icon"></A>
-                <A href="/restcontents/youtube.do?notescateno=${notescateno }&restcontentsno=${restcontentsno}&now_page=${param.now_page == null ? 1 : param.now_page}" title="Youtube"><IMG src="/restcontents/images/youtube.png" class="icon"></A>
-                <A href="/restcontents/delete.do?notescateno=${notescateno }&restcontentsno=${restcontentsno}&now_page=${param.now_page == null ? 1 : param.now_page}" title="삭제"><IMG src="/restcontents/images/delete.png" class="icon"></A>
-              </td>
-            </c:when>
-            <c:otherwise>
-            
-            </c:otherwise>
-          </c:choose>
-                    
         </tr>
         
       </c:forEach>

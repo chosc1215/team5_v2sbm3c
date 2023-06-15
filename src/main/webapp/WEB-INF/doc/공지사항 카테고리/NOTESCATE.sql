@@ -10,16 +10,28 @@ CREATE TABLE NOTESCATE(
 		RDATE                         		DATE		 NULL ,
 		UDATE                         		DATE		 NULL ,
 		SEQNO                         		NUMERIC(5)		 NOT NULL,
-		VISIBLE                       		CHAR(1)		 NOT NULL
+        visible                   CHAR(1)    DEFAULT 'N'     NOT NULL
+		
 );
 
+drop table notescate;
 COMMENT ON TABLE NOTESCATE is '공지사항 카테고리';
 COMMENT ON COLUMN NOTESCATE.NOTESCATENO is '공지사항 카테고리 번호';
 COMMENT ON COLUMN NOTESCATE.NAME is '카테고리 이름';
 COMMENT ON COLUMN NOTESCATE.CNT is '관련자료수';
 COMMENT ON COLUMN NOTESCATE.RDATE is '등록일';
-COMMENT ON COLUMN NOTESCATE.UDATE is '수정일';
 COMMENT ON COLUMN NOTESCATE.SEQNO is '출력 순서';
-COMMENT ON COLUMN NOTESCATE.VISIBLE is '출력 모드';
+COMMENT ON COLUMN NOTESCATE.visible is '출력 모드';
 
+CREATE SEQUENCE notescate_seq
+  START WITH 1         -- 시작 번호
+  INCREMENT BY 1       -- 증가값
+  MAXVALUE 9999999999  -- 최대값: 9999999999 --> NUMBER(10) 대응
+  CACHE 2              -- 2번은 메모리에서만 계산
+  NOCYCLE;             -- 다시 1부터 생성되는 것을 방지
+  
+DROP SEQUENCE notescate_seq;
+INSERT INTO notescate(notescateno, name, cnt, rdate, seqno) VALUES(notescate_seq.nextval, '공지사항', 0, sysdate, 0);
+ 
+ select * from notescate;
 

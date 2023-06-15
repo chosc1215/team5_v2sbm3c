@@ -19,19 +19,33 @@
 <c:import url="/menu/top.do" />
  
 <DIV class='title_line'>
-  전체 글 목록
+  ${notescateVO.name }  
+  <c:if test="${param.word.length() > 0 }">
+    > 「${param.word }」 검색 ${list.size() } 건
+  </c:if> 
+      
 </DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
+  
+    <%-- 관리자로 로그인해야 메뉴가 출력됨 --%>
+    <c:if test="${sessionScope.admin_id != null }">
+      <%--
+      http://localhost:9091/notescate/create.do?notescateno=1
+      http://localhost:9091/notescate/create.do?notescateno=2
+      http://localhost:9091/notescate/create.do?notescateno=3
+      --%>
+      <A href="./create.do?notescateno=${notescateVO.notescateno }">등록</A>
+      <span class='menu_divide' >│</span>
+    </c:if>
+    
     <A href="javascript:location.reload();">새로고침</A>
-
-
   </ASIDE>
   
   <DIV style="text-align: right; clear: both;">  
     <form name='frm' id='frm' method='get' action='./list_by_notescateno.do'>
-      <input type='hidden' name='cateno' value='${notescateVO.notescateno }'>  <%-- 게시판의 구분 --%>
+      <input type='hidden' name='notescateno' value='${notescateVO.notescateno }'>  <%-- 게시판의 구분 --%>
       
       <c:choose>
         <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
@@ -53,17 +67,9 @@
   
   <table class="table table-striped" style='width: 100%;'>
     <colgroup>
-      <c:choose>
-        <c:when test="${sessionScope.admin_id != null }">
-          <col style="width: 10%;"></col>
-          <col style="width: 80%;"></col>
-          <col style="width: 10%;"></col>        
-        </c:when>
-        <c:otherwise>
-          <col style="width: 10%;"></col>
-          <col style="width: 90%;"></col>
-        </c:otherwise>
-      </c:choose>
+      <col style="width: 10%;"></col>
+      <col style="width: 80%;"></col>
+      <col style="width: 10%;"></col>
     </colgroup>
 
 <!--     <thead>
@@ -76,22 +82,22 @@
     </thead> -->
     
     <tbody>
-      <c:forEach var="restcontentsVO" items="${list}">
-        <c:set var="title" value="${restcontentsVO.title }" />
-        <c:set var="content" value="${restcontentsVO.content }" />
-        <c:set var="notescateno" value="${restcontentsVO.notescateno }" />
-        <c:set var="restcontentsno" value="${restcontentsVO.restcontentsno }" />
-        <c:set var="thumb1" value="${restcontentsVO.thumb1 }" />
+      <c:forEach var="notescateVO" items="${list}">
+        <c:set var="title" value="${notescateVO.title }" />
+        <c:set var="content" value="${notescateVO.content }" />
+        <c:set var="notescateno" value="${notescateVO.notescateno }" />
+        <c:set var="notescateno" value="${notescateVO.notescateno }" />
+        <c:set var="thumb1" value="${notescateVO.thumb1 }" />
         
-        <tr style="height: 112px;" onclick="location.href='./read.do?restcontentsno=${restcontentsno }&now_page=${param.now_page == null ? 1 : param.now_page}'" class='hover'>
+         <tr style="height: 112px;" onclick="location.href='./read.do?notescateno=${notescateno }&word=${param.word }'" class='hover'>
           <td style='vertical-align: middle; text-align: center; '>
             <c:choose>
               <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> <%-- 이미지인지 검사 --%>
-                <%-- registry.addResourceHandler("/restcontents/storage/**").addResourceLocations("file:///" +  Restcontents.getUploadDir()); --%>
-                <img src="/restcontents/storage/${thumb1 }" style="width: 120px; height: 90px;">
+                <%-- registry.addResourceHandler("/notescate/storage/**").addResourceLocations("file:///" +  Notescate.getUploadDir()); --%>
+                <img src="/notescate/storage/${thumb1 }" style="width: 120px; height: 90px;">
               </c:when>
-              <c:otherwise> <!-- 이미지가 없는 경우 기본 이미지 출력: /static/restcontents/images/none1.png -->
-                <IMG src="/restcontents/images/none1.png" style="width: 120px; height: 90px;">
+              <c:otherwise> <!-- 이미지가 없는 경우 기본 이미지 출력: /static/notescate/images/none1.png -->
+                <IMG src="/notescate/images/none1.png" style="width: 120px; height: 90px;">
               </c:otherwise>
             </c:choose>
           </td>  
@@ -105,21 +111,11 @@
                   ${content}
               </c:when>
             </c:choose>
+          </td> 
+          <td style='vertical-align: middle; text-align: center;'>
+            <A href="/notescate/map.do?notescateno=${notescateno }&notescateno=${notescateno}" title="지도"><IMG src="/notescate/images/map.png" class="icon"></A>
+            <A href="/notescate/youtube.do?notescateno=${notescateno }&notescateno=${notescateno}" title="Youtube"><IMG src="/notescate/images/youtube.png" class="icon"></A>
           </td>
-          
-          <c:choose>
-            <c:when test="${sessionScope.admin_id != null }"> 
-              <td style='vertical-align: middle; text-align: center;'>
-                <A href="/restcontents/map.do?notescateno=${notescateno }&restcontentsno=${restcontentsno}&now_page=${param.now_page == null ? 1 : param.now_page}" title="지도"><IMG src="/restcontents/images/map.png" class="icon"></A>
-                <A href="/restcontents/youtube.do?notescateno=${notescateno }&restcontentsno=${restcontentsno}&now_page=${param.now_page == null ? 1 : param.now_page}" title="Youtube"><IMG src="/restcontents/images/youtube.png" class="icon"></A>
-                <A href="/restcontents/delete.do?notescateno=${notescateno }&restcontentsno=${restcontentsno}&now_page=${param.now_page == null ? 1 : param.now_page}" title="삭제"><IMG src="/restcontents/images/delete.png" class="icon"></A>
-              </td>
-            </c:when>
-            <c:otherwise>
-            
-            </c:otherwise>
-          </c:choose>
-                    
         </tr>
         
       </c:forEach>
