@@ -30,5 +30,12 @@ public interface RestcontentsProcInter {
    * @return
    */
   public RestcontentsVO read(int restcontentsno);
+  
+  /**
+   * Map
+   * @param restcontentsVO
+   * @return
+   */
+  public int map(RestcontentsVO restcontentsVO);
 
 }

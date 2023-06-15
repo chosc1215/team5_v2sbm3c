@@ -221,6 +221,21 @@ public class RestcontentsCont {
     return mav;
     
   }
+  
+  @RequestMapping(value = "/restcontents/map.do", method = RequestMethod.GET)
+  public ModelAndView map(int restcontentsno) {
+    ModelAndView mav = new ModelAndView();
+    
+    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+    mav.addObject("restcontentsVO", restcontentsVO);
+    
+    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+    mav.addObject("restcateVO", restcateVO);
+    
+    mav.setViewName("/restcontents/map");
+    return mav;
+        
+  }
 
   
   
