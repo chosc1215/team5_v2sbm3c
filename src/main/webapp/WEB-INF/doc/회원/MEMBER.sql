@@ -1,6 +1,7 @@
 /**********************************/
 /* Table Name: 회원 */
 /**********************************/
+DROP TABLE member CASCADE CONSTRAINTS;
 DROP TABLE member;
 CREATE TABLE MEMBER(
 		MEMBERNO                      		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
