@@ -75,7 +75,7 @@
     
     </thead> -->
     
-    <tbody>
+    <%-- <tbody>
       <c:forEach var="restcontentsVO" items="${list}">
         <c:set var="title" value="${restcontentsVO.title }" />
         <c:set var="content" value="${restcontentsVO.content }" />
@@ -86,8 +86,8 @@
         <tr style="height: 112px;" onclick="location.href='./read.do?restcontentsno=${restcontentsno }&now_page=${param.now_page == null ? 1 : param.now_page}'" class='hover'>
           <td style='vertical-align: middle; text-align: center; '>
             <c:choose>
-              <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> <%-- 이미지인지 검사 --%>
-                <%-- registry.addResourceHandler("/restcontents/storage/**").addResourceLocations("file:///" +  Restcontents.getUploadDir()); --%>
+              <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> 이미지인지 검사
+                registry.addResourceHandler("/restcontents/storage/**").addResourceLocations("file:///" +  Restcontents.getUploadDir());
                 <img src="/restcontents/storage/${thumb1 }" style="width: 120px; height: 90px;">
               </c:when>
               <c:otherwise> <!-- 이미지가 없는 경우 기본 이미지 출력: /static/restcontents/images/none1.png -->
@@ -98,7 +98,7 @@
           <td style='vertical-align: middle;'>
             <div style='font-weight: bold;'>${title }</div>
             <c:choose> 
-              <c:when test="${content.length() > 160 }"> <%-- 160자 이상이면 160자만 출력 --%>
+              <c:when test="${content.length() > 160 }"> 160자 이상이면 160자만 출력
                   ${content.substring(0, 160)}.....
               </c:when>
               <c:when test="${content.length() <= 160 }">
@@ -126,7 +126,7 @@
 
     </tbody>
   </table>
-</DIV>
+</DIV> --%>
 
  
 <jsp:include page="../menu/bottom.jsp" />
