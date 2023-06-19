@@ -72,4 +72,10 @@ public class RestcontentsProc implements RestcontentsProcInter {
     return cnt;
   }
 
+  @Override
+  public int youtube(RestcontentsVO restcontentsVO) {
+    int cnt = this.restcontentsDAO.youtube(restcontentsVO);
+    return cnt;
+  }
+
 }

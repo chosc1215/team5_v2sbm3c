@@ -38,5 +38,12 @@ public interface RestcontentsDAOInter {
    */
   public int map(RestcontentsVO restcontentsVO);
   
+  /**
+   * 유튜브
+   * @param restcontentsVO
+   * @return
+   */
+  public int youtube(RestcontentsVO restcontentsVO);
+  
   
 }

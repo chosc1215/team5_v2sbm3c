@@ -193,7 +193,8 @@ public class RestcontentsCont {
     
     return mav;
   }  
-  
+  /**
+   * 조회 */
   @RequestMapping(value = "/restcontents/read.do", method = RequestMethod.GET)
   public ModelAndView read(int restcontentsno) {
     ModelAndView mav = new ModelAndView();
@@ -221,7 +222,10 @@ public class RestcontentsCont {
     return mav;
     
   }
-  
+  /**
+   * 맵 등록/수정/삭제 폼
+   * @return
+   */
   @RequestMapping(value = "/restcontents/map.do", method = RequestMethod.GET)
   public ModelAndView map(int restcontentsno) {
     ModelAndView mav = new ModelAndView();
@@ -235,6 +239,65 @@ public class RestcontentsCont {
     mav.setViewName("/restcontents/map");
     return mav;
         
+  }
+  
+  /**
+   * 맵 등록/수정/삭제 처리
+   * @return
+   */
+  @RequestMapping(value="/restcontents/map.do", method = RequestMethod.POST)
+  public ModelAndView map_update(RestcontentsVO restcontentsVO) {
+    ModelAndView mav = new ModelAndView();
+    
+    this.restcontentsProc.map(restcontentsVO);
+    
+    mav.setViewName("redirect:/restcontents/read.do?restcontentsno=" + restcontentsVO.getRestcontentsno());
+    
+    return mav;
+  }
+  
+  /**
+   * 유튜브 등록/수정/삭제 폼
+   * @return
+   */
+  @RequestMapping(value = "/restcontents/youtube.do", method = RequestMethod.GET)
+  public ModelAndView youtube(int restcontentsno) {
+    ModelAndView mav = new ModelAndView();
+    
+    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+    mav.addObject("restcontentsVO", restcontentsVO);
+    
+    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+    mav.addObject("restcateVO", restcateVO);
+    
+    mav.setViewName("/restcontents/youtube");
+    return mav;
+        
+  }
+  
+  /**
+   * 유튜브 등록/수정/삭제 처리
+   */
+  @RequestMapping(value="/restcontents/youtube.do", method = RequestMethod.POST)
+  public ModelAndView youtube_update(RestcontentsVO restcontentsVO) {
+    ModelAndView mav = new ModelAndView();
+    
+    if (restcontentsVO.getYoutube().trim().length() > 0) { // 삭제 중인지 확인, 삭제가 아니면 youtube 크기 변경
+      // youtube 영상의 크기를 width 기준 640 px로 변경 
+      String youtube = Tool.youtubeResize(restcontentsVO.getYoutube());
+      restcontentsVO.setYoutube(youtube);
+    }
+    
+    this.restcontentsProc.youtube(restcontentsVO);
+
+    // youtube 크기 조절
+    // <iframe width="1019" height="573" src="https://www.youtube.com/embed/Aubh5KOpz-4" title="교보문고에서 가장 잘나가는 일본 추리소설 베스트셀러 10위부터 1위까지 소개해드려요📚" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    
+    
+    mav.setViewName("redirect:/restcontents/read.do?restcontentsno=" + restcontentsVO.getRestcontentsno()); 
+    // /webapp/WEB-INF/views/contents/read.jsp
+    
+    return mav;
   }
 
   

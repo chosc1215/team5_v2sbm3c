@@ -33,5 +33,9 @@ CREATE SEQUENCE notescate_seq
 DROP SEQUENCE notescate_seq;
 INSERT INTO notescate(notescateno, name, cnt, rdate, seqno) VALUES(notescate_seq.nextval, '공지사항', 0, sysdate, 0);
  
- select * from notescate;
+select * from notescate;
+
+ 
+delete from notescate
+where notescateno = 3;
 
