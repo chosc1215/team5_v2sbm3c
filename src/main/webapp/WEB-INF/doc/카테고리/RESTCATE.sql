@@ -40,13 +40,6 @@ INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.ne
 INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.nextval, '속초', 0, sysdate, 0);
 commit;
 
-----추천 시스템
-INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.nextval, '강릉', 0, sysdate, 0);
-INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.nextval, '양양', 0, sysdate, 0);
-INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.nextval, '동해', 0, sysdate, 0);
-INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.nextval, '춘천', 0, sysdate, 0);
-INSERT INTO restcate(restcateno, name, cnt, rdate, seqno) VALUES(restcate_seq.nextval, '속초', 0, sysdate, 0);
-commit;
 
 select*from restcate; 
 -- SELECT LIST

@@ -48,16 +48,16 @@
       <col style="width: 10%;"></col>
     </colgroup>
 
-<!--     <thead>
+     <thead>
       <tr>
         <th style='text-align: center;'>파일</th>
         <th style='text-align: center;'>제목</th>
         <th style='text-align: center;'>기타</th>
       </tr>
     
-    </thead> -->
+    </thead> 
     
-    <%-- <tbody>
+     <tbody>
       <c:forEach var="restcontentsVO" items="${list}">
         <c:set var="title" value="${restcontentsVO.title }" />
         <c:set var="content" value="${restcontentsVO.content }" />
@@ -65,7 +65,8 @@
         <c:set var="restcontentsno" value="${restcontentsVO.restcontentsno }" />
         <c:set var="thumb1" value="${restcontentsVO.thumb1 }" />
         
-         <tr style="height: 112px;" onclick="http://localhost:9093/notescate/list_by_notescateno.do?cateno=${notescateno }'" class='hover'> 
+         <tr style="height: 112px;" onclick="http://localhost:9093/notescate/list_by_notescateno.do?notescateno=${notescateno }'" class='hover'>
+         <%-- <tr style="height: 112px;" onclick="location.href='./read.do?restcontentsno=${restcontentsno }'" class='hover'>  --%>
           <td style='vertical-align: middle; text-align: center; '>
             <c:choose>
               <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}"> 이미지인지 검사
