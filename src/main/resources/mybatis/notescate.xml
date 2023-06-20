@@ -29,7 +29,7 @@
     UPDATE notescate 
     SET name=#{name}, seqno=#{seqno} 
     WHERE notescateno=#{notescateno}  
-  </update>
+  </update> 
   
   <!-- 삭제, 삭제된 레코드 갯수를 리턴 -->
   <delete id="delete" parameterType="int">
@@ -74,6 +74,8 @@
     WHERE visible='Y'
     ORDER BY notescateno ASC
   </select>
+  
+  
   
 
 
