@@ -93,7 +93,13 @@
           2 page: WHERE r >= 11 AND r <= 20;
           3 page: WHERE r >= 21 AND r <= 30; -->
   </select>
-  
+
+  <!-- 글 수정 -->
+  <update id="update_text" parameterType="dev.mvc.restcontents.RestcontentsVO">
+    UPDATE restcontents
+    SET title=#{title}, content=#{content},  word=#{word} 
+    WHERE restcontentsno = #{restcontentsno}
+  </update>  
   
   
   

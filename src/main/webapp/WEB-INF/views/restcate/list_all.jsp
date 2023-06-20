@@ -9,7 +9,7 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
+<title>동서울 터미널과 함께하는 맛집리스트</title>
 <link rel="shortcut icon" href="/images/star.png" /> <%-- /static 기준 --%>
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
@@ -67,7 +67,7 @@
     %>
       <TR>
         <TD class='td_bs'><%= restcateVO.getSeqno() %></TD>
-        <TD><%=restcateVO.getName() %></TD>
+        <TD><a href="/restcontents/list_by_restcateno.do?restcateno=<%=restcateVO.getRestcateno()%>&now_page=1"><%=restcateVO.getName() %></a></TD>
         <TD class='td_bs'><%=restcateVO.getCnt() %></TD>
         <TD class='td_bs'><%=restcateVO.getRdate().substring(0, 10) %></TD>
         <TD>

@@ -172,27 +172,27 @@ public class RestcontentsCont {
     return mav;
   }
 
-  /**
-   * 특정 카테고리의 등록된 글목록
-   * http://localhost:9091/restcontents/list_by_restcateno.do?restcateno=1
-   * http://localhost:9091/restcontents/list_by_restcateno.do?restcateno=2
-   * http://localhost:9091/restcontents/list_by_restcateno.do?restcateno=3
-   * @return
-   */
-  @RequestMapping(value="/restcontents/list_by_restcateno.do", method=RequestMethod.GET)
-  public ModelAndView list_by_restcateno(int restcateno) {
-    ModelAndView mav = new ModelAndView();
-    
-    RestcateVO restcateVO = this.restcateProc.read(restcateno);
-    mav.addObject("restcateVO", restcateVO);
-        
-    ArrayList<RestcontentsVO> list = this.restcontentsProc.list_by_restcateno(restcateno);
-    mav.addObject("list", list);
-    
-    mav.setViewName("/restcontents/list_by_restcateno"); // /webapp/WEB-INF/views/contents/list_by_cateno.jsp
-    
-    return mav;
-  }  
+//  /**
+//   * 특정 카테고리의 등록된 글목록
+//   * http://localhost:9091/restcontents/list_by_restcateno.do?restcateno=1
+//   * http://localhost:9091/restcontents/list_by_restcateno.do?restcateno=2
+//   * http://localhost:9091/restcontents/list_by_restcateno.do?restcateno=3
+//   * @return
+//   */
+//  @RequestMapping(value="/restcontents/list_by_restcateno.do", method=RequestMethod.GET)
+//  public ModelAndView list_by_restcateno(int restcateno) {
+//    ModelAndView mav = new ModelAndView();
+//    
+//    RestcateVO restcateVO = this.restcateProc.read(restcateno);
+//    mav.addObject("restcateVO", restcateVO);
+//        
+//    ArrayList<RestcontentsVO> list = this.restcontentsProc.list_by_restcateno(restcateno);
+//    mav.addObject("list", list);
+//    
+//    mav.setViewName("/restcontents/list_by_restcateno"); // /webapp/WEB-INF/views/contents/list_by_cateno.jsp
+//    
+//    return mav;
+//  }  
   /**
    * 조회 */
   @RequestMapping(value = "/restcontents/read.do", method = RequestMethod.GET)
@@ -299,8 +299,152 @@ public class RestcontentsCont {
     
     return mav;
   }
-
   
+  /**
+   * 목록 + 검색 + 페이징 지원
+   * http://localhost:9093/restcontents/list_by_restcateno.do?restcateno=1&word=스위스&now_page=1
+   * 
+   * @param restcateno
+   * @param word
+   * @param now_page
+   * @return
+   */
+  @RequestMapping(value = "/restcontents/list_by_restcateno.do", method = RequestMethod.GET)
+  public ModelAndView list_by_restcateno_search_paging(RestcontentsVO restcontentsVO) {
+    ModelAndView mav = new ModelAndView();
+    
+    // 검색된 전체 글 수  
+    int search_count = this.restcontentsProc.search_count(restcontentsVO);
+    mav.addObject("search_count", search_count);
+    
+    // 검색 목록: 검색된 레코드를 페이지 단위로 분할하여 가져옴 
+    ArrayList<RestcontentsVO> list = restcontentsProc.list_by_restcateno_search_paging(restcontentsVO);
+    mav.addObject("list", list);
+    
+    RestcateVO restcateVO = restcateProc.read(restcontentsVO.getRestcateno());
+    mav.addObject("restcateVO", restcateVO);
+    
+    /*
+     * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 현재 페이지: 11 / 22 [이전] 11 12 13 14 15 16 17
+     * 18 19 20 [다음]
+     * @param cateno 카테고리번호
+     * @param now_page 현재 페이지
+     * @param word 검색어
+     * @return 페이징용으로 생성된 HTML/CSS tag 문자열
+     */    
+    String paging = restcontentsProc.pagingBox(restcontentsVO.getRestcateno(), restcontentsVO.getNow_page(), restcontentsVO.getWord(), "list_by_restcateno.do");
+    mav.addObject("paging", paging);
+    
+    mav.setViewName("/restcontents/list_by_restcateno_search_paging");  // /restcontents/list_by_restcateno_search_paging.jsp
+    
+    return mav;
+  }
+  
+  /**
+   * 목록 + 검색 + 페이징 + Grid(갤러리) 지원
+   * http://localhost:9093/restcontents/list_by_restcateno_grid.do?restcateno=1&word=스위스&now_page=1
+   * 
+   * @param restcateno
+   * @param word
+   * @param now_page
+   * @return
+   */
+  @RequestMapping(value = "/restcontents/list_by_restcateno_grid.do", method = RequestMethod.GET)
+  public ModelAndView list_by_restcateno_search_paging_grid(RestcontentsVO restcontentsVO) {
+    ModelAndView mav = new ModelAndView();
+
+    // 검색된 전체 글 수
+    int search_count = this.restcontentsProc.search_count(restcontentsVO);
+    mav.addObject("search_count", search_count);
+    
+    // 검색 목록
+    ArrayList<RestcontentsVO> list = restcontentsProc.list_by_restcateno_search_paging(restcontentsVO);
+    mav.addObject("list", list);
+
+    RestcateVO restcateVO = restcateProc.read(restcontentsVO.getRestcateno());
+    mav.addObject("restcateVO", restcateVO);
+
+    /*
+     * SPAN태그를 이용한 박스 모델의 지원, 1 페이지부터 시작 현재 페이지: 11 / 22 [이전] 11 12 13 14 15 16 17
+     * 18 19 20 [다음]
+     * @param restcateno 카테고리번호
+     * @param now_page 현재 페이지
+     * @param word 검색어
+     * @return 페이징용으로 생성된 HTML/CSS tag 문자열
+     */
+    String paging = restcontentsProc.pagingBox(restcontentsVO.getRestcateno(), restcontentsVO.getNow_page(), restcontentsVO.getWord(), "list_by_restcateno_grid.do");
+    mav.addObject("paging", paging);
+
+    // mav.addObject("now_page", now_page);
+    
+    mav.setViewName("/restcontents/list_by_restcateno_search_paging_grid");  // /restcontents/list_by_restcateno_search_paging_grid.jsp
+
+    return mav;
+  }
+  
+//  /**
+//   * 수정 폼
+//   * http://localhost:9093/restcontents/update_text.do?restcontentsno=1
+//   * 
+//   * @return
+//   */
+//  @RequestMapping(value = "/restcontents/update_text.do", method = RequestMethod.GET)
+//  public ModelAndView update_text(int restcontentsno) {
+//    ModelAndView mav = new ModelAndView();
+//    
+//    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+//    mav.addObject("restcontentsVO", restcontentsVO);
+//    
+//    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+//    mav.addObject("restcateVO", restcateVO);
+//    
+//    mav.setViewName("/restcontents/update_text"); // /WEB-INF/views/contents/update_text.jsp
+//    // String content = "장소:\n인원:\n준비물:\n비용:\n기타:\n";
+//    // mav.addObject("content", content);
+//
+//    return mav; // forward
+//  }
+//  
+//  /**
+//   * 수정 처리
+//   * http://localhost:9091/contents/update_text.do?contentsno=1
+//   * 
+//   * @return
+//   */
+//  @RequestMapping(value = "/restcontents/update_text.do", method = RequestMethod.POST)
+//  public ModelAndView update_text(HttpSession session, RestcontentsVO restcontentsVO) {
+//    ModelAndView mav = new ModelAndView();
+//    
+//    // System.out.println("-> word: " + contentsVO.getWord());
+//    
+//    if (this.adminProc.isAdmin(session)) { // 관리자 로그인
+//      this.restcontentsProc.update_text(restcontentsVO);  
+//      
+//      mav.addObject("contentsno", restcontentsVO.getRestcontentsno());
+//      mav.addObject("cateno", restcontentsVO.getRestcateno());
+//      mav.setViewName("redirect:/restcontents/read.do");
+//    } else { // 정상적인 로그인이 아닌 경우
+//      if (this.restcontentsProc.password_check(restcontentsVO) == 1) {
+//        this.restcontentsProc.update_text(restcontentsVO);  
+//         
+//        // mav 객체 이용
+//        mav.addObject("restcontentsno", restcontentsVO.getRestcontentsno());
+//        mav.addObject("restcateno", restcontentsVO.getRestcateno());
+//        mav.setViewName("redirect:/restcontents/read.do");
+//      } else {
+//        mav.addObject("url", "/restcontents/passwd_check"); // /WEB-INF/views/contents/passwd_check.jsp
+//        mav.setViewName("redirect:/restcontents/msg.do");  // POST -> GET -> JSP 출력
+//      }    
+//    }
+//    
+//    mav.addObject("now_page", contentsVO.getNow_page()); // POST -> GET: 데이터 분실이 발생함으로 다시하번 데이터 저장 ★
+//    
+//    // URL에 파라미터의 전송
+//    // mav.setViewName("redirect:/contents/read.do?contentsno=" + contentsVO.getContentsno() + "&cateno=" + contentsVO.getCateno());             
+//    
+//    return mav; // forward
+//  }
+//  
   
   
 }

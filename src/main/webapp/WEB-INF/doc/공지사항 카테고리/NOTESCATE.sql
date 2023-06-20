@@ -1,8 +1,7 @@
-
-
 /**********************************/
 /* Table Name: 공지사항 카테고리 */
 /**********************************/
+drop TABLE notescate;
 CREATE TABLE NOTESCATE(
 		NOTESCATENO                   		NUMBER(10)		 NOT NULL		 PRIMARY KEY,
 		NAME                          		VARCHAR2(50)		 NOT NULL,
