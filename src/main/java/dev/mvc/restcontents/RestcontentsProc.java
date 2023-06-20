@@ -232,9 +232,23 @@ public class RestcontentsProc implements RestcontentsProcInter {
   }
 
   @Override
+  public int password_check(RestcontentsVO restcontentsVO) {
+    int cnt = this.restcontentsDAO.password_check(restcontentsVO);
+    return cnt;
+  }  
+  
+  @Override
   public int update_text(RestcontentsVO restcontentsVO) {
     int cnt = this.restcontentsDAO.update_text(restcontentsVO);
     return cnt;
   }
+
+  @Override
+  public int update_file(RestcontentsVO restcontentsVO) {
+    int cnt = this.restcontentsDAO.update_file(restcontentsVO);
+    return cnt;
+  }
+
+
 
 }

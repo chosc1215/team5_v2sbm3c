@@ -93,6 +93,13 @@
           2 page: WHERE r >= 11 AND r <= 20;
           3 page: WHERE r >= 21 AND r <= 30; -->
   </select>
+  
+  <!-- 패스워드 검사 -->
+  <select id="password_check" resultType="int" parameterType="dev.mvc.restcontents.RestcontentsVO">
+    SELECT COUNT(*) as cnt 
+    FROM restcontents
+    WHERE restcontentsno = #{restcontentsno} AND passwd=#{passwd}
+  </select>
 
   <!-- 글 수정 -->
   <update id="update_text" parameterType="dev.mvc.restcontents.RestcontentsVO">
@@ -101,6 +108,12 @@
     WHERE restcontentsno = #{restcontentsno}
   </update>  
   
+  <!-- 파일 수정 -->
+  <update id="update_file" parameterType="dev.mvc.restcontents.RestcontentsVO">
+    UPDATE restcontents
+    SET file1=#{file1}, file1saved=#{file1saved}, thumb1=#{thumb1}, size1=#{size1}
+    WHERE restcontentsno = #{restcontentsno}
+  </update>  
   
   
   

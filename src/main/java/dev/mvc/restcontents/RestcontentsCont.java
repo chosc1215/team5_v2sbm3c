@@ -172,27 +172,6 @@ public class RestcontentsCont {
     return mav;
   }
 
-//  /**
-//   * 특정 카테고리의 등록된 글목록
-//   * http://localhost:9091/restcontents/list_by_restcateno.do?restcateno=1
-//   * http://localhost:9091/restcontents/list_by_restcateno.do?restcateno=2
-//   * http://localhost:9091/restcontents/list_by_restcateno.do?restcateno=3
-//   * @return
-//   */
-//  @RequestMapping(value="/restcontents/list_by_restcateno.do", method=RequestMethod.GET)
-//  public ModelAndView list_by_restcateno(int restcateno) {
-//    ModelAndView mav = new ModelAndView();
-//    
-//    RestcateVO restcateVO = this.restcateProc.read(restcateno);
-//    mav.addObject("restcateVO", restcateVO);
-//        
-//    ArrayList<RestcontentsVO> list = this.restcontentsProc.list_by_restcateno(restcateno);
-//    mav.addObject("list", list);
-//    
-//    mav.setViewName("/restcontents/list_by_restcateno"); // /webapp/WEB-INF/views/contents/list_by_cateno.jsp
-//    
-//    return mav;
-//  }  
   /**
    * 조회 */
   @RequestMapping(value = "/restcontents/read.do", method = RequestMethod.GET)
@@ -216,6 +195,9 @@ public class RestcontentsCont {
     
     RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
     mav.addObject("restcateVO", restcateVO);
+    
+    String mname = this.adminProc.read(restcontentsVO.getAdminno()).getMname();
+    mav.addObject("mname", mname);
     
     mav.setViewName("/restcontents/read"); // /WEB-INF/views/restcontents/read.jsp
     
@@ -382,69 +364,192 @@ public class RestcontentsCont {
     return mav;
   }
   
-//  /**
-//   * 수정 폼
-//   * http://localhost:9093/restcontents/update_text.do?restcontentsno=1
-//   * 
-//   * @return
-//   */
-//  @RequestMapping(value = "/restcontents/update_text.do", method = RequestMethod.GET)
-//  public ModelAndView update_text(int restcontentsno) {
-//    ModelAndView mav = new ModelAndView();
-//    
-//    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
-//    mav.addObject("restcontentsVO", restcontentsVO);
-//    
-//    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
-//    mav.addObject("restcateVO", restcateVO);
-//    
-//    mav.setViewName("/restcontents/update_text"); // /WEB-INF/views/contents/update_text.jsp
-//    // String content = "장소:\n인원:\n준비물:\n비용:\n기타:\n";
-//    // mav.addObject("content", content);
-//
-//    return mav; // forward
-//  }
-//  
-//  /**
-//   * 수정 처리
-//   * http://localhost:9091/contents/update_text.do?contentsno=1
-//   * 
-//   * @return
-//   */
-//  @RequestMapping(value = "/restcontents/update_text.do", method = RequestMethod.POST)
-//  public ModelAndView update_text(HttpSession session, RestcontentsVO restcontentsVO) {
-//    ModelAndView mav = new ModelAndView();
-//    
-//    // System.out.println("-> word: " + contentsVO.getWord());
-//    
-//    if (this.adminProc.isAdmin(session)) { // 관리자 로그인
-//      this.restcontentsProc.update_text(restcontentsVO);  
-//      
-//      mav.addObject("contentsno", restcontentsVO.getRestcontentsno());
-//      mav.addObject("cateno", restcontentsVO.getRestcateno());
-//      mav.setViewName("redirect:/restcontents/read.do");
-//    } else { // 정상적인 로그인이 아닌 경우
-//      if (this.restcontentsProc.password_check(restcontentsVO) == 1) {
-//        this.restcontentsProc.update_text(restcontentsVO);  
-//         
-//        // mav 객체 이용
-//        mav.addObject("restcontentsno", restcontentsVO.getRestcontentsno());
-//        mav.addObject("restcateno", restcontentsVO.getRestcateno());
-//        mav.setViewName("redirect:/restcontents/read.do");
-//      } else {
-//        mav.addObject("url", "/restcontents/passwd_check"); // /WEB-INF/views/contents/passwd_check.jsp
-//        mav.setViewName("redirect:/restcontents/msg.do");  // POST -> GET -> JSP 출력
-//      }    
-//    }
-//    
-//    mav.addObject("now_page", contentsVO.getNow_page()); // POST -> GET: 데이터 분실이 발생함으로 다시하번 데이터 저장 ★
-//    
-//    // URL에 파라미터의 전송
-//    // mav.setViewName("redirect:/contents/read.do?contentsno=" + contentsVO.getContentsno() + "&cateno=" + contentsVO.getCateno());             
-//    
-//    return mav; // forward
-//  }
-//  
+  
+  
+  /**
+   * 수정 폼
+   * http://localhost:9093/restcontents/update_text.do?restcontentsno=1
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/restcontents/update_text.do", method = RequestMethod.GET)
+  public ModelAndView update_text(int restcontentsno) {
+    ModelAndView mav = new ModelAndView();
+    
+    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+    mav.addObject("restcontentsVO", restcontentsVO);
+    
+    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+    mav.addObject("restcateVO", restcateVO);
+    
+    mav.setViewName("/restcontents/update_text"); // /WEB-INF/views/contents/update_text.jsp
+    // String content = "장소:\n인원:\n준비물:\n비용:\n기타:\n";
+    // mav.addObject("content", content);
+
+    return mav; // forward
+  }
+  
+  /**
+   * 수정 처리
+   * http://localhost:9091/contents/update_text.do?contentsno=1
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/restcontents/update_text.do", method = RequestMethod.POST)
+  public ModelAndView update_text(HttpSession session, RestcontentsVO restcontentsVO) {
+    ModelAndView mav = new ModelAndView();
+    
+    // System.out.println("-> word: " + contentsVO.getWord());
+    
+    if (this.adminProc.isAdmin(session)) { // 관리자 로그인
+      this.restcontentsProc.update_text(restcontentsVO);  
+      
+      mav.addObject("restcontentsno", restcontentsVO.getRestcontentsno());
+      mav.addObject("restcateno", restcontentsVO.getRestcateno());
+      mav.setViewName("redirect:/restcontents/read.do");
+    } else { // 정상적인 로그인이 아닌 경우
+      if (this.restcontentsProc.password_check(restcontentsVO) == 1) {
+        this.restcontentsProc.update_text(restcontentsVO);  
+         
+        // mav 객체 이용
+        mav.addObject("restcontentsno", restcontentsVO.getRestcontentsno());
+        mav.addObject("restcateno", restcontentsVO.getRestcateno());
+        mav.setViewName("redirect:/restcontents/read.do");
+      } else {
+        mav.addObject("url", "/restcontents/passwd_check"); // /WEB-INF/views/contents/passwd_check.jsp
+        mav.setViewName("redirect:/restcontents/msg.do");  // POST -> GET -> JSP 출력
+      }    
+    }
+    
+    mav.addObject("now_page", restcontentsVO.getNow_page()); // POST -> GET: 데이터 분실이 발생함으로 다시하번 데이터 저장 ★
+    
+    // URL에 파라미터의 전송
+    // mav.setViewName("redirect:/contents/read.do?contentsno=" + contentsVO.getContentsno() + "&cateno=" + contentsVO.getCateno());             
+    
+    return mav; // forward
+  }
+  
+  /**
+   * restcontentsno, passwd를 GET 방식으로 전달받아 패스워드 일치 검사를하고 결과 1또는 0을 Console에 출력하세요.
+   * http://localhost:9093/restcontents/password_check.do?restcontentsno=2&passwd=123
+   * @return
+   */
+  @RequestMapping(value="/restcontents/password_check.do", method=RequestMethod.GET )
+  public ModelAndView password_check(RestcontentsVO restcontentsVO) {
+    ModelAndView mav = new ModelAndView();
+
+    int cnt = this.restcontentsProc.password_check(restcontentsVO);
+    System.out.println("-> cnt: " + cnt);
+    
+    if (cnt == 0) {
+      mav.setViewName("/restcontents/passwd_check"); // /WEB-INF/views/restcontents/passwd_check.jsp
+    }
+        
+    return mav;
+  }    
+  
+  /**
+   * 파일 수정 폼
+   * http://localhost:9091/contents/update_file.do?contentsno=1
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/restcontents/update_file.do", method = RequestMethod.GET)
+  public ModelAndView update_file(int restcontentsno) {
+    ModelAndView mav = new ModelAndView();
+    
+    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+    mav.addObject("restcontentsVO", restcontentsVO);
+    
+    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+    mav.addObject("restcateVO", restcateVO);
+    
+    mav.setViewName("/restcontents/update_file"); // /WEB-INF/views/contents/update_file.jsp
+
+    return mav; // forward
+  }
+  
+  /**
+   * 파일 수정 처리 http://localhost:9091/contents/update_file.do
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/restcontents/update_file.do", method = RequestMethod.POST)
+  public ModelAndView update_file(HttpSession session, RestcontentsVO restcontentsVO) {
+    ModelAndView mav = new ModelAndView();
+    
+    if (this.adminProc.isAdmin(session)) {
+      // 삭제할 파일 정보를 읽어옴, 기존에 등록된 레코드 저장용
+      RestcontentsVO restcontentsVO_old = restcontentsProc.read(restcontentsVO.getRestcontentsno());
+      
+      // -------------------------------------------------------------------
+      // 파일 삭제 시작
+      // -------------------------------------------------------------------
+      String file1saved = restcontentsVO_old.getFile1saved();  // 실제 저장된 파일명
+      String thumb1 = restcontentsVO_old.getThumb1();       // 실제 저장된 preview 이미지 파일명
+      long size1 = 0;
+         
+      String upDir =  Restcontents.getUploadDir(); // C:/kd/deploy/resort_v2sbm3c/restcontents/storage/
+      
+      Tool.deleteFile(upDir, file1saved);  // 실제 저장된 파일삭제
+      Tool.deleteFile(upDir, thumb1);     // preview 이미지 삭제
+      // -------------------------------------------------------------------
+      // 파일 삭제 종료
+      // -------------------------------------------------------------------
+          
+      // -------------------------------------------------------------------
+      // 파일 전송 시작
+      // -------------------------------------------------------------------
+      String file1 = "";          // 원본 파일명 image
+
+      // 전송 파일이 없어도 file1MF 객체가 생성됨.
+      // <input type='file' class="form-control" name='file1MF' id='file1MF' 
+      //           value='' placeholder="파일 선택">
+      MultipartFile mf = restcontentsVO.getFile1MF();
+          
+      file1 = mf.getOriginalFilename(); // 원본 파일명
+      size1 = mf.getSize();  // 파일 크기
+          
+      if (size1 > 0) { // 폼에서 새롭게 올리는 파일이 있는지 파일 크기로 체크 ★
+        // 파일 저장 후 업로드된 파일명이 리턴됨, spring.jsp, spring_1.jpg...
+        file1saved = Upload.saveFileSpring(mf, upDir); 
+        
+        if (Tool.isImage(file1saved)) { // 이미지인지 검사
+          // thumb 이미지 생성후 파일명 리턴됨, width: 250, height: 200
+          thumb1 = Tool.preview(upDir, file1saved, 250, 200); 
+        }
+        
+      } else { // 파일이 삭제만 되고 새로 올리지 않는 경우
+        file1="";
+        file1saved="";
+        thumb1="";
+        size1=0;
+      }
+          
+      restcontentsVO.setFile1(file1);
+      restcontentsVO.setFile1saved(file1saved);
+      restcontentsVO.setThumb1(thumb1);
+      restcontentsVO.setSize1(size1);
+      // -------------------------------------------------------------------
+      // 파일 전송 코드 종료
+      // -------------------------------------------------------------------
+          
+      this.restcontentsProc.update_file(restcontentsVO); // Oracle 처리
+
+      mav.addObject("restcontentsno", restcontentsVO.getRestcontentsno());
+      mav.addObject("cateno", restcontentsVO.getRestcateno());
+      mav.setViewName("redirect:/restcontents/read.do"); // request -> param으로 접근 전환
+                
+    } else {
+      mav.addObject("url", "/admin/login_need"); // login_need.jsp, redirect parameter 적용
+      mav.setViewName("redirect:/restcontents/msg.do"); // GET
+    }
+
+    // redirect하게되면 전부 데이터가 삭제됨으로 mav 객체에 다시 저장
+    mav.addObject("now_page", restcontentsVO.getNow_page());
+    
+    return mav; // forward
+  } 
   
   
 }

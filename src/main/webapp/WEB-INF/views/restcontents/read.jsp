@@ -103,7 +103,7 @@
           </c:choose>
 
           <span style="font-size: 1.5em; font-weight: bold;">${title }</span><br>
-          <div style="font-size: 1em;">${mname } ${rdate }</div><br>
+          <div style="font-size: 1em;">${mname } /  ${rdate }</div><br>
           ${content }
         </DIV>
       </li>
@@ -121,6 +121,7 @@
           <DIV style='text-align: center; width:640px; height: 360px; margin: 0px auto;'>
             ${map }
           </DIV>
+          <br><br><br><br>
         </li>
       </c:if>
       

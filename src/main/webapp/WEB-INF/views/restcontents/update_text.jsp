@@ -1,42 +1,48 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+ 
+<c:set var="restcateno" value="${restcateVO.restcateno }" />
 
+<c:set var="restcontentsno" value="${restcontentsVO.restcontentsno }" />
+<c:set var="title" value="${restcontentsVO.title }" />
+<c:set var="content" value="${restcontentsVO.content }" />
+<c:set var="word" value="${restcontentsVO.word }" />
+ 
 <!DOCTYPE html> 
 <html lang="ko"> 
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
 <title>동서울 터미널과 함께하는 맛집리스트</title>
-<!-- /static 기준 -->
 <link rel="shortcut icon" href="/images/star.jpg" /> <%-- /static 기준 --%>
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
-
+ 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+    
 </head>
-
+ 
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'>${restcateVO.name } > 글 등록</DIV>
+<DIV class='title_line'> ${restcateVO.name } > ${title } > 수정</DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
-    <A href="./create.do?restcateno=${restcateVO.restcateno }">등록</A>
+    <A href="./create.do?restcateno=${restcateno }">등록</A>
     <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
-    <A href="./list_by_restcateno.do?restcateno=${restcateVO.restcateno }">기본 목록형</A>    
+    <A href="./list_by_restcateno.do?restcateno=${restcateno }">기본 목록형</A>    
     <span class='menu_divide' >│</span>
-    <A href="./list_by_restcateno_grid.do?restcateno=${restcateVO.restcateno }">갤러리형</A>
+    <A href="./list_by_restcateno_grid.do?restcateno=${restcateno }">갤러리형</A>
   </ASIDE> 
   
   <DIV style="text-align: right; clear: both;">  
     <form name='frm' id='frm' method='get' action='./list_by_restcateno.do'>
-      <input type='hidden' name='restcateno' value='${restcateVO.restcateno }'>  <%-- 게시판의 구분 --%>
+      <input type='hidden' name='restcateno' value='${restcateno }'>  <%-- 게시판의 구분 --%>
       
       <c:choose>
         <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
@@ -56,36 +62,41 @@
   
   <DIV class='menu_line'></DIV>
   
-  <FORM name='frm' method='POST' action='./create.do' enctype="multipart/form-data">
-    <input type="hidden" name="restcateno" value="${param.restcateno }">
+  <FORM name='frm' method='POST' action='./update_text.do'>
+    <input type="hidden" name="restcateno" value="${restcateno }">
+    <input type="hidden" name="restcontentsno" value="${restcontentsno }">
+    <input type="hidden" name="now_page" value="${param.now_page }">
     
     <div>
        <label>제목</label>
-       <input type='text' name='title' value='' required="required" 
+       <input type='text' name='title' value='${title }' required="required" 
                  autofocus="autofocus" class="form-control" style='width: 100%;'>
     </div>
     <div>
        <label>내용</label>
-       <textarea name='content' required="required" class="form-control" rows="12" style='width: 100%;'></textarea>
+       <textarea name='content' required="required" class="form-control" rows="12" style='width: 100%;'>${content }</textarea>
     </div>
     <div>
        <label>검색어</label>
-       <input type='text' name='word' value='' required="required" 
+       <input type='text' name='word' value="${word }" required="required" 
                  class="form-control" style='width: 100%;'>
     </div>   
-    <div>
-       <label>이미지</label>
-       <input type='file' class="form-control" name='file1MF' id='file1MF' 
-                 value='' placeholder="파일 선택">
-    </div>   
-    <div>
-       <label>패스워드</label>
-       <input type='password' name='passwd' value='1234' required="required" 
-                 class="form-control" style='width: 50%;'>
-    </div>   
+    
+    <c:choose>
+      <c:when test="${sessionScope.admin_id == null }">
+        <div>
+          <label>패스워드</label>
+          <input type='password' name='passwd' value='' required="required" 
+                    class="form-control" style='width: 50%;'>
+        </div>
+      </c:when>
+      <c:otherwise>
+      </c:otherwise>
+    </c:choose>
+       
     <div class="content_body_bottom">
-      <button type="submit" class="btn btn-primary">등록</button>
-      <button type="button" onclick="location.href='./list_by_restcateno.do?restcateno=${param.restcateno}'" class="btn btn-primary">목록</button>
+      <button type="submit" class="btn btn-primary">저장</button>
+      <button type="button" onclick="location.href='./read.do?restcateno=${param.restcateno}&restcontentsno=${restcontentsno }'" class="btn btn-primary">취소</button>
     </div>
   
   </FORM>
@@ -95,3 +106,4 @@
 </body>
  
 </html>
+
