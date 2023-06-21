@@ -14,11 +14,14 @@ RestcateVO restcateVO_read = (RestcateVO)request.getAttribute("restcateVO");
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
-<link rel="shortcut icon" href="/images/star.png" /> <%-- /static 기준 --%>
+<title>동서울 터미널과 함께하는 맛집리스트</title>
+<link rel="shortcut icon" href="/images/star.jpg" /> <%-- /static 기준 --%>
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+ 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     
 </head> 
  
@@ -41,7 +44,7 @@ RestcateVO restcateVO_read = (RestcateVO)request.getAttribute("restcateVO");
           </div>
             
           <label>관련 카테고리 이름</label>: <%=restcateVO_read.getName() %> 
-          <a href="../contents/list_by_restcateno.do?restcateno=${restcateVO.restcateno }" title="관련 카테고리로 이동"><img src='/restcate/images/link.png'></a>
+          <a href="../restcontents/list_by_restcateno.do?restcateno=${restcateVO.restcateno }" title="관련 카테고리로 이동"><img src='/restcate/images/link.png'></a>
           &nbsp;      
           <button type="submit" id='submit' class='btn btn-danger btn-sm' style='height: 28px; margin-bottom: 5px;'>관련 자료와 함게 카테고리 삭제</button>
           

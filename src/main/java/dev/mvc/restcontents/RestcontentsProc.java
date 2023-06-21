@@ -249,6 +249,23 @@ public class RestcontentsProc implements RestcontentsProcInter {
     return cnt;
   }
 
+  @Override
+  public int delete(int restcontentsno) {
+    int cnt = this.restcontentsDAO.delete(restcontentsno);
+    return cnt;
+  }
+
+  @Override
+  public int count_by_restcateno(int restcateno) {
+    int cnt = this.restcontentsDAO.count_by_restcateno(restcateno);
+    return cnt;
+  }
+
+  @Override
+  public int delete_by_restcateno(int restcateno) {
+    int cnt = this.restcontentsDAO.delete_by_restcateno(restcateno);
+    return cnt;
+  }  
 
 
 }

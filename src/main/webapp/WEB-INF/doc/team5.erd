@@ -23,7 +23,7 @@
       <constraint>
         <height>-1</height>
         <width>-1</width>
-        <x>1125</x>
+        <x>1049</x>
         <y>192</y>
       </constraint>
       <sourceConnections/>
@@ -1165,12 +1165,12 @@
                             <columnName>RATING</columnName>
                             <logicalName>평점</logicalName>
                             <columnType class="net.java.amateras.db.dialect.ColumnType">
-                              <name>INTEGER</name>
-                              <logicalName>Integer</logicalName>
+                              <name>NUMBER</name>
+                              <logicalName>Numeric</logicalName>
                               <supportSize>true</supportSize>
-                              <type>4</type>
+                              <type>2</type>
                             </columnType>
-                            <size>10</size>
+                            <size>2</size>
                             <notNull>false</notNull>
                             <primaryKey>false</primaryKey>
                             <description></description>
@@ -1257,6 +1257,17 @@
                       <description></description>
                       <autoIncrement>false</autoIncrement>
                       <defaultValue>0</defaultValue>
+                    </net.java.amateras.db.visual.model.ColumnModel>
+                    <net.java.amateras.db.visual.model.ColumnModel>
+                      <columnName>RATING</columnName>
+                      <logicalName>평점</logicalName>
+                      <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../../targetConnections/net.java.amateras.db.visual.model.ForeignKeyModel[3]/source/columns/net.java.amateras.db.visual.model.ColumnModel[5]/columnType"/>
+                      <size>3,2</size>
+                      <notNull>false</notNull>
+                      <primaryKey>false</primaryKey>
+                      <description></description>
+                      <autoIncrement>false</autoIncrement>
+                      <defaultValue></defaultValue>
                     </net.java.amateras.db.visual.model.ColumnModel>
                     <net.java.amateras.db.visual.model.ColumnModel>
                       <columnName>CNT</columnName>
@@ -1672,7 +1683,7 @@
   </children>
   <dommains/>
   <dialectName>Oracle</dialectName>
-  <logicalMode>false</logicalMode>
+  <logicalMode>true</logicalMode>
   <jarFile>C:\kd\setup\ojdbc8.jar</jarFile>
   <jdbcDriver>oracle.jdbc.driver.OracleDriver</jdbcDriver>
   <jdbcUrl>jdbc:oracle:thin:@43.201.106.87:1521:XE</jdbcUrl>

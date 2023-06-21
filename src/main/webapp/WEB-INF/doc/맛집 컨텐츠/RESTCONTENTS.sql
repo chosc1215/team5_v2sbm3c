@@ -11,7 +11,8 @@ CREATE TABLE RESTCONTENTS(
 		TITLE                         		VARCHAR2(200)		 NOT NULL,
 		CONTENT                       		CLOB  		         NOT NULL,
 		RECOM                         		NUMBER(7)           DEFAULT 0		 NOT NULL,
-		CNT                           		NUMBER(7)		    DEFAULT 0        NOT NULL,
+		RATING                        		NUMBER(3,2)		 NULL ,
+        CNT                           		NUMBER(7)		    DEFAULT 0        NOT NULL,
 		REPLYCNT                      		NUMBER(7)		    DEFAULT 0        NOT NULL,
 		PASSWD                        		VARCHAR2(15)		 NOT NULL,
 		WORD                          		VARCHAR2(100)		 NULL ,
@@ -33,6 +34,7 @@ COMMENT ON COLUMN RESTCONTENTS.RESTCATENO is '카테고리번호';
 COMMENT ON COLUMN RESTCONTENTS.TITLE is '제목';
 COMMENT ON COLUMN RESTCONTENTS.CONTENT is '내용';
 COMMENT ON COLUMN RESTCONTENTS.RECOM is '추천수';
+COMMENT ON COLUMN RESTCONTENTS.RATING is '평점';
 COMMENT ON COLUMN RESTCONTENTS.CNT is '조회수';
 COMMENT ON COLUMN RESTCONTENTS.REPLYCNT is '댓글수';
 COMMENT ON COLUMN RESTCONTENTS.PASSWD is '패스워드';
