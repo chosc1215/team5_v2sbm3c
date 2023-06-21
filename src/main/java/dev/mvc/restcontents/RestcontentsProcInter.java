@@ -92,4 +92,25 @@ public interface RestcontentsProcInter {
    */
   public int update_file(RestcontentsVO restcontentsVO);
   
+  /**
+   * 삭제
+   * @param contentsno
+   * @return 삭제된 레코드 갯수
+   */
+  public int delete(int restcontentsno);
+  
+  /**
+   * 카테고리별 레코드 갯수
+   * @param restcateno
+   * @return
+   */
+  public int count_by_restcateno(int restcateno);
+  
+  /**
+   * 특정 카테고리에 속한 모든 레코드 삭제
+   * @param restcateno
+   * @return 삭제된 레코드 갯수
+   */
+  public int delete_by_restcateno(int restcateno);    
+  
 }

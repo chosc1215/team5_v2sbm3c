@@ -424,7 +424,7 @@ public class RestcontentsCont {
     mav.addObject("now_page", restcontentsVO.getNow_page()); // POST -> GET: 데이터 분실이 발생함으로 다시하번 데이터 저장 ★
     
     // URL에 파라미터의 전송
-    // mav.setViewName("redirect:/contents/read.do?contentsno=" + contentsVO.getContentsno() + "&cateno=" + contentsVO.getCateno());             
+    // mav.setViewName("redirect:/contents/read.do?contentsno=" + contentsVO.getRestcontentsno() + "&cateno=" + contentsVO.getRestcateno());             
     
     return mav; // forward
   }
@@ -524,7 +524,7 @@ public class RestcontentsCont {
         file1saved="";
         thumb1="";
         size1=0;
-      }
+      } 
           
       restcontentsVO.setFile1(file1);
       restcontentsVO.setFile1saved(file1saved);
@@ -551,5 +551,109 @@ public class RestcontentsCont {
     return mav; // forward
   } 
   
+  /**
+   * 삭제 폼
+   * @param restcontentsno
+   * @return
+   */
+  @RequestMapping(value = "/restcontents/delete.do", method = RequestMethod.GET)
+  public ModelAndView delete(int restcontentsno) {
+    ModelAndView mav = new ModelAndView();
+    
+    // 삭제할 정보를 조회하여 확인
+    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+    mav.addObject("restcontentsVO", restcontentsVO);
+    
+    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+    mav.addObject("restcateVO", restcateVO);
+    
+    mav.setViewName("/restcontents/delete"); // /webapp/WEB-INF/views/restcontents/delete.jsp
+    
+    return mav;
+  }
+  
+  /**
+   * 삭제 처리
+   * @param restcontentsno
+   * @return
+   */
+  @RequestMapping(value = "/restcontents/delete.do", method = RequestMethod.POST)
+  public ModelAndView delete(RestcontentsVO restcontentsVO) {
+    ModelAndView mav = new ModelAndView();
+    
+    // -------------------------------------------------------------------
+    // 파일 삭제 시작
+    // -------------------------------------------------------------------
+    // 삭제할 파일 정보를 읽어옴.
+    RestcontentsVO restcontentsVO_read = restcontentsProc.read(restcontentsVO.getRestcontentsno());
+        
+    String file1saved = restcontentsVO.getFile1saved();
+    String thumb1 = restcontentsVO.getThumb1();
+    
+    String uploadDir = Restcontents.getUploadDir();
+    Tool.deleteFile(uploadDir, file1saved);  // 실제 저장된 파일삭제
+    Tool.deleteFile(uploadDir, thumb1);     // preview 이미지 삭제
+    // -------------------------------------------------------------------
+    // 파일 삭제 종료
+    // -------------------------------------------------------------------
+        
+    this.restcontentsProc.delete(restcontentsVO.getRestcontentsno()); // DBMS 삭제
+    
+    this.restcateProc.update_cnt_sub(restcontentsVO.getRestcateno()); // restcate 테이블 글 수 감소
+        
+    // -------------------------------------------------------------------------------------
+    // 마지막 페이지의 마지막 레코드 삭제시의 페이지 번호 -1 처리
+    // -------------------------------------------------------------------------------------    
+    // 마지막 페이지의 마지막 10번째 레코드를 삭제후
+    // 하나의 페이지가 3개의 레코드로 구성되는 경우 현재 9개의 레코드가 남아 있으면
+    // 페이지수를 4 -> 3으로 감소 시켜야함, 마지막 페이지의 마지막 레코드 삭제시 나머지는 0 발생
+    int now_page = restcontentsVO.getNow_page();
+    if (restcontentsProc.search_count(restcontentsVO) % Restcontents.RECORD_PER_PAGE == 0) {
+      now_page = now_page - 1; // 삭제시 DBMS는 바로 적용되나 크롬은 새로고침등의 필요로 단계가 작동 해야함.
+      if (now_page < 1) {
+        now_page = 1; // 시작 페이지
+      }
+    }
+    // -------------------------------------------------------------------------------------
+
+    mav.addObject("restcateno", restcontentsVO.getRestcateno());
+    mav.addObject("now_page", now_page);
+    mav.setViewName("redirect:/restcontents/list_by_restcateno.do"); 
+    
+    return mav;
+  } 
+  
+  @RequestMapping(value = "/restcontents/count_by_restcateno.do", method = RequestMethod.GET)
+  public String count_by_restcateno(int restcateno) {
+    System.out.println("-> count: " + this.restcontentsProc.count_by_restcateno(restcateno));
+    return "";
+  }
+  
+  //http://localhost:9091/restcontents/delete_by_restcateno.do?restcateno=1
+  // 파일 삭제 -> 레코드 삭제
+  @RequestMapping(value = "/restcontents/delete_by_restcateno.do", method = RequestMethod.GET)
+  public String delete_by_restcateno(int restcateno) {
+    ArrayList<RestcontentsVO> list = this.restcontentsProc.list_by_restcateno(restcateno);
+    
+    for(RestcontentsVO restcontentsVO : list) {
+      // -------------------------------------------------------------------
+      // 파일 삭제 시작
+      // -------------------------------------------------------------------
+      String file1saved = restcontentsVO.getFile1saved();
+      String thumb1 = restcontentsVO.getThumb1();
+     
+      String uploadDir = Restcontents.getUploadDir();
+      Tool.deleteFile(uploadDir, file1saved);  // 실제 저장된 파일삭제
+      Tool.deleteFile(uploadDir, thumb1);     // preview 이미지 삭제
+      // -------------------------------------------------------------------
+      // 파일 삭제 종료
+      // -------------------------------------------------------------------
+    }
+   
+    System.out.println("-> count: " + this.restcontentsProc.delete_by_restcateno(restcateno));
+    
+    return "";
+   
+  }
   
 }

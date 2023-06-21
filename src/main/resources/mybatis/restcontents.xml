@@ -115,7 +115,24 @@
     WHERE restcontentsno = #{restcontentsno}
   </update>  
   
+  <!-- 삭제 --> 
+  <delete id="delete" parameterType="int">
+    DELETE FROM restcontents
+    WHERE restcontentsno=#{restcontentsno}
+  </delete>  
   
+  <!-- 특정 카테고리에 속한 레코드 갯수를 리턴 -->
+  <select id="count_by_restcateno" resultType="int" parameterType="int">
+    SELECT COUNT(*) as cnt 
+    FROM restcontents 
+    WHERE restcateno=#{restcateno}
+  </select>
+  
+  <!-- 특정 카테고리에 속한 모든 레코드 삭제 -->
+  <delete id="delete_by_restcateno" parameterType="int">
+    DELETE FROM restcontents
+    WHERE restcateno=#{restcateno}
+  </delete>
   
   
   

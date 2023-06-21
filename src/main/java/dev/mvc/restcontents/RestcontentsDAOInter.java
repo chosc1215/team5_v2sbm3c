@@ -47,7 +47,7 @@ public interface RestcontentsDAOInter {
   
   /**
    * 검색된 레코드 갯수 리턴
-   * @param contentsVO
+   * @param restcontentsVO
    * @return
    */
   public int search_count(RestcontentsVO restcontentsVO);
@@ -61,25 +61,45 @@ public interface RestcontentsDAOInter {
 
   /**
    * 패스워드 검사  
-   * @param contentsVO
+   * @param restcontentsVO
    * @return 1: 패스워드 일치, 0: 패스워드 불일치
    */
   public int password_check(RestcontentsVO restcontentsVO);  
   
   /**
    * 글 정보 수정
-   * @param contentsVO
+   * @param restcontentsVO
    * @return 변경된 레코드 갯수
    */
   public int update_text(RestcontentsVO restcontentsVO);
   
   /**
    * 파일 정보 수정
-   * @param contentsVO
+   * @param restcontentsVO
    * @return 처리된 레코드 갯수
    */
   public int update_file(RestcontentsVO restcontentsVO);
   
+  /**
+   * 삭제
+   * @param restcontentsno
+   * @return 삭제된 레코드 갯수
+   */
+  public int delete(int restcontentsno);
+  
+  /**
+   * 카테고리별 레코드 갯수
+   * @param restcateno
+   * @return
+   */
+  public int count_by_restcateno(int restcateno);
+  
+  /**
+   * 특정 카테고리에 속한 모든 레코드 삭제
+   * @param restcateno
+   * @return 삭제된 레코드 갯수
+   */
+  public int delete_by_restcateno(int restcateno);  
   
   
   

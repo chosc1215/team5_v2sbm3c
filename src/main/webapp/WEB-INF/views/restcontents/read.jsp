@@ -135,7 +135,7 @@
       <li class="li_none">
         <DIV>
           <c:if test="${file1.trim().length() > 0 }"> <%-- ServletRegister.java: registrationBean.addUrlMappings("/download"); --%>
-            첨부 파일: <a href='/download?dir=/restcontents/storage&filename=${file1saved}&downname=${file1}'>${file1}</a> (${size1_label})  
+            첨부 파일: <a href='/download?dir=/restcontents/storage&filename=${file1saved}&downname=${file1}' title="이미지 다운로드">${file1}<IMG SRC="/restcontents/images/download.png" title="이미지 다운로드"></a> (${size1_label})  
           </c:if>
         </DIV>
       </li>   
