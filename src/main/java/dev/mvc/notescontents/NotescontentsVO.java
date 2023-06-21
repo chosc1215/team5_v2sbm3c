@@ -29,11 +29,20 @@ import org.springframework.web.multipart.MultipartFile;
         youtube                             VARCHAR2(1000)            NULL,        
  */
 
+
 public class NotescontentsVO {
     /** 컨텐츠 번호 */
     private int contentsno;
     /** 관리자 번호 */
     private int adminno;
+    public int getContentsno() {
+      return contentsno;
+    }
+
+    public void setContentsno(int contentsno) {
+      this.contentsno = contentsno;
+    }
+
     /** 카테고리 번호 */
     private int notescateno;
     /** 제목 */

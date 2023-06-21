@@ -4,48 +4,47 @@
  
 <mapper namespace="dev.mvc.notescontents.NotescontentsDAOInter">
 
-<!-- 등록한 레코드 갯수 1 리턴 -->
-  <insert id="create" parameterType="dev.mvc.contents.ContentsVO">
-    INSERT INTO notescontents(notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notesnotescateno, adminno )
-    VALUES(notescontents_seq.nextval, '공지사항 컨텐츠', '공지사항 내용', '검색어', 'space.jpg', 'space_1.jpg', 'space_t.jpg', 1000,1,3 )
+<!-- 등록한 레코드 갯수 1 리턴 --> 
+  <insert id="create" parameterType="dev.mvc.notescontents.NotescontentsVO">
+    INSERT INTO notescontents(notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno )
+    VALUES(notescontents_seq.nextval, #{title} ,#{content},#{word}, #{file1}, #{file1saved}, #{thumb1}, #{size1},#{notescateno},#{adminno} )
   </insert>
   
   <!-- 모든 카테고리의 등록된 글목록 -->
   <select id="list_all" resultType="dev.mvc.notescontents.NotescontentsVO">
-    SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notesnotescateno, adminno
+    SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
     FROM notescontents
     ORDER BY notescontentsno DESC
   </select> 
   
   <!-- 특정 카테고리의 등록된 글목록 -->
-  <select id="list_by_notescateno" resultType="dev.mvc.contents.ContentsVO" parameterType="int">
-    SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notesnotescateno, adminno
-    FROM contents
+  <select id="list_by_notescateno" resultType="dev.mvc.notescontents.NotescontentsVO" parameterType="int">
+    SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+    FROM notescontents
     WHERE notescateno=#{notescateno}
     ORDER BY notescontentsno DESC
 
   </select> 
-
+ 
   <!-- 일반적인 조회 -->
-  <select id="read" resultType="dev.mvc.contents.ContentsVO" parameterType="int">
-    SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notesnotescateno, adminno
-    FROM contents
+  <select id="read" resultType="dev.mvc.notescontents.NotescontentsVO" parameterType="int">
+    SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+    FROM notescontents
     WHERE notescontentsno = #{notescontentsno}
   </select>
   
   <!-- Map 등록, 수정, 삭제 -->
-  <update id="map" parameterType="dev.mvc.contents.ContentsVO">
-    UPDATE contents 
+  <update id="map" parameterType="dev.mvc.notescontents.NotescontentsVO">
+    UPDATE notescontents 
     SET map=#{map} 
     WHERE notescontentsno=#{notescontentsno}
   </update>
 
 
   <!-- 카테고리별 검색 목록 -->
-  <select id="list_by_notescateno_search" resultType="dev.mvc.contents.ContentsVO" parameterType="dev.mvc.contents.ContentsVO">
-    SELECT notescontentsno, adminno, notescateno, title, content, recom, cnt, replycnt, word, rdate,
-            file1, file1saved, thumb1, size1, map, youtube
-    FROM contents
+  <select id="list_by_notescateno_search" resultType="dev.mvc.notescontents.NotescontentsVO" parameterType="dev.mvc.notescontents.NotescontentsVO">
+    SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+    FROM notescontents
     <choose>
       <when test="word == null or word == ''"> <!-- 검색하지 않는 경우, 모든 레코드 -->
         WHERE notescateno=#{notescateno}
@@ -60,9 +59,9 @@
   </select>
    
   <!-- 카테고리별 검색 레코드 갯수 -->
-  <select id="search_count" resultType="int" parameterType="dev.mvc.contents.ContentsVO">
+  <select id="search_count" resultType="int" parameterType="dev.mvc.notescontents.NotescontentsVO">
     SELECT COUNT(*) as cnt
-    FROM contents
+    FROM notescontents
     <choose>
       <when test="word == null or word == ''"> <!-- 검색하지 않는 경우의 레코드 갯수 -->
         WHERE notescateno=#{notescateno}
@@ -76,13 +75,13 @@
   </select>
   
   <!-- 카테고리별 검색 + 페이징 목록 -->
-  <select id="list_by_notescateno_search_paging" resultType="dev.mvc.contents.ContentsVO" parameterType="dev.mvc.contents.ContentsVO">
-   SELECT notescontentsno, adminno, notescateno, title, content, recom, cnt, replycnt, rdate, file1, file1saved, thumb1, size1, map, youtube, r
-   FROM (
-              SELECT notescontentsno, adminno, notescateno, title, content, recom, cnt, replycnt, rdate, file1, file1saved, thumb1, size1, map, youtube, rownum as r
+  <select id="list_by_notescateno_search_paging" resultType="dev.mvc.notescontents.NotescontentsVO" parameterType="dev.mvc.notescontents.NotescontentsVO">
+   SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+    FROM  (
+              SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno, rownum as r
               FROM (
-                        SELECT notescontentsno, adminno, notescateno, title, content, recom, cnt, replycnt, rdate, file1, file1saved, thumb1, size1, map, youtube
-                        FROM contents
+                        SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+                        FROM notescontents
                         <choose>
                           <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->
                             WHERE notescateno=#{notescateno}
@@ -104,41 +103,41 @@
   </select>
 
   <!-- 글 수정 -->
-  <update id="update_text" parameterType="dev.mvc.contents.ContentsVO">
-    UPDATE contents
+  <update id="update_text" parameterType="dev.mvc.notescontents.NotescontentsVO">
+    UPDATE notescontents
     SET title=#{title}, content=#{content},  word=#{word} 
     WHERE notescontentsno = #{notescontentsno}
   </update>
   
   <!-- 패스워드 검사 -->
-  <select id="password_check" resultType="int" parameterType="dev.mvc.contents.ContentsVO">
+  <select id="password_check" resultType="int" parameterType="dev.mvc.notescontents.NotescontentsVO">
     SELECT COUNT(*) as cnt 
-    FROM contents
+    FROM notescontents
     WHERE notescontentsno = #{notescontentsno} AND passwd=#{passwd}
   </select>
   
   <!-- 파일 수정 -->
-  <update id="update_file" parameterType="dev.mvc.contents.ContentsVO">
-    UPDATE contents
+  <update id="update_file" parameterType="dev.mvc.notescontents.NotescontentsVO">
+    UPDATE notescontents
     SET file1=#{file1}, file1saved=#{file1saved}, thumb1=#{thumb1}, size1=#{size1}
     WHERE notescontentsno = #{notescontentsno}
   </update>
   
   <delete id="delete" parameterType="int">
-    DELETE FROM contents
+    DELETE FROM notescontents
     WHERE notescontentsno=#{notescontentsno}
   </delete>
  
   <!-- 특정 카테고리에 속한 레코드 갯수를 리턴 -->
   <select id="count_by_notescateno" resultType="int" parameterType="int">
     SELECT COUNT(*) as cnt 
-    FROM contents 
+    FROM notescontents 
     WHERE notescateno=#{notescateno}
   </select>
   
   <!-- 특정 카테고리에 속한 모든 레코드 삭제 -->
   <delete id="delete_by_notescateno" parameterType="int">
-    DELETE FROM contents
+    DELETE FROM notescontents
     WHERE notescateno=#{notescateno}
   </delete>
 
