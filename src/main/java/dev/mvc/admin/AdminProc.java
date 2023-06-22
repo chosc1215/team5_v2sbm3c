@@ -1,5 +1,7 @@
 package dev.mvc.admin;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +55,12 @@ public class AdminProc implements AdminProcInter {
   public AdminVO read(int adminno) {
     AdminVO adminVO = this.adminDAO.read(adminno);
     return adminVO;
+  }
+
+  @Override
+  public ArrayList<AdminVO> list() {
+    ArrayList<AdminVO> list = this.adminDAO.list();
+    return list;
   }
 
   

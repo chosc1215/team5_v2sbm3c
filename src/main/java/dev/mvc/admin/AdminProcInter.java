@@ -1,5 +1,7 @@
 package dev.mvc.admin;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpSession;
 
 public interface AdminProcInter {
@@ -17,6 +19,12 @@ public interface AdminProcInter {
    * @return
    */
   public int create(AdminVO adminVO);
+  
+  /**
+   * 관리자 전체 목록
+   * @return
+   */
+  public ArrayList<AdminVO> list();
   
   /**
    * 로그인

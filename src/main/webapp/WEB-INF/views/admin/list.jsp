@@ -36,9 +36,9 @@
     <ASIDE class="aside_right">
       <A href="javascript:location.reload();">새로고침</A>
       <span class='menu_divide' >│</span> 
-      <A href='./create.do'>회원 가입</A>
+      <A href='./create.do'>관리자 회원 가입</A>
       <span class='menu_divide' >│</span> 
-      <A href='./list.do'>목록</A>
+      <A href='./list.do'>관리자 목록</A>
     </ASIDE> 
    
     <div class='menu_line'></div>
@@ -58,48 +58,37 @@
       <TH class='th_bs'>등급</TH>
       <TH class='th_bs'>ID</TH>
       <TH class='th_bs'>성명</TH>
-      <TH class='th_bs'>전화번호</TH>
-      <TH class='th_bs'>주소</TH>
+      <TH class='th_bs'></TH>
+      <TH class='th_bs'></TH>      
       <TH class='th_bs'>등록일</TH>
       <TH class='th_bs'>기타</TH>
     </TR>
    
-    <c:forEach var="memberVO" items="${list }">
-      <c:set var="memberno" value ="${memberVO.memberno}" />
-      <c:set var="grade" value ="${memberVO.grade}" />
-      <c:set var="id" value ="${memberVO.id}" />
-      <c:set var="mname" value ="${memberVO.mname}" />
-      <c:set var="tel" value ="${memberVO.tel}" />
-      <c:set var="address1" value ="${memberVO.address1}" />
-      <c:set var="mdate" value ="${memberVO.mdate}" />
+    <c:forEach var="adminVO" items="${list }">
+      <c:set var="adminno" value ="${adminVO.adminno}" />
+      <c:set var="grade" value ="${adminVO.grade}" />
+      <c:set var="id" value ="${adminVO.id}" />
+      <c:set var="mname" value ="${adminVO.mname}" />
+      <c:set var="mdate" value ="${adminVO.mdate}" />
        
     <TR>
       <TD class='td_basic'>
         <c:choose>
-          <c:when test="${grade >= 1 and grade <= 10}"><img src='/member/images/admin.png' title="관리자" class="icon"></c:when> <%-- /static 기준 --%>    
-          <c:when test="${grade >= 11 and grade <= 20}"><img src='/member/images/user.png' title="회원" class="icon"></c:when>
-          <c:when test="${grade >= 30 and grade <= 39}"><img src='/member/images/pause.png' title="정지 회원" class="icon"></c:when>
-          <c:when test="${grade >= 40 and grade <= 49}"><img src='/member/images/x.png' title="탈퇴 회원" class="icon"></c:when>
+          <c:when test="${grade >= 1 and grade <= 10}"><img src='/admin/images/admin.png' title="관리자" class="icon"></c:when> <%-- /static 기준 --%>    
+          <c:when test="${grade >= 11 and grade <= 20}"><img src='/admin/images/user.png' title="회원" class="icon"></c:when>
+          <c:when test="${grade >= 30 and grade <= 39}"><img src='/admin/images/pause.png' title="정지 회원" class="icon"></c:when>
+          <c:when test="${grade >= 40 and grade <= 49}"><img src='/admin/images/x.png' title="탈퇴 회원" class="icon"></c:when>
         </c:choose>  
       </TD>
-      <TD class='td_left'><A href="./read.do?memberno=${memberno}">${id}</A></TD>
-      <TD class='td_left'><A href="./read.do?memberno=${memberno}">${mname}</A></TD>
-      <TD class='td_basic'>${tel}</TD>
-      <TD class='td_left'>
-        <c:choose>
-          <c:when test="${address1.length() > 15 }"> <%-- 긴 주소 처리 --%>
-            ${address1.substring(0, 15) }...
-          </c:when>
-          <c:otherwise>
-            ${address1}
-          </c:otherwise>
-        </c:choose>
-      </TD>
+      <TD class='td_left'><A href="./read.do?adminno=${adminno}">${id}</A></TD>
+      <TD class='td_left'><A href="./read.do?adminno=${adminno}">${mname}</A></TD>
+      <TD class='td_left'></TD>
+      <TD class='td_left'></TD>
       <TD class='td_basic'>${mdate.substring(0, 10)}</TD> <%-- 년월일 --%>
       <TD class='td_basic'>
-        <A href="./passwd_update.do?memberno=${memberno}"><IMG src='/member/images/passwd.png' title='패스워드 변경' class="icon"></A>
-        <A href="./read.do?memberno=${memberno}"><IMG src='/member/images/update.png' title='수정' class="icon"></A>
-        <A href="./delete.do?memberno=${memberno}"><IMG src='/member/images/delete.png' title='삭제' class="icon"></A>
+        <A href="./passwd_update.do?adminno=${adminno}"><IMG src='/admin/images/passwd.png' title='패스워드 변경' class="icon"></A>
+        <A href="./read.do?adminno=${adminno}"><IMG src='/admin/images/update.png' title='수정' class="icon"></A>
+        <A href="./delete.do?adminno=${adminno}"><IMG src='/admin/images/delete.png' title='삭제' class="icon"></A>
       </TD>
       
     </TR>

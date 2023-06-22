@@ -35,6 +35,12 @@
     VALUES(admin_seq.nextval, #{id}, #{passwd}, #{mname}, sysdate, #{grade})
   </insert>
   
+  <select id="list" resultType="dev.mvc.admin.AdminVO">
+    SELECT adminno, id, passwd, mname, mdate, grade
+    FROM admin
+    ORDER BY grade ASC, id ASC
+  </select>
+  
 </mapper>
 
 

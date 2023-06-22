@@ -74,6 +74,7 @@
                           <a class="dropdown-item" href='/restcate/list_all.do'>카테고리 전체 목록</a>
                           <a class="dropdown-item" href="/admin/create.do">회원 가입</a>
                           <a class="dropdown-item" href='/member/list.do'>회원 목록</a>
+                          <!-- <a class="dropdown-item" href='/admin/list.do'>관리자 목록</a> -->
                           <a class="dropdown-item" href='/admin/logout.do'>관리자 ${sessionScope.admin_id } 로그아웃</a>
                         </div>
                       </li>
