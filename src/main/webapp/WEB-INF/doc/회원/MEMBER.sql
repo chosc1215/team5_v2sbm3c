@@ -92,6 +92,7 @@ COMMIT;
  
 SELECT memberno, id, passwd, mname, tel, zipcode, address1, address2, mdate, grade
 FROM member
+WHERE memberno=12
 ORDER BY grade ASC, id ASC;
      
      
@@ -149,6 +150,8 @@ WHERE id='user1@gmail.com' AND passwd='1234';
  ---
    0
  
- 
+SELECT memberno, id, passwd, mname, tel, zipcode, address1, address2, mdate, grade
+FROM member
+WHERE memberno= 12;
 
 

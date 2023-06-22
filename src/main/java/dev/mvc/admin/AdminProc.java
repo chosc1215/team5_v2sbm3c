@@ -11,6 +11,18 @@ public class AdminProc implements AdminProcInter {
   private AdminDAOInter adminDAO;
   
   @Override
+  public int checkid(String id) {
+    int cnt = this.adminDAO.checkid(id);
+    return cnt;
+  }
+  
+  @Override
+  public int create(AdminVO adminVO) {
+    int cnt = this.adminDAO.create(adminVO);
+    return cnt;
+  }
+  
+  @Override
   public int login(AdminVO adminVO) {
     int cnt = this.adminDAO.login(adminVO);
     return cnt;
@@ -42,6 +54,7 @@ public class AdminProc implements AdminProcInter {
     AdminVO adminVO = this.adminDAO.read(adminno);
     return adminVO;
   }
+
   
   
   

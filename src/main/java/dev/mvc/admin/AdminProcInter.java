@@ -3,6 +3,21 @@ package dev.mvc.admin;
 import javax.servlet.http.HttpSession;
 
 public interface AdminProcInter {
+  
+  /**
+   * 중복 아이디 검사
+   * @param id
+   * @return 중복 아이디 갯수
+   */
+  public int checkid(String id);
+  
+  /**
+   * 관리자 회원 가입
+   * @param adminVO
+   * @return
+   */
+  public int create(AdminVO adminVO);
+  
   /**
    * 로그인
    * @param AdminVO

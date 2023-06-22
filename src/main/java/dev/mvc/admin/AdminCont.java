@@ -7,13 +7,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import dev.mvc.tool.Tool; 
 
@@ -21,58 +25,69 @@ import dev.mvc.tool.Tool;
 public class AdminCont {
   @Autowired
   @Qualifier("dev.mvc.admin.AdminProc")
-  private AdminProcInter adminProc;
+  private AdminProcInter adminProc = null;
   
   public AdminCont() {
     System.out.println("-> AdminCont created.");
   }
   
-//  /**
-//   * 로그인 폼
-//   * http://localhost:9091/admin/login.do
-//   * @return
-//   */
-//  @RequestMapping(value="/admin/login.do", method=RequestMethod.GET)
-//  public ModelAndView login() {
-//    ModelAndView mav = new ModelAndView();
-//    
-//    mav.setViewName("/admin/login_form"); // /WEB-INF/views/admin/login_form.jsp
-//    
-//    return mav;
-//  }
-//
-//  /**
-//   * 로그인 처리
-//   * http://localhost:9091/admin/login.do
-//   * @return
-//   */
-//  @RequestMapping(value="/admin/login.do", method=RequestMethod.POST)
-//  public ModelAndView login(HttpSession session,
-//                                       AdminVO adminVO) {
-//    ModelAndView mav = new ModelAndView();
-//    
-//    int cnt = this.adminProc.login(adminVO);
-//    
-//    if (cnt == 1) { // 로그인 성공
-//      AdminVO adminVO_read = this.adminProc.read_by_id(adminVO.getId()); // 관리자 정보 읽기
-//      
-//      session.setAttribute("adminno", adminVO_read.getAdminno()); // 서버의 메모리에 기록
-//      session.setAttribute("admin_id", adminVO_read.getId());
-//      session.setAttribute("admin_mname", adminVO_read.getMname());
-//      session.setAttribute("admin_grade", adminVO_read.getGrade());
-//
-//      mav.setViewName("redirect:/index.do"); // 시작 페이지
-//    } else {  // 로그인 실패
-//      // /WEB-INF/views/admin/login_fail_msg.jsp
-//      // POST 방식에서는 jsp에서 <c:import 태그가 실행이 안됨.
-//      // mav.setViewName("/admin/login_fail_msg");   
-//      
-//      mav.addObject("url", "/admin/login_fail_msg"); // /WEB-INF/views/admin/login_fail_msg.jsp
-//      mav.setViewName("redirect:/admin/msg.do");   // POST -> url -> GET
-//    }
-//        
-//    return mav;
-//  }
+  // http://localhost:9093/admin/checkid.do?id=admin1
+  @ResponseBody
+  @RequestMapping(value="/admin/checkid.do", method=RequestMethod.GET ,
+                produces = "text/plain;charset=UTF-8" )
+  public String checkid(String id) {
+    int cnt = this.adminProc.checkid(id);
+    
+    JSONObject json = new JSONObject();
+    json.put("cnt", cnt);
+    
+    return json.toString();
+  }
+  
+  /**
+   * 관리자회원 등록 폼
+   * @return
+   */
+  @RequestMapping(value = "/admin/create.do", method = RequestMethod.GET)
+  public ModelAndView create() {
+    ModelAndView mav = new ModelAndView();
+    mav.setViewName("/admin/create");
+    
+    return mav;
+  }
+  
+  /**
+   * 관리자회원 등록 처리
+   * @param adminVO
+   * @return
+   */
+  @RequestMapping(value="/admin/create.do", method=RequestMethod.POST)
+  public ModelAndView create(AdminVO adminVO) {
+    ModelAndView mav = new ModelAndView();
+    
+    adminVO.setGrade(1);
+    
+    int cnt = adminProc.create(adminVO);
+    
+    if (cnt == 1) { // insert 레코드 개수
+      mav.addObject("code", "create_success");
+      mav.addObject("mname", adminVO.getMname());  // 관리자님(admin) 회원 가입을 축하합니다.
+      mav.addObject("id", adminVO.getId());
+    } else {
+      mav.addObject("code", "create_fail");
+    }
+    
+    mav.addObject("cnt", cnt); // request.setAttribute("cnt", cnt)
+    
+    mav.addObject("url", "/member/msg");  // /member/msg -> /member/msg.jsp
+    
+    mav.setViewName("redirect:/member/msg.do"); // POST -> GET -> /member/msg.jsp
+
+//    mav.addObject("code", "create_fail"); // 가입 실패 test용
+//    mav.addObject("cnt", 0);                 // 가입 실패 test용
+    
+    return mav;
+  }
   
   /**
    * 로그아웃 처리
@@ -101,57 +116,7 @@ public class AdminCont {
     
     return mav; // forward
   }
-  
-//  /**
-//   * 로그인 폼
-//   * @return
-//   */
-//  // http://localhost:9091/admin/login.do 
-//  @RequestMapping(value = "/admin/login.do", 
-//                             method = RequestMethod.GET)
-//  public ModelAndView login_cookie(HttpServletRequest request) {
-//    ModelAndView mav = new ModelAndView();
-//    
-//    Cookie[] cookies = request.getCookies();
-//    Cookie cookie = null;
-//  
-//    String ck_admin_id = ""; // id 저장
-//    String ck_admin_id_save = ""; // id 저장 여부를 체크
-//    String ck_admin_passwd = ""; // passwd 저장
-//    String ck_admin_passwd_save = ""; // passwd 저장 여부를 체크
-//  
-//    if (cookies != null) { // 쿠키가 존재한다면
-//      for (int i=0; i < cookies.length; i++){
-//        cookie = cookies[i]; // 쿠키 객체 추출
-//      
-//        if (cookie.getName().equals("ck_admin_id")){
-//          ck_admin_id = cookie.getValue(); 
-//        }else if(cookie.getName().equals("ck_admin_id_save")){
-//          ck_admin_id_save = cookie.getValue();  // Y, N
-//        }else if (cookie.getName().equals("ck_admin_passwd")){
-//          ck_admin_passwd = cookie.getValue();         // 1234
-//        }else if(cookie.getName().equals("ck_admin_passwd_save")){
-//          ck_admin_passwd_save = cookie.getValue();  // Y, N
-//        }
-//      }
-//    }
-//  
-//    //    <input type='text' class="form-control" name='id' id='id' 
-//    //            value='${ck_admin_id }' required="required" 
-//    //            style='width: 30%;' placeholder="아이디" autofocus="autofocus">
-//    mav.addObject("ck_admin_id", ck_admin_id);
-//  
-//    //    <input type='checkbox' name='id_save' value='Y' 
-//    //            ${ck_admin_id_save == 'Y' ? "checked='checked'" : "" }> 저장
-//    mav.addObject("ck_admin_id_save", ck_admin_id_save);
-//  
-//    mav.addObject("ck_admin_passwd", ck_admin_passwd);
-//    mav.addObject("ck_admin_passwd_save", ck_admin_passwd_save);
-//  
-//    mav.setViewName("/admin/login_form_ck"); // /admin/login_form_ck.jsp
-//    return mav;
-//  }
-   
+     
   /**
    * Cookie 로그인 폼
    * @return

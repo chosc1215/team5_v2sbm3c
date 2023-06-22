@@ -24,6 +24,17 @@
     WHERE adminno=#{adminno}
   </select>
   
+  <select id="checkid" resultType="int" parameterType="String">
+    SELECT COUNT(id) as cnt
+    FROM admin
+    WHERE id = #{id}  
+  </select>
+  
+  <insert id="create" parameterType="dev.mvc.admin.AdminVO">
+    INSERT INTO admin(adminno, id, passwd, mname, mdate, grade)
+    VALUES(admin_seq.nextval, #{admin1}, #{passwd}, #{mname}, sysdate, #{grade});
+  </insert>
+  
 </mapper>
 
 

@@ -20,3 +20,5 @@ COMMENT ON COLUMN REVIEW.RATING is '평점';
 
 
 
+
+

@@ -85,3 +85,8 @@ VALUES(admin_seq.nextval, 'admin', '69017000', 'Master 관리자', sysdate, 1);
 commit;
 
 SELECT adminno, id, passwd, mname, mdate, grade FROM admin ORDER BY adminno ASC;
+
+-- id 중복 확인 1=존재, 0=없음
+SELECT COUNT(id)
+FROM admin
+WHERE id = 'admin3';

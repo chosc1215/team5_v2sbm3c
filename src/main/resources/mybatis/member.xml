@@ -75,5 +75,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM member
     WHERE id=#{id} AND passwd=#{passwd}
   </select>
-     
+  
+<!--   <select id ="id_find" >
+    SELECT memberno, id, passwd, mname, tel, zipcode, address1, address2, mdate, grade
+    FROM member
+    WHERE memberno=12
+    ORDER BY grade ASC, id ASC
+  </select>   -->
+
+       
 </mapper> 

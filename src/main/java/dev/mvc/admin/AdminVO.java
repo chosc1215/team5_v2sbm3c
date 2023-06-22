@@ -1,18 +1,27 @@
 package dev.mvc.admin;
 
 public class AdminVO {
+  /** 관리자번호 */
   private int adminno;
+  /** 아이디 */
   private String id;
+  /**패스워드*/
   private String passwd;
+  /** 관리자 성명 */
   private String mname;
+  /** 가입일 */
   private String mdate;
+  /** 등급 */
   private int grade;
   
-  /** id 저장 여부 */
-  private String id_save;
   
+  /** 등록된 패스워드 */
+  private String old_passwd = "";  
+  /** id 저장 여부 */
+  private String id_save;  
   /** 패스워드 저장 여부 */
   private String passwd_save;
+  
   
   public int getAdminno() {
     return adminno;
@@ -49,6 +58,12 @@ public class AdminVO {
   }
   public void setGrade(int grade) {
     this.grade = grade;
+  }
+  public String getOld_passwd() {
+    return old_passwd;
+  }
+  public void setOld_passwd(String old_passwd) {
+    this.old_passwd = old_passwd;
   }
   public String getId_save() {
     return id_save;
