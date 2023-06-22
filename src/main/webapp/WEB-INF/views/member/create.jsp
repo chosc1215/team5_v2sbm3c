@@ -210,7 +210,7 @@
     
     <div class="form-group"> <%-- label의 크기에따라 input 태그의 크기가 지정되는 형태 --%>
       <label>성명*:
-        <input type='text' class="form-control form-control-sm" name='mname' id='mname' value='하정우' required="required" placeholder="성명*">
+        <input type='text' class="form-control form-control-sm" name='mname' id='mname' value='왕눈이' required="required" placeholder="성명*">
       </label>
     </div>   
 

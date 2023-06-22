@@ -200,7 +200,7 @@ public class MemberCont {
   }
   
   /**
-   * 회원 삭제
+   * 회원 삭제 폼 (관리자)
    * @param memberno
    * @return
    */
@@ -221,9 +221,30 @@ public class MemberCont {
     return mav; // forward
   }
   
+  /**
+   * 회원 탈퇴 폼
+   * @param session
+   * @param memberno
+   * @return
+   */
+  @RequestMapping(value="/member/delete_m.do", method=RequestMethod.GET)
+  public ModelAndView delete_m(HttpSession session, int memberno) {
+    ModelAndView mav = new ModelAndView();
+    
+    if (this.memberProc.isMember(session)== true) {
+      MemberVO memberVO = this.memberProc.read(memberno);
+      mav.addObject("memberVO", memberVO);
+      mav.setViewName("/member/delete_m");
+    } else {
+      // 로그인을 하지 않은 경우
+      mav.setViewName("/member/login_need");
+    }
+
+    return mav;
+  }
  
   /**
-   * 회원 삭제 처리
+   * 회원 삭제 처리 (관리자)
    * @param memberVO
    * @return
    */
@@ -240,6 +261,38 @@ public class MemberCont {
 
     if (cnt == 1) {
       mav.addObject("code", "delete_success");
+      mav.addObject("mname", memberVO.getMname());  // 홍길동님(user4) 회원 정보를 변경했습니다.
+      mav.addObject("id", memberVO.getId());
+    } else {
+      mav.addObject("code", "delete_fail");
+    }
+
+    mav.addObject("cnt", cnt); // request.setAttribute("cnt", cnt)
+    mav.addObject("url", "/member/msg");  // /member/msg -> /member/msg.jsp
+    
+    mav.setViewName("redirect:/member/msg.do");
+    
+    return mav;
+  }
+  
+  /**
+   * 회원 탈퇴 처리
+   * @param memberVO
+   * @return
+   */
+  @RequestMapping(value="/member/delete_m.do", method=RequestMethod.POST)
+  public ModelAndView delete_m_proc(int memberno){
+    ModelAndView mav = new ModelAndView();
+    
+    // System.out.println("id: " + memberVO.getId());
+    // 삭제된 정보를 msg.jsp에 출력하기 휘해 삭제전에 회원 정보를 읽음.
+    MemberVO memberVO = this.memberProc.read(memberno); 
+    
+    
+    int cnt= this.memberProc.delete_m(memberno); // 회원 삭제
+
+    if (cnt == 1) {
+      mav.addObject("code", "delete_mem_success");
       mav.addObject("mname", memberVO.getMname());  // 홍길동님(user4) 회원 정보를 변경했습니다.
       mav.addObject("id", memberVO.getId());
     } else {

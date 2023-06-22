@@ -62,6 +62,13 @@ public interface MemberDAOInter {
   public int delete(int memberno);
   
   /**
+   * 회원 탈퇴
+   * @param memberno
+   * @return
+   */
+  public int delete_m(int memberno);
+  
+  /**
    * 현재 패스워드 검사
    * @param map
    * @return 0: 일치하지 않음, 1: 일치함

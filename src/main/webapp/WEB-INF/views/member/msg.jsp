@@ -73,6 +73,17 @@
                          class="btn btn-primary">회원 목록</button>
           </LI>                                                                     
         </c:when>    
+        
+        <c:when test="${param.code == 'delete_mem_success'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_success">${param.mname }님(${param.id }) 회원 탈퇴에 성공했습니다.</span>
+          </LI>   
+          <LI class='li_none'>
+            <button type='button' 
+                         onclick="location.href='/member/logout.do'"
+                         class="btn btn-primary">시작화면 가기</button>
+          </LI>                                                                     
+        </c:when>    
             
         <c:when test="${code == 'delete_fail'}"> <%-- Java if --%>
           <LI class='li_none'>
