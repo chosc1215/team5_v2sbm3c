@@ -101,6 +101,20 @@ public interface RestcontentsDAOInter {
    */
   public int delete_by_restcateno(int restcateno);  
   
+  /**
+   * 글 수 증가
+   * @param 
+   * @return
+   */ 
+  public int increaseCommentscnt(int restcontentsno);
+ 
+  /**
+   * 글 수 감소
+   * @param 
+   * @return
+   */   
+  public int decreaseCommentscnt(int restcontentsno);
+  
   
   
 }

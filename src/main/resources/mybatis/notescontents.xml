@@ -140,6 +140,8 @@
     DELETE FROM notescontents
     WHERE notescateno=#{notescateno}
   </delete>
+  
+
 
 </mapper>
 

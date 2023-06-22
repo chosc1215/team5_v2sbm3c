@@ -104,7 +104,9 @@ public class MemberProc implements MemberProcInter {
     int cnt = this.memberDAO.login(map);
     return cnt;
   }
+  
+  
 
-
-   
+    
 }
+  
