@@ -82,6 +82,12 @@ public class MemberProc implements MemberProcInter {
   }
   
   @Override
+  public int delete_m(int memberno) {
+    int cnt = this.memberDAO.delete_m(memberno);
+    return cnt;
+  }
+  
+  @Override
   public int passwd_check(HashMap<Object, Object> map) {
     int cnt = this.memberDAO.passwd_check(map);
     return cnt;
@@ -98,5 +104,7 @@ public class MemberProc implements MemberProcInter {
     int cnt = this.memberDAO.login(map);
     return cnt;
   }
+
+
    
 }
