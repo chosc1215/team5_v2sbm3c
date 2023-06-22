@@ -87,7 +87,7 @@
     %>
       <TR>
         <TD class='td_bs'><%= notescateVO.getSeqno() %></TD>
-        <TD><a href="/notescateno/list_by_notescateno.do?notescateno=<%=notescateVO.getNotescateno() %>&now_page=1"><%=notescateVO.getName() %></a></TD>
+        <TD><a href="/notescontents/list_by_notescateno.do?notescateno=<%=notescateVO.getNotescateno() %>&now_page=1"><%=notescateVO.getName() %></a></TD>
         <TD class='td_bs'><%=notescateVO.getCnt() %></TD>
         <TD class='td_bs'><%=notescateVO.getRdate().substring(0, 10) %></TD>
         <TD>

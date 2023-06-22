@@ -2,7 +2,8 @@
 /* Table Name: 관리자 */
 /**********************************/
 DROP TABLE admin;
-
+select*from admin;
+select*from notescontents;
 CREATE TABLE admin(
     adminno    NUMBER(10)    NOT NULL,
     id         VARCHAR(20)   NOT NULL UNIQUE, -- 아이디, 중복 안됨, 레코드를 구분 
