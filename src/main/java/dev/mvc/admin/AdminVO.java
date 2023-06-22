@@ -14,9 +14,8 @@ public class AdminVO {
   /** 등급 */
   private int grade;
   
-  
   /** 등록된 패스워드 */
-  private String old_passwd = "";  
+  private String old_passwd = "";
   /** id 저장 여부 */
   private String id_save;  
   /** 패스워드 저장 여부 */

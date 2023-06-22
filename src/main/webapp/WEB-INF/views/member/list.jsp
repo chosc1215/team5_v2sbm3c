@@ -66,6 +66,7 @@
    
     <c:forEach var="memberVO" items="${list }">
       <c:set var="memberno" value ="${memberVO.memberno}" />
+      <c:set var="adminno" value ="${adminVO.adminno}" />
       <c:set var="grade" value ="${memberVO.grade}" />
       <c:set var="id" value ="${memberVO.id}" />
       <c:set var="mname" value ="${memberVO.mname}" />

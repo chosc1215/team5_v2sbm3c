@@ -79,9 +79,9 @@ public class AdminCont {
     
     mav.addObject("cnt", cnt); // request.setAttribute("cnt", cnt)
     
-    mav.addObject("url", "/member/msg");  // /member/msg -> /member/msg.jsp
+    mav.addObject("url", "/admin/msg");  // /member/msg -> /member/msg.jsp
     
-    mav.setViewName("redirect:/member/msg.do"); // POST -> GET -> /member/msg.jsp
+    mav.setViewName("redirect:/admin/msg.do"); // POST -> GET -> /member/msg.jsp
 
 //    mav.addObject("code", "create_fail"); // 가입 실패 test용
 //    mav.addObject("cnt", 0);                 // 가입 실패 test용

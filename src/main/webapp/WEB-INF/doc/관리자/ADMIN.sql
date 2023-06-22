@@ -87,6 +87,6 @@ commit;
 SELECT adminno, id, passwd, mname, mdate, grade FROM admin ORDER BY adminno ASC;
 
 -- id 중복 확인 1=존재, 0=없음
-SELECT COUNT(id)
+SELECT COUNT(id)as cnt
 FROM admin
 WHERE id = 'admin3';
