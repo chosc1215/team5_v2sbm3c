@@ -140,7 +140,7 @@ public class AdminCont {
     
     return mav; // forward
   }
-     
+  
   /**
    * Cookie 로그인 폼
    * @return
@@ -150,11 +150,61 @@ public class AdminCont {
                              method = RequestMethod.GET)
   public ModelAndView login_cookie(HttpServletRequest request) {
     ModelAndView mav = new ModelAndView();
+    
+    Cookie[] cookies = request.getCookies();
+    Cookie cookie = null;
+  
+    String ck_admin_id = ""; // id 저장
+    String ck_admin_id_save = ""; // id 저장 여부를 체크
+    String ck_admin_passwd = ""; // passwd 저장
+    String ck_admin_passwd_save = ""; // passwd 저장 여부를 체크
+  
+    if (cookies != null) { // 쿠키가 존재한다면
+      for (int i=0; i < cookies.length; i++){
+        cookie = cookies[i]; // 쿠키 객체 추출
+      
+        if (cookie.getName().equals("ck_admin_id")){
+          ck_admin_id = cookie.getValue(); 
+        }else if(cookie.getName().equals("ck_admin_id_save")){
+          ck_admin_id_save = cookie.getValue();  // Y, N
+        }else if (cookie.getName().equals("ck_admin_passwd")){
+          ck_admin_passwd = cookie.getValue();         // 1234
+        }else if(cookie.getName().equals("ck_admin_passwd_save")){
+          ck_admin_passwd_save = cookie.getValue();  // Y, N
+        }
+      }
+    }
+  
+    //    <input type='text' class="form-control" name='id' id='id' 
+    //            value='${ck_admin_id }' required="required" 
+    //            style='width: 30%;' placeholder="아이디" autofocus="autofocus">
+    mav.addObject("ck_admin_id", ck_admin_id);
+  
+    //    <input type='checkbox' name='id_save' value='Y' 
+    //            ${ck_admin_id_save == 'Y' ? "checked='checked'" : "" }> 저장
+    mav.addObject("ck_admin_id_save", ck_admin_id_save);
+  
+    mav.addObject("ck_admin_passwd", ck_admin_passwd);
+    mav.addObject("ck_admin_passwd_save", ck_admin_passwd_save);
   
     mav.setViewName("/admin/login_form_ck"); // /admin/login_form_ck.jsp
-    
     return mav;
   }
+     
+//  /**
+//   * Cookie 로그인 폼
+//   * @return
+//   */
+//  // http://localhost:9091/admin/login.do 
+//  @RequestMapping(value = "/admin/login.do", 
+//                             method = RequestMethod.GET)
+//  public ModelAndView login_cookie(HttpServletRequest request) {
+//    ModelAndView mav = new ModelAndView();
+//  
+//    mav.setViewName("/admin/login_form_ck"); // /admin/login_form_ck.jsp
+//    
+//    return mav;
+//  }
   
   /**
   * Cookie 기반 로그인 처리

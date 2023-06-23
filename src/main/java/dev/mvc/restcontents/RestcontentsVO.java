@@ -33,6 +33,8 @@ public class RestcontentsVO {
   private String content = "";
   /** 추천수 */
   private int recom;
+  /** 평점 */
+  private int rating;
   /** 조회수 */
   private int cnt = 0;
   /** 댓글수 */
@@ -125,6 +127,14 @@ public class RestcontentsVO {
 
   public void setRecom(int recom) {
     this.recom = recom;
+  }
+
+  public int getRating() {
+    return rating;
+  }
+
+  public void setRating(int rating) {
+    this.rating = rating;
   }
 
   public int getCnt() {
