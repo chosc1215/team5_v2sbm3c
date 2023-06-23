@@ -12,14 +12,14 @@
   
   <!-- 회원 정보 -->
   <select id="read_by_id" resultType="dev.mvc.admin.AdminVO" parameterType ="String" >
-    SELECT adminno, id, passwd, mname, mdate, grade 
+    SELECT adminno, id, passwd, mname, mdate, grade
     FROM admin
     WHERE id=#{id}
   </select>
 
   <!-- adminno를 통한 회원 정보 -->
   <select id="read" resultType="dev.mvc.admin.AdminVO" parameterType ="int" >
-    SELECT adminno, id, passwd, mname, mdate, grade 
+    SELECT adminno, id, passwd, mname, mdate, grade
     FROM admin
     WHERE adminno=#{adminno}
   </select>
@@ -30,16 +30,19 @@
     WHERE id = #{id}  
   </select>
   
+  <!-- 관리자 회원 가입 -->
   <insert id="create" parameterType="dev.mvc.admin.AdminVO">
     INSERT INTO admin(adminno, id, passwd, mname, mdate, grade)
     VALUES(admin_seq.nextval, #{id}, #{passwd}, #{mname}, sysdate, #{grade})
   </insert>
   
+  <!-- 관리자 회원 목록 -->
   <select id="list" resultType="dev.mvc.admin.AdminVO">
     SELECT adminno, id, passwd, mname, mdate, grade
     FROM admin
     ORDER BY grade ASC, id ASC
   </select>
+  
   
 </mapper>
 

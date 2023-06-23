@@ -48,6 +48,8 @@ public interface AdminDAOInter {
    */
   public AdminVO read(int adminno);
   
+
+  
 }
 
 

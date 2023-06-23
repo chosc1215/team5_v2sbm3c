@@ -848,17 +848,6 @@
                             <autoIncrement>false</autoIncrement>
                             <defaultValue></defaultValue>
                           </net.java.amateras.db.visual.model.ColumnModel>
-                          <net.java.amateras.db.visual.model.ColumnModel>
-                            <columnName>RESTCONTENTSNO</columnName>
-                            <logicalName>맛집 컨텐츠 번호</logicalName>
-                            <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../../../../net.java.amateras.db.visual.model.ForeignKeyModel/references/entry/net.java.amateras.db.visual.model.ColumnModel[2]/columnType"/>
-                            <size>20</size>
-                            <notNull>false</notNull>
-                            <primaryKey>false</primaryKey>
-                            <description></description>
-                            <autoIncrement>false</autoIncrement>
-                            <defaultValue></defaultValue>
-                          </net.java.amateras.db.visual.model.ColumnModel>
                         </columns>
                         <indices/>
                         <backgroundColor>
@@ -1511,7 +1500,12 @@
         <net.java.amateras.db.visual.model.ColumnModel>
           <columnName>TEL</columnName>
           <logicalName>전화번호</logicalName>
-          <columnType class="net.java.amateras.db.dialect.ColumnType" reference="../../net.java.amateras.db.visual.model.ColumnModel[2]/columnType"/>
+          <columnType class="net.java.amateras.db.dialect.ColumnType">
+            <name>VARCHAR2</name>
+            <logicalName>String</logicalName>
+            <supportSize>true</supportSize>
+            <type>12</type>
+          </columnType>
           <size>14</size>
           <notNull>true</notNull>
           <primaryKey>false</primaryKey>

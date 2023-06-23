@@ -2,6 +2,7 @@
 /* Table Name: 관리자 */
 /**********************************/
 DROP TABLE admin;
+DROP TABLE admin CASCADE CONSTRAINTS;
 select*from admin;
 select*from notescontents;
 CREATE TABLE admin(
@@ -32,10 +33,10 @@ CREATE SEQUENCE admin_seq
   NOCYCLE;                      -- 다시 1부터 생성되는 것을 방지
 
 INSERT INTO admin(adminno, id, passwd, mname, mdate, grade)
-VALUES(admin_seq.nextval, 'admin1', '69017000', '관리자1', sysdate, 1);
+VALUES(admin_seq.nextval, 'admin1', '7140', '관리자1', sysdate, 1);
 
 INSERT INTO admin(adminno, id, passwd, mname, mdate, grade)
-VALUES(admin_seq.nextval, 'admin2', '1234', '관리자2', sysdate, 1);
+VALUES(admin_seq.nextval, 'admin2', '3863', '관리자2', sysdate, 1);
 
 INSERT INTO admin(adminno, id, passwd, mname, mdate, grade)
 VALUES(admin_seq.nextval, 'admin3', '1234', '관리자3', sysdate, 1);
@@ -72,7 +73,7 @@ COMMIT;
 -- 로그인, 1: 로그인 성공, 0: 로그인 실패
 SELECT COUNT(*) as cnt
 FROM admin
-WHERE id='admin1' AND passwd='1234'; 
+WHERE id='admin1' AND passwd='7140'; 
 
 --------------------------------------------
 --AWS 관리자 설정
