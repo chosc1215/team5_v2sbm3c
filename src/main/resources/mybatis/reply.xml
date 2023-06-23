@@ -14,6 +14,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     FROM reply
     ORDER BY replyno DESC
   </select>
+  
+  <select id="list_member_join" resultType="dev.mvc.reply.ReplyMemberVO">
+    SELECT m.id,
+              r.replyno, r.restcontentsno, r.memberno, r.content, r.passwd, r.rdate
+    FROM member m,  reply r
+    WHERE m.memberno = r.memberno
+    ORDER BY r.replyno DESC
+  </select>
 
   <select id="list_by_restcontentsno" resultType="dev.mvc.reply.ReplyVO" parameterType="int">
     SELECT replyno, restcontentsno, memberno, content, passwd, rdate
@@ -43,6 +51,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE replyno=#{replyno}
   </delete>
   
+    
+   
 
   
     

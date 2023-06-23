@@ -1,5 +1,6 @@
 package dev.mvc.reply;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,9 +14,12 @@ public interface ReplyDAOInter {
   public List<ReplyMemberVO> list_by_restcontentsno_join(int restcontentsno);
   
   public int checkPasswd(Map<String, Object> map);
+  
+  public List<ReplyMemberVO> list_member_join();
 
   public int delete(int replyno);
   
+
   
 
 }

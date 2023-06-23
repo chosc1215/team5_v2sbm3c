@@ -64,5 +64,19 @@ public class ReplyProc implements ReplyProcInter {
     int count = replyDAO.delete(replyno);
     return count;
   }
+  
+  @Override
+  public List<ReplyMemberVO> list_member_join() {
+    List<ReplyMemberVO> list = replyDAO.list_member_join();
+    
+    // 특수 문자 변경
+    for (ReplyMemberVO replyMemberVO:list) {
+      String content = replyMemberVO.getContent();
+      content = Tool.convertChar(content);
+      replyMemberVO.setContent(content);
+    }
+    
+    return list;
+  }
    
 }

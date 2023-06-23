@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.restcate.RestcateProcInter;
+import dev.mvc.admin.AdminProc;
+import dev.mvc.admin.AdminProcInter;
 import dev.mvc.member.MemberProc;
 import dev.mvc.member.MemberVO;
 
@@ -26,6 +28,11 @@ public class ReplyCont {
   @Autowired
   @Qualifier("dev.mvc.member.MemberProc") // 이름 지정
   private MemberProc memberProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.admin.AdminProc") 
+  private AdminProcInter adminProc;
+  
   
   public ReplyCont(){
     System.out.println("-> ReplyCont created.");
@@ -48,8 +55,9 @@ public class ReplyCont {
   @RequestMapping(value="/reply/list.do", method=RequestMethod.GET)
   public ModelAndView list(HttpSession session) {
     ModelAndView mav = new ModelAndView();
+       
     
-    if (memberProc.isMember(session)) {
+    if (adminProc.isAdmin(session)) {
       List<ReplyVO> list = replyProc.list();
       
       mav.addObject("list", list);

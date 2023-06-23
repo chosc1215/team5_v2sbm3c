@@ -16,4 +16,6 @@ public interface ReplyProcInter {
 
   public int delete(int replyno);
   
+  public List<ReplyMemberVO> list_member_join();
+  
 }
