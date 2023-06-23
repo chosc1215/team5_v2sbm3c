@@ -134,7 +134,7 @@
     WHERE restcateno=#{restcateno}
   </delete>
   
-  <!-- 댓글 수 증가 -->
+    <!-- 댓글 수 증가 -->
    <update id="increaseCommentscnt" parameterType="int">
      UPDATE restcontents
      SET replycnt = replycnt + 1
@@ -147,6 +147,8 @@
      SET replycnt = replycnt - 1
      WHERE restcontentsno = #{restcontentsno}
    </update>
+   
+   
   
     
 </mapper>

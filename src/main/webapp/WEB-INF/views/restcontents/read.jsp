@@ -29,6 +29,182 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     
+   <script type="text/javascript">
+  $(function(){
+      $('#btn_recom').on("click", function() { update_recom_ajax(${restcontentsno}); });
+    $('#btn_login').on('click', login_ajax);
+    $('#btn_loadDefault').on('click', loadDefault); 
+  // ---------------------------------------- 댓글 관련 시작 ----------------------------------------
+    var frm_reply = $('#frm_reply');
+    $('#content', frm_reply).on('click', check_login);  // 댓글 작성시 로그인 여부 확인
+    $('#btn_create', frm_reply).on('click', reply_create);  // 댓글 작성시 로그인 여부 확인
+    // ---------------------------------------- 댓글 관련 종료 ----------------------------------------
+    
+  });
+
+  function update_recom_ajax(restcontentsno) {
+    // console.log('-> restcontentsno:' + restcontentsno);
+    var params = "";
+    // params = $('#frm').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
+    params = 'restcontentsno=' + restcontentsno; // 공백이 값으로 있으면 안됨.
+    $.ajax(
+      {
+        url: '/restcontents/update_recom_ajax.do',
+        type: 'post',  // get, post
+        cache: false, // 응답 결과 임시 저장 취소
+        async: true,  // true: 비동기 통신
+        dataType: 'json', // 응답 형식: json, html, xml...
+        data: params,      // 데이터
+        success: function(rdata) { // 응답이 온경우
+          // console.log('-> rdata: '+ rdata);
+          var str = '';
+          if (rdata.cnt == 1) {
+            // console.log('-> btn_recom: ' + $('#btn_recom').val());  // X
+            // console.log('-> btn_recom: ' + $('#btn_recom').html());
+            $('#btn_recom').html('♥('+rdata.recom+')');
+            $('#span_animation').hide();
+          } else {
+            $('#span_animation').html("지금은 추천을 할 수 없습니다.");
+          }
+        },
+        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+        error: function(request, status, error) { // callback 함수
+          console.log(error);
+        }
+      }
+    );  //  $.ajax END
+
+    // $('#span_animation').css('text-align', 'center');
+    $('#span_animation').html("<img src='/restcontents/images/ani04.gif' style='width: 8%;'>");
+    $('#span_animation').show(); // 숨겨진 태그의 출력
+  }
+
+  function loadDefault() {
+    $('#id').val('user1');
+    $('#passwd').val('1234');
+  } 
+  
+  <%-- 로그인 --%>
+  function login_ajax() {
+    var params = "";
+    params = $('#frm_login').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
+    // params += '&${ _csrf.parameterName }=${ _csrf.token }';
+    // console.log(params);
+    // return;
+    
+    $.ajax(
+      {
+        url: '/member/login_ajax.do',
+        type: 'post',  // get, post
+        cache: false, // 응답 결과 임시 저장 취소
+        async: true,  // true: 비동기 통신
+        dataType: 'json', // 응답 형식: json, html, xml...
+        data: params,      // 데이터
+        success: function(rdata) { // 응답이 온경우
+          var str = '';
+          console.log('-> login cnt: ' + rdata.cnt);  // 1: 로그인 성공
+          
+          if (rdata.cnt == 1) {
+            // 쇼핑카트에 insert 처리 Ajax 호출
+            $('#div_login').hide();
+            // alert('로그인 성공');
+            $('#login_yn').val('YES'); // 로그인 성공 기록
+            cart_ajax_post(); // 쇼핑카트에 insert 처리 Ajax 호출     
+            
+          } else {
+            alert('로그인에 실패했습니다.<br>잠시후 다시 시도해주세요.');
+            
+          }
+        },
+        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+        error: function(request, status, error) { // callback 함수
+          console.log(error);
+        }
+      }
+    );  //  $.ajax END
+
+  } 
+
+  // 댓글 등록
+  function reply_create() {
+    var frm_reply = $('#frm_reply');
+    
+    if (check_login() !=false) { // 로그인 한 경우만 처리
+      var params = frm_reply.serialize(); // 직렬화: 키=값&키=값&...
+      // alert(params);
+      // return;
+
+      // 자바스크립트: 영숫자, 한글, 공백, 특수문자: 글자수 1로 인식
+      // 오라클: 한글 1자가 3바이트임으로 300자로 제한
+      // alert('내용 길이: ' + $('#content', frm_reply).val().length);
+      // return;
+      
+      if ($('#content', frm_reply).val().length > 300) {
+        $('#modal_title').html('댓글 등록'); // 제목 
+        $('#modal_content').html("댓글 내용은 300자이상 입력 할 수 없습니다."); // 내용
+        $('#modal_panel').modal();           // 다이얼로그 출력
+        return;  // 실행 종료
+      }
+
+      $.ajax({
+        url: "../reply/create.do", // action 대상 주소
+        type: "post",          // get, post
+        cache: false,          // 브러우저의 캐시영역 사용안함.
+        async: true,           // true: 비동기
+        dataType: "json",   // 응답 형식: json, xml, html...
+        data: params,        // 서버로 전달하는 데이터
+        success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
+          // alert(rdata);
+          var msg = ""; // 메시지 출력
+          var tag = ""; // 글목록 생성 태그
+          
+          if (rdata.cnt > 0) {
+            $('#modal_content').attr('class', 'alert alert-success'); // CSS 변경
+            msg = "댓글을 등록했습니다.";
+            $('#content', frm_reply).val('');
+            $('#passwd', frm_reply).val('');
+
+            // list_by_restcontentsno_join(); // 댓글 목록을 새로 읽어옴
+            
+            $('#reply_list').html(''); // 댓글 목록 패널 초기화, val(''): 안됨
+            $("#reply_list").attr("data-replypage", 1);  // 댓글이 새로 등록됨으로 1로 초기화
+            
+            // list_by_restcontentsno_join_add(); // 페이징 댓글, 페이징 문제 있음.
+            // alert('댓글 목록 읽기 시작');
+            // global_rdata = new Array(); // 댓글을 새로 등록했음으로 배열 초기화
+            // global_rdata_cnt = 0; // 목록 출력 글수
+            
+            // list_by_restcontentsno_join(); // 페이징 댓글
+          } else {
+            $('#modal_content').attr('class', 'alert alert-danger'); // CSS 변경
+            msg = "댓글 등록에 실패했습니다.";
+          }
+          
+          $('#modal_title').html('댓글 등록'); // 제목 
+          $('#modal_content').html(msg);     // 내용
+          $('#modal_panel').modal();           // 다이얼로그 출력
+        },
+        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+        error: function(request, status, error) { // callback 함수
+          var msg = 'ERROR request.status: '+request.status + '/ ' + error;
+          console.log(msg); // Chrome에 출력
+        }
+      });
+    }
+  }
+  
+</script>
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 </head> 
  
 <body>
@@ -126,6 +302,8 @@
       </c:if>
       
       
+      
+      
       <li class="li_none" style="clear: both;">
         <DIV style='text-decoration: none;'>
           <br>
@@ -143,9 +321,34 @@
   </fieldset>
 
 </DIV>
+
+
+<!-- ------------------------------ 댓글 영역 시작 ------------------------------ -->
+<DIV style='width: 80%; margin: 0px auto;'>
+    <HR>
+    <FORM name='frm_reply' id='frm_reply'> <%-- 댓글 등록 폼 --%>
+        <input type='hidden' name='restcontentsno' id='restcontentsno' value='${restcontentsno}'>
+        <input type='hidden' name='memberno' id='memberno' value='${sessionScope.memberno}'>
+        
+        <textarea name='content' id='content' style='width: 100%; height: 60px;' placeholder="댓글 작성, 로그인해야 등록 할 수 있습니다."></textarea>
+        <input type='password' name='passwd' id='passwd' placeholder="비밀번호">
+        <button type='button' id='btn_create'>등록</button>
+    </FORM>
+    <HR>
+    <DIV id='reply_list' data-replypage='1'>  <%-- 댓글 목록 --%>
+    
+    </DIV>
+    <DIV id='reply_list_btn' style='border: solid 1px #EEEEEE; margin: 0px auto; width: 100%; background-color: #EEFFFF;'>
+        <button id='btn_add' style='width: 100%;'>더보기 ▽</button>
+    </DIV>  
+  
+</DIV>
+
  
 <jsp:include page="../menu/bottom.jsp" flush='false' />
 </body>
+
+
  
 </html>
 
