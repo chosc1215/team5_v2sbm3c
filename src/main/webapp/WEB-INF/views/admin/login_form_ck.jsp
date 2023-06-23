@@ -45,7 +45,7 @@
         </div>   
      
         <div class="form_input">
-          <button type="submit" class="btn btn-info">로그인</button> <a class="btn btn-info" href="/admin/create.do">관리자 회원 가입</a>
+          <button type="submit" class="btn btn-info">로그인</button>
         </div>   
         
       </FORM>

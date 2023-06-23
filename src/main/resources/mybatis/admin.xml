@@ -32,8 +32,14 @@
   
   <insert id="create" parameterType="dev.mvc.admin.AdminVO">
     INSERT INTO admin(adminno, id, passwd, mname, mdate, grade)
-    VALUES(admin_seq.nextval, #{admin1}, #{passwd}, #{mname}, sysdate, #{grade});
+    VALUES(admin_seq.nextval, #{id}, #{passwd}, #{mname}, sysdate, #{grade})
   </insert>
+  
+  <select id="list" resultType="dev.mvc.admin.AdminVO">
+    SELECT adminno, id, passwd, mname, mdate, grade
+    FROM admin
+    ORDER BY grade ASC, id ASC
+  </select>
   
 </mapper>
 

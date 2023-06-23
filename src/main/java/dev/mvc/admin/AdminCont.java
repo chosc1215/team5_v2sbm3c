@@ -1,5 +1,6 @@
 package dev.mvc.admin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.Cookie;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
+import dev.mvc.member.MemberVO;
 import dev.mvc.tool.Tool; 
 
 @Controller
@@ -79,15 +81,37 @@ public class AdminCont {
     
     mav.addObject("cnt", cnt); // request.setAttribute("cnt", cnt)
     
-    mav.addObject("url", "/member/msg");  // /member/msg -> /member/msg.jsp
+    mav.addObject("url", "/admin/msg");  // /member/msg -> /member/msg.jsp
     
-    mav.setViewName("redirect:/member/msg.do"); // POST -> GET -> /member/msg.jsp
+    mav.setViewName("redirect:/admin/msg.do"); // POST -> GET -> /member/msg.jsp
 
 //    mav.addObject("code", "create_fail"); // 가입 실패 test용
 //    mav.addObject("cnt", 0);                 // 가입 실패 test용
     
     return mav;
   }
+  
+  /**
+   * 관리자 목록 출력 가능
+   * @param session
+   * @return
+   */
+   @RequestMapping(value="/admin/list.do", method=RequestMethod.GET)
+   public ModelAndView list(HttpSession session) {
+     ModelAndView mav = new ModelAndView();
+     
+     if (this.adminProc.isAdmin(session) == true) {
+       ArrayList<AdminVO> list = this.adminProc.list();
+       mav.addObject("list", list);
+
+       mav.setViewName("/admin/list"); // /webapp/WEB-INF/views/member/list.jsp
+       
+     } else {
+       mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+     }    
+     
+     return mav;
+   }
   
   /**
    * 로그아웃 처리
