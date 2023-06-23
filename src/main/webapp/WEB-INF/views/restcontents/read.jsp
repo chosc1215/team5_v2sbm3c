@@ -425,7 +425,7 @@
               <c:otherwise> <!-- 기본 이미지 출력 -->
                 <IMG src="/restcontents/images/none1.png" style="width: 100%;"> 
               </c:otherwise>
-            </c:choose>
+            </c:choose> 
         </DIV>
         
         
