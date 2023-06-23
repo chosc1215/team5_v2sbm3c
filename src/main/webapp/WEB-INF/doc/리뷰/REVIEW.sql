@@ -29,12 +29,23 @@ CREATE SEQUENCE REVIEW_seq
   CACHE 2              -- 2번은 메모리에서만 계산
   NOCYCLE; 
 
+--등록
 INSERT INTO review(REVIEWNO, RESTCONTENTSNO, MEMBERNO, RECONTENT, RATING, RDATE) 
 VALUES(REVIEW_seq.nextval, 2, 3, '좋아요', 5, sysdate);
-  
+
+--조회
 SELECT reviewno, restcontentsno, memberno, recontent, rating, rdate
 FROM review
 ORDER BY reviewno ASC;
+
+--수정
+UPDATE review
+SET recontent = '좋군요'
+WHERE reviewno = 1;
+
+--삭제
+DELETE FROM review
+WHERE reviewno = 1;
   
   
   

@@ -36,8 +36,9 @@ SELECT recommendno, memberno, restcateno, seq, rdate
 FROM recommend
 ORDER BY recommendno ASC;
 
+
 DELETE FROM recommend;
-DELETE FROM recommend WHERE memberno=1;
+DELETE FROM recommend WHERE memberno=3;
 commit;
 
 
