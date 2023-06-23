@@ -199,6 +199,8 @@ public class RestcontentsCont {
     String mname = this.adminProc.read(restcontentsVO.getAdminno()).getMname();
     mav.addObject("mname", mname);
     
+    
+    
     mav.setViewName("/restcontents/read"); // /WEB-INF/views/restcontents/read.jsp
     
     
