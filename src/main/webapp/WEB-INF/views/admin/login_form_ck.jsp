@@ -17,6 +17,23 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+<script type="text/javascript">
+  $(function() { // click 이벤트 핸들러 등록
+    $('#btn_create').on('click', create); // 회원 가입
+    $('#btn_loadDefault').on('click', loadDefault); // 기본 로그인 정보 설정
+  });
+
+  // 회원 가입  
+  function create() {
+    location.href="./create.do";
+  }
+
+  // 테스트용 기본값 로딩
+  function loadDefault() {
+    $('#id').val('admin1');
+    $('#passwd').val('7140');
+  }
+</script>
 
 </head> 
  
@@ -48,6 +65,8 @@
      
         <div class="form_input">
           <button type="submit" class="btn btn-info btn-sm">로그인</button>
+          <button type='button' id='btn_create' class="btn btn-info btn-sm">회원가입</button>
+          <button type='button' id='btn_loadDefault' class="btn btn-info btn-sm">테스트 계정</button>
         </div>   
         
       </FORM>

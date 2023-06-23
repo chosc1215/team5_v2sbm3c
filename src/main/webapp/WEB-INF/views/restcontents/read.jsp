@@ -323,13 +323,6 @@
 
 </DIV>
 
-
-<!-- 연습욕 곙정 -->
-
-
-<body>
-<jsp:include page="../menu/top.jsp" flush='false' />
-
 <!-- Modal 알림창 시작 -->
 <div class="modal fade" id="modal_panel" role="dialog">
   <div class="modal-dialog">
@@ -349,9 +342,6 @@
   </div>
 </div> <!-- Modal 알림창 종료 -->
    
-
-
-
   
   <DIV class='menu_line'></DIV>
   
