@@ -175,4 +175,42 @@ public class ReplyCont {
     return obj.toString();
   }
   
+  /**
+   * {"list":[
+          {"memberno":1,
+        "rdate":"2019-12-18 16:46:35",
+      "passwd":"123",
+      "replyno":1,
+      "id":"user1",
+      "content":"댓글 1",
+      "contentsno":1}
+    ,
+        {"memberno":1,
+       "rdate":"2019-12-18 16:46:35",
+       "passwd":"123",
+       "replyno":1,
+       "id":"user1",
+       "content":"댓글 1",
+       "contentsno":1}
+    ]
+  }
+
+   * http://localhost:9093/reply/list_by_restcontentsno_join_add.do?restcontentsno=5
+   * @param restcontentsno
+   * @return
+   */
+  /*
+   * @ResponseBody
+   * 
+   * @RequestMapping(value = "/reply/list_by_restcontentsno_join_add.do", method =
+   * RequestMethod.GET, produces = "text/plain;charset=UTF-8") public String
+   * list_by_restcontentsno_join_add(int restcontentsno) { // String
+   * msg="JSON 출력"; // return msg; List<ReplyMemberVO> list =
+   * this.replyProc.lis_by_restcontentsno_join_add(restcontentsno);
+   * 
+   * JSONObject obj = new JSONObject(); obj.put("list", list);
+   * 
+   * return obj.toString(); }
+   */
+  
 }

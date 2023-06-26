@@ -222,6 +222,16 @@
         var msg = '';
         
         $('#reply_list').html(''); // 패널 초기화, val(''): 안됨
+
+/*         // -------------------- 전역 변수에 댓글 목록 추가 --------------------
+        reply_list = rdata.list;
+        // -------------------- 전역 변수에 댓글 목록 추가 --------------------
+        // alert('rdata.list.length: ' + rdata.list.length);
+        
+        var last_index=1; 
+        if (rdata.list.length >= 2 ) { // 글이 2건 이상이라면 2건만 출력
+          last_index = 2
+        } */
         
         for (i=0; i < rdata.list.length; i++) {
           var row = rdata.list[i];
@@ -247,6 +257,91 @@
     });
     
   }
+
+  //댓글 삭제 레이어 출력
+  function reply_delete(replyno) {
+    // alert('replyno: ' + replyno);
+    var frm_reply_delete = $('#frm_reply_delete');
+    $('#replyno', frm_reply_delete).val(replyno); // 삭제할 댓글 번호 저장
+    $('#modal_panel_delete').modal();             // 삭제폼 다이얼로그 출력
+  }
+
+  // 댓글 삭제 처리
+  function reply_delete_proc(replyno) {
+    // alert('replyno: ' + replyno);
+    var params = $('#frm_reply_delete').serialize();
+    $.ajax({
+      url: "../reply/delete.do", // action 대상 주소
+      type: "post",           // get, post
+      cache: false,          // 브러우저의 캐시영역 사용안함.
+      async: true,           // true: 비동기
+      dataType: "json",   // 응답 형식: json, xml, html...
+      data: params,        // 서버로 전달하는 데이터
+      success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
+        // alert(rdata);
+        var msg = "";
+        
+        if (rdata.passwd_cnt ==1) { // 패스워드 일치
+          if (rdata.delete_cnt == 1) { // 삭제 성공
+
+            $('#btn_frm_reply_delete_close').trigger("click"); // 삭제폼 닫기, click 발생 
+            
+            $('#' + replyno).remove(); // 태그 삭제
+              
+            return; // 함수 실행 종료
+          } else {  // 삭제 실패
+            msg = "패스 워드는 일치하나 댓글 삭제에 실패했습니다. <br>";
+            msg += " 다시한번 시도해주세요."
+          }
+        } else { // 패스워드 일치하지 않음.
+          // alert('패스워드 불일치');
+          // return;
+          
+          msg = "패스워드가 일치하지 않습니다.";
+          $('#modal_panel_delete_msg').html(msg);
+
+          $('#passwd', '#frm_reply_delete').focus();  // frm_reply_delete 폼의 passwd 태그로 focus 설정
+          
+        }
+      },
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        console.log(error);
+      }
+    });
+  }
+
+/*   // // [더보기] 버튼 처리
+  function list_by_restcontentsno_join_add() {
+    // alert('list_by_restcontentsno_join_add called');
+    
+    let cnt_per_page = 2; // 2건씩 추가
+    let replyPage=parseInt($("#reply_list").attr("data-replyPage"))+cnt_per_page; // 2
+    $("#reply_list").attr("data-replyPage", replyPage); // 2
+    
+    var last_index=replyPage + 2; // 4
+    // alert('replyPage: ' + replyPage);
+    
+    var msg = '';
+    for (i=replyPage; i < last_index; i++) {
+      var row = reply_list[i];
+      
+      msg = "<DIV id='"+row.replyno+"' style='border-bottom: solid 1px #EEEEEE; margin-bottom: 10px;'>";
+      msg += "<span style='font-weight: bold;'>" + row.id + "</span>";
+      msg += "  " + row.rdate;
+      
+      if ('${sessionScope.memberno}' == row.memberno) { // 글쓴이 일치여부 확인, 본인의 글만 삭제 가능함 ★
+        msg += " <A href='javascript:reply_delete("+row.replyno+")'><IMG src='/reply/images/delete.png'></A>";
+      }
+      msg += "  " + "<br>";
+      msg += row.content;
+      msg += "</DIV>";
+
+      // alert('msg: ' + msg);
+      $('#reply_list').append(msg);
+    }    
+  } 
+   */
   
 </script>
     
@@ -254,6 +349,55 @@
  
 <body>
 <c:import url="/menu/top.do" />
+
+    <!-- Modal 알림창 시작 -->
+    <div class="modal fade" id="modal_panel" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title" id='modal_title'></h4><!-- 제목 -->
+          </div>
+          <div class="modal-body">
+            <p id='modal_content'></p>  <!-- 내용 -->
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div> <!-- Modal 알림창 종료 -->
+
+    <!-- -------------------- 댓글 삭제폼 시작 -------------------- -->
+    <div class="modal fade" id="modal_panel_delete" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">댓글 삭제</h4><!-- 제목 -->
+          </div>
+          <div class="modal-body">
+            <form name='frm_reply_delete' id='frm_reply_delete'>
+              <input type='hidden' name='replyno' id='replyno' value=''>
+              
+              <label>패스워드</label>
+              <input type='password' name='passwd' id='passwd' class='form-control'>
+              <DIV id='modal_panel_delete_msg' style='color: #AA0000; font-size: 1.1em;'></DIV>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type='button' class='btn btn-danger' 
+                         onclick="reply_delete_proc(frm_reply_delete.replyno.value); frm_reply_delete.passwd.value='';">삭제</button>
+    
+            <button type="button" class="btn btn-default" data-dismiss="modal" 
+                         id='btn_frm_reply_delete_close'>Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -------------------- 댓글 삭제폼 종료 -------------------- -->
  
 <DIV class='title_line'><A href="./list_by_restcateno.do?restcateno=${restcateno }" class='title_link'>${restcateVO.name }</A></DIV>
 
@@ -308,6 +452,8 @@
   </DIV>
   
   <DIV class='menu_line'></DIV>
+  
+  
 
   <fieldset class="fieldset_basic">
     <ul>
@@ -366,121 +512,8 @@
   </fieldset>
 
 </DIV>
-
-<!-- Modal 알림창 시작 -->
-<div class="modal fade" id="modal_panel" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title" id='modal_title'></h4><!-- 제목 -->
-      </div>
-      <div class="modal-body">
-        <p id='modal_content'></p>  <!-- 내용 -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div> <!-- Modal 알림창 종료 -->
    
-  
-  <DIV class='menu_line'></DIV>
-  
-  
-  
-  <!-- -------------------- 댓글 삭제폼 시작 -------------------- -->
-<div class="modal fade" id="modal_panel_delete" role="dialog">
-  <div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">×</button>
-        <h4 class="modal-title">댓글 삭제</h4><!-- 제목 -->
-      </div>
-      <div class="modal-body">
-        <form name='frm_reply_delete' id='frm_reply_delete'>
-          <input type='hidden' name='replyno' id='replyno' value=''>
-          
-          <label>패스워드</label>
-          <input type='password' name='passwd' id='passwd' class='form-control'>
-          <DIV id='modal_panel_delete_msg' style='color: #AA0000; font-size: 1.1em;'></DIV>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type='button' class='btn btn-danger' 
-                     onclick="reply_delete_proc(frm_reply_delete.replyno.value); frm_reply_delete.passwd.value='';">삭제</button>
 
-        <button type="button" class="btn btn-default" data-dismiss="modal" 
-                     id='btn_frm_reply_delete_close'>Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- -------------------- 댓글 삭제폼 종료 -------------------- -->
-   
-<DIV class='title_line'>
-  <A href="../restcate/list.do" class='title_link'>카테고리 그룹</A> 
-  <A href="./list_by_restcateno_search_paging.do?cateno=${restcateVO.restcateno }" class='title_link'>${restcateVO.name }</A>
-</DIV>
-
-<DIV class='content_body'>
-  <ASIDE class="aside_right">
-    <A href="./create.do?restcateno=${restcateVO.restcateno }">등록</A>
-    <span class='menu_divide' >│</span>
-    <A href="javascript:location.reload();">새로고침</A>
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_restcateno_search_paging.do?restcateno=${restcateVO.restcateno }&now_page=${param.now_page}&word=${param.word }">기본 목록형</A>    
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_restcateno_grid.do?cateno=${restcateVO.restcateno }">갤러리형</A>
-    <span class='menu_divide' >│</span>
-    <A href="./update_text.do?restcontentsno=${restcontentsno}&now_page=${param.now_page}">수정</A>
-    <span class='menu_divide' >│</span>
-    <A href="./update_file.do?restcontentsno=${restcontentsno}&now_page=${param.now_page}">파일 수정</A>  
-    <span class='menu_divide' >│</span>
-    <A href="./delete.do?restcontentsno=${restcontentsno}&now_page=${param.now_page}&restcateno=${restcateno}">삭제</A>  
-  </ASIDE> 
-  
-  <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='get' action='./list_by_restcateno_search.do'>
-      <input type='hidden' name='cateno' value='${restcateVO.restcateno }'>
-      <c:choose>
-        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='word' id='word' value='' style='width: 20%;'>
-        </c:otherwise>
-      </c:choose>
-      <button type='submit'>검색</button>
-      <c:if test="${param.word.length() > 0 }">
-        <button type='button' 
-                     onclick="location.href='./list_by_restcateno_search.do?cateno=${restcateVO.restcateno}&word='">검색 취소</button>  
-      </c:if>    
-    </form>
-  </DIV>
-  
-  <DIV class='menu_line'></DIV>
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   <%-- ******************** Ajax 기반 로그인 폼 시작 ******************** --%>
   <DIV id='div_login' style='width: 80%; margin: 0px auto; display: none;'>
   <FORM name='frm_login' id='frm_login' method='POST' action='/member/login_ajax.do' class="form-horizontal">
@@ -559,7 +592,7 @@
         <button type='button' id='btn_create'>등록</button>
     </FORM>
     <HR>
-    <DIV id='reply_list' data-replypage='1'>  <%-- 댓글 목록 --%>
+    <DIV id='reply_list' data-replypage='0'>  <%-- 댓글 목록 --%>
     
     </DIV>
     <DIV id='reply_list_btn' style='border: solid 1px #EEEEEE; margin: 0px auto; width: 100%; background-color: #EEFFFF;'>
