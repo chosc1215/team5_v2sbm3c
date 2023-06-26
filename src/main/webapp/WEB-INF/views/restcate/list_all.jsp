@@ -10,7 +10,7 @@
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
 <title>동서울 터미널과 함께하는 맛집리스트</title>
-<link rel="shortcut icon" href="/images/star.png" /> <%-- /static 기준 --%>
+<link rel="shortcut icon" href="/images/star.jpg" /> <%-- /static 기준 --%>
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
  
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

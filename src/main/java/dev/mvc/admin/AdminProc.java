@@ -37,15 +37,18 @@ public class AdminProc implements AdminProcInter {
   }
 
   @Override
-  public boolean isAdmin(HttpSession session){
-    boolean sw = false;
+  public boolean isAdmin(HttpSession session) {
+    boolean admin_sw = false;
     
-    String id_admin = (String)session.getAttribute("id_admin");
-    
-    if (id_admin != null){
-      sw = true;
+    if (session != null) {
+      String admin_id = (String)session.getAttribute("admin_id");
+      
+      if (admin_id != null) {
+        admin_sw = true; // 정상적으로 로그인 한 경우
+      }
     }
-    return sw;
+    
+    return admin_sw;
   }
   
   
