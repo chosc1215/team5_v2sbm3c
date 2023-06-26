@@ -38,6 +38,8 @@
     var frm_reply = $('#frm_reply');
     $('#content', frm_reply).on('click', check_login);  // 댓글 작성시 로그인 여부 확인
     $('#btn_create', frm_reply).on('click', reply_create);  // 댓글 작성시 로그인 여부 확인
+
+    list_by_restcontentsno_join();
     // ---------------------------------------- 댓글 관련 종료 ----------------------------------------
     
   });
@@ -175,7 +177,7 @@
             $('#content', frm_reply).val('');
             $('#passwd', frm_reply).val('');
 
-            // list_by_restcontentsno_join(); // 댓글 목록을 새로 읽어옴
+            list_by_restcontentsno_join(); // 댓글 목록을 새로 읽어옴
             
             $('#reply_list').html(''); // 댓글 목록 패널 초기화, val(''): 안됨
             $("#reply_list").attr("data-replypage", 1);  // 댓글이 새로 등록됨으로 1로 초기화
@@ -202,6 +204,48 @@
         }
       });
     }
+  }
+  
+  // contentsno 별 소속된 댓글 목록
+  function list_by_restcontentsno_join() {
+    var params = 'restcontentsno=' + ${restcontentsVO.restcontentsno };
+
+    $.ajax({
+      url: "../reply/list_by_restcontentsno_join.do", // action 대상 주소
+      type: "get",           // get, post
+      cache: false,          // 브러우저의 캐시영역 사용안함.
+      async: true,           // true: 비동기
+      dataType: "json",   // 응답 형식: json, xml, html...
+      data: params,        // 서버로 전달하는 데이터
+      success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
+        // alert(rdata);
+        var msg = '';
+        
+        $('#reply_list').html(''); // 패널 초기화, val(''): 안됨
+        
+        for (i=0; i < rdata.list.length; i++) {
+          var row = rdata.list[i];
+          
+          msg += "<DIV id='"+row.replyno+"' style='border-bottom: solid 1px #EEEEEE; margin-bottom: 10px;'>";
+          msg += "<span style='font-weight: bold;'>" + row.id + "</span>";
+          msg += "  " + row.rdate;
+          
+          if ('${sessionScope.memberno}' == row.memberno) { // 글쓴이 일치여부 확인, 본인의 글만 삭제 가능함 ★
+            msg += " <A href='javascript:reply_delete("+row.replyno+")'><IMG src='/reply/images/delete.png'></A>";
+          }
+          msg += "  " + "<br>";
+          msg += row.content;
+          msg += "</DIV>";
+        }
+        // alert(msg);
+        $('#reply_list').append(msg);
+      },
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        console.log(error);
+      }
+    });
+    
   }
   
 </script>
