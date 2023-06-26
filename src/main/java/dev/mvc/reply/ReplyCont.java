@@ -1,6 +1,8 @@
 package dev.mvc.reply;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -140,6 +142,37 @@ public class ReplyCont {
     obj.put("list", list);
  
     return obj.toString();     
+  }
+  
+  /**
+   * 패스워드를 검사한 후 삭제 
+   * http://localhost:9090/resort/reply/delete.do?replyno=1&passwd=1234
+   * {"delete_cnt":0,"passwd_cnt":0}
+   * {"delete_cnt":1,"passwd_cnt":1}
+   * @param replyno
+   * @param passwd
+   * @return
+   */
+  @ResponseBody
+  @RequestMapping(value = "/reply/delete.do", 
+                              method = RequestMethod.POST,
+                              produces = "text/plain;charset=UTF-8")
+  public String delete(int replyno, String passwd) {
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("replyno", replyno);
+    map.put("passwd", passwd);
+    
+    int passwd_cnt = replyProc.checkPasswd(map); // 패스워드 일치 여부, 1: 일치, 0: 불일치
+    int delete_cnt = 0;                                    // 삭제된 댓글
+    if (passwd_cnt == 1) { // 패스워드가 일치할 경우
+      delete_cnt = replyProc.delete(replyno); // 댓글 삭제
+    }
+    
+    JSONObject obj = new JSONObject();
+    obj.put("passwd_cnt", passwd_cnt); // 패스워드 일치 여부, 1: 일치, 0: 불일치
+    obj.put("delete_cnt", delete_cnt); // 삭제된 댓글
+    
+    return obj.toString();
   }
   
 }
