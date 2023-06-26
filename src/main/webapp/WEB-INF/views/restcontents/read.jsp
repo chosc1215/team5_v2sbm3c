@@ -389,6 +389,98 @@
   
   <DIV class='menu_line'></DIV>
   
+  
+  
+  <!-- -------------------- 댓글 삭제폼 시작 -------------------- -->
+<div class="modal fade" id="modal_panel_delete" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">×</button>
+        <h4 class="modal-title">댓글 삭제</h4><!-- 제목 -->
+      </div>
+      <div class="modal-body">
+        <form name='frm_reply_delete' id='frm_reply_delete'>
+          <input type='hidden' name='replyno' id='replyno' value=''>
+          
+          <label>패스워드</label>
+          <input type='password' name='passwd' id='passwd' class='form-control'>
+          <DIV id='modal_panel_delete_msg' style='color: #AA0000; font-size: 1.1em;'></DIV>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type='button' class='btn btn-danger' 
+                     onclick="reply_delete_proc(frm_reply_delete.replyno.value); frm_reply_delete.passwd.value='';">삭제</button>
+
+        <button type="button" class="btn btn-default" data-dismiss="modal" 
+                     id='btn_frm_reply_delete_close'>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- -------------------- 댓글 삭제폼 종료 -------------------- -->
+   
+<DIV class='title_line'>
+  <A href="../restcate/list.do" class='title_link'>카테고리 그룹</A> 
+  <A href="./list_by_restcateno_search_paging.do?cateno=${restcateVO.restcateno }" class='title_link'>${restcateVO.name }</A>
+</DIV>
+
+<DIV class='content_body'>
+  <ASIDE class="aside_right">
+    <A href="./create.do?restcateno=${restcateVO.restcateno }">등록</A>
+    <span class='menu_divide' >│</span>
+    <A href="javascript:location.reload();">새로고침</A>
+    <span class='menu_divide' >│</span>
+    <A href="./list_by_restcateno_search_paging.do?restcateno=${restcateVO.restcateno }&now_page=${param.now_page}&word=${param.word }">기본 목록형</A>    
+    <span class='menu_divide' >│</span>
+    <A href="./list_by_restcateno_grid.do?cateno=${restcateVO.restcateno }">갤러리형</A>
+    <span class='menu_divide' >│</span>
+    <A href="./update_text.do?restcontentsno=${restcontentsno}&now_page=${param.now_page}">수정</A>
+    <span class='menu_divide' >│</span>
+    <A href="./update_file.do?restcontentsno=${restcontentsno}&now_page=${param.now_page}">파일 수정</A>  
+    <span class='menu_divide' >│</span>
+    <A href="./delete.do?restcontentsno=${restcontentsno}&now_page=${param.now_page}&restcateno=${restcateno}">삭제</A>  
+  </ASIDE> 
+  
+  <DIV style="text-align: right; clear: both;">  
+    <form name='frm' id='frm' method='get' action='./list_by_restcateno_search.do'>
+      <input type='hidden' name='cateno' value='${restcateVO.restcateno }'>
+      <c:choose>
+        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
+          <input type='text' name='word' id='word' value='${param.word }' style='width: 20%;'>
+        </c:when>
+        <c:otherwise> <%-- 검색하지 않는 경우 --%>
+          <input type='text' name='word' id='word' value='' style='width: 20%;'>
+        </c:otherwise>
+      </c:choose>
+      <button type='submit'>검색</button>
+      <c:if test="${param.word.length() > 0 }">
+        <button type='button' 
+                     onclick="location.href='./list_by_restcateno_search.do?cateno=${restcateVO.restcateno}&word='">검색 취소</button>  
+      </c:if>    
+    </form>
+  </DIV>
+  
+  <DIV class='menu_line'></DIV>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <%-- ******************** Ajax 기반 로그인 폼 시작 ******************** --%>
   <DIV id='div_login' style='width: 80%; margin: 0px auto; display: none;'>
   <FORM name='frm_login' id='frm_login' method='POST' action='/member/login_ajax.do' class="form-horizontal">
@@ -452,6 +544,7 @@
             </c:choose> 
         </DIV>
         
+       
         
 
 <!-- ------------------------------ 댓글 영역 시작 ------------------------------ -->
