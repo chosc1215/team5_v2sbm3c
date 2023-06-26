@@ -78,5 +78,21 @@ public class ReplyProc implements ReplyProcInter {
     
     return list;
   }
+
+  /*
+   * @Override public List<ReplyMemberVO> lis_by_restcontentsno_join_add(int
+   * restcontentsno) { List<ReplyMemberVO> list =
+   * this.replyDAO.lis_by_restcontentsno_join_add(restcontentsno);
+   * 
+   * String content = "";
+   * 
+   * // 특수 문자 변경 for (ReplyMemberVO replyMemberVO:list) { content =
+   * replyMemberVO.getContent(); content = Tool.convertChar(content);
+   * replyMemberVO.setContent(content); }
+   * 
+   * return list; }
+   */
+
+
    
 }
