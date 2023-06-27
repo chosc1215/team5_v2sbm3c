@@ -1,78 +1,79 @@
 /**********************************/
 /* Table Name: 설문조사항목 */
 /**********************************/
+DROP TABLE calendar;
 CREATE TABLE calendar(
-  calendarno  INT          NOT NULL   AUTO_INCREMENT PRIMARY KEY,
-  labeldate   VARCHAR(10)  NOT NULL, -- 출력할 날짜 2013-10-20 
-  label       VARCHAR(20)  NOT NULL, -- 달력에 출력될 레이블
-  title       VARCHAR(100) NOT NULL, -- 제목(*)
-  content     TEXT          NOT NULL, -- 글 내용
-  cnt         INT           DEFAULT 0, -- 조회수
-  regdate     DATETIME      NOT NULL  -- 등록 날짜
+  calendarno  NUMBER(8)     NOT NULL   PRIMARY KEY,
+  labeldate   VARCHAR(10)   NOT NULL,  -- 출력할 날짜 2013-10-20 
+  title       VARCHAR(100)  NOT NULL,  -- 제목(*)
+  content     CLOB          NOT NULL,  -- 글 내용
+  rdate       DATE          NOT NULL,   -- 등록 날짜
+  passwd     VARCHAR(60)   NOT NULL, -- 패스워드, 영숫자 조합
+  memberno    NUMBER(10) NOT NULL,     -- 회원 번호, 레코드를 구분하는 컬럼
+  
+  FOREIGN KEY (memberno) REFERENCES member (memberno)
 );
 
-INSERT INTO calendar(labeldate, label, title, content, cnt, regdate)
-VALUES('2015-02-16', '개강', '개강 안내입니다.', '"개강 내용입니다.', 0, now());
+COMMENT ON TABLE calendar is '일정';
+COMMENT ON COLUMN calendar.calendarno is '일정 번호';
+COMMENT ON COLUMN calendar.labeldate is '달력에 출력되는 문장의 기준 날짜';
+COMMENT ON COLUMN calendar.title is '제목';
+COMMENT ON COLUMN calendar.content is '글 내용';
+COMMENT ON COLUMN calendar.rdate is '등록 날짜';
+COMMENT ON COLUMN calendar.passwd is '패스워드';
+COMMENT ON COLUMN calendar.memberno is '회원 번호';
 
-INSERT INTO calendar(labeldate, label, title, content, cnt, regdate)
-VALUES('2015-02-17', '종강', '종강 안내입니다.', '"종강 내용입니다.', 0, now());
+DROP SEQUENCE calendar_seq;
 
-INSERT INTO calendar(labeldate, label, title, content, cnt, regdate)
-VALUES('2015-02-19', '설날', '설날 안내입니다.', '"설날 내용입니다.', 0, now());
+CREATE SEQUENCE calendar_seq
+  START WITH 1         -- 시작 번호
+  INCREMENT BY 1       -- 증가값
+  MAXVALUE 99999999    -- 최대값: 99999999 --> NUMBER(8) 대응
+  CACHE 2              -- 2번은 메모리에서만 계산
+  NOCYCLE;             -- 다시 1부터 생성되는 것을 방지
 
+
+INSERT INTO calendar(calendarno, labeldate, title, content, rdate,passwd, memberno)
+VALUES(calendar_seq.nextval, '2023-06-26', '주차장 건설로 임시 폐쇄합니다.', '주차장 건설로 임시 폐쇄합니다.', sysdate,'1234', 3);
+
+INSERT INTO calendar(calendarno, labeldate,  title, content, rdate,passwd, memberno)
+VALUES(calendar_seq.nextval, '2023-06-29', '주차장 건설로 임시 폐쇄합니다.2','333', sysdate,'1234', 3);
+       
 -- 전체 목록
-SELECT calendarno, labeldate, label, title, content, cnt, regdate
+SELECT calendarno, labeldate, title, content,  rdate, memberno
 FROM calendar
 ORDER BY calendarno DESC;
 
- calendarno labeldate  label title     content    cnt regdate
- ---------- ---------- ----- --------- ---------- --- ---------------------
-          3 2015-02-19 설날    설날 안내입니다. "설날 내용입니다.   0 2015-02-16 19:49:23.0
-          2 2015-02-17 종강    종강 안내입니다. "종강 내용입니다.   0 2015-02-16 19:49:22.0
-          1 2015-02-16 개강    개강 안내입니다. "개강 내용입니다.   0 2015-02-16 19:49:20.0
-
-
--- 특정 날짜의 목록
-SELECT calendarno, labeldate, label
+-- 6월달만 출력, SUBSTR(labeldate, 1, 7): 첫번재부터 7개의 문자 추출
+SELECT calendarno, labeldate, title, content, cnt, rdate, memberno
 FROM calendar
-WHERE labeldate = '2015-02-16';
+WHERE SUBSTR(labeldate, 1, 7) = '2023-06'
+ORDER BY calendarno ASC;
 
- calendarno labeldate  label
- ---------- ---------- -----
-          1 2015-02-16 개강
-
-          
-SELECT calendarno, labeldate, label
+-- 특정 날짜만 출력
+SELECT calendarno, labeldate, title, content, cnt, rdate, memberno
 FROM calendar
-WHERE substring(labeldate, 1, 7) = '2015-02'; -- 2월달
+WHERE labeldate = '2023-06-26'
+ORDER BY calendarno ASC;
 
- calendarno labeldate  label
- ---------- ---------- -----
-          1 2015-02-16 개강
-          2 2015-02-17 종강
-          3 2015-02-19 설날
-
-          
 -- 조회
+SELECT calendarno, labeldate, title, content, cnt, rdate, memberno
+FROM calendar
+WHERE calendarno=1;
+          
+-- 수정
+UPDATE calendar
+SET labeldate='2023-06-27', title='주차장 완공', content='주차장 완공했습니다.'
+WHERE calendarno = 1;
+
+-- 조회수 증가
 UPDATE calendar
 SET cnt = cnt + 1
 WHERE calendarno = 1;
 
-
-SELECT calendarno, labeldate, label, title, content, cnt, regdate
-FROM calendar
-WHERE calendarno = 1;
-
-
--- 변경
-UPDATE calendar
-SET labeldate='', label='', title='', content=''
-WHERE calendarno = 1;
-
-
 -- 삭제
 DELETE FROM calendar
-WHERE calendarno = 1;
+WHERE calendarno = 3;
 
-
-
+--패스워드 확인 
+select*count 

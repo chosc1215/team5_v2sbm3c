@@ -1,5 +1,7 @@
 package dev.mvc.calendar;
 
+import java.util.ArrayList;
+
 public interface CalendarProcInter {
   
   /**
@@ -9,6 +11,6 @@ public interface CalendarProcInter {
    */
   public int create(CalendarVO calendarVO); // 추상 메소드
   
-
+  public ArrayList<CalendarVO>list_all();
 
 }

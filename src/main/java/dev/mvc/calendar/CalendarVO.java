@@ -19,12 +19,10 @@ public class CalendarVO {
   private String title;
   /** 내용 */
   private String content;
-  /** 조회수 */
-  private int cnt;
   /** 글 등록일 */
   private String rdate;
   /** 회원 번호 */
-  private String memberno;
+  private int memberno;
   
   
   public int getCalendarno() {
@@ -51,26 +49,20 @@ public class CalendarVO {
   public void setContent(String content) {
     this.content = content;
   }
-  public int getCnt() {
-    return cnt;
-  }
-  public void setCnt(int cnt) {
-    this.cnt = cnt;
-  }
-
-  public String getMemberno() {
-    return memberno;
-  }
-  public void setMemberno(String memberno) {
-    this.memberno = memberno;
-  }
   public String getRdate() {
     return rdate;
   }
   public void setRdate(String rdate) {
     this.rdate = rdate;
   }
+  public int getMemberno() {
+    return memberno;
+  }
+  public void setMemberno(int memberno) {
+    this.memberno = memberno;
+  }
   
+
   
 }
 

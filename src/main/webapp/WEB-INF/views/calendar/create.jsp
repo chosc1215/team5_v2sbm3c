@@ -25,9 +25,9 @@
     <span class='menu_divide' >│</span>
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
-    <A href="./list.do?calendarno=${calendarVO.calendarno }">기본 목록형</A>    
+    <A href="./list_by_calendarno.do?calendarno=${calendarVO.calendarno }">기본 목록형</A>    
     <span class='menu_divide' >│</span>
-    <A href="./list_by_grid.do?calendarno=${calendarVO.calendarno }">갤러리형</A>
+    <A href="./list_by_calendarno_grid.do?calendarno=${calendarVO.calendarno }">갤러리형</A>
   </ASIDE> 
   
   <DIV style="text-align: right; clear: both;">  
@@ -53,27 +53,17 @@
   <DIV class='menu_line'></DIV>
   
   <FORM name='frm' method='POST' action='./create.do' enctype="multipart/form-data">
-    <input type="hidden" name="calendarno" value="${param.calendarno }">
     
     <div>
-       <label>제목</label>
-       <input type='text' name='title' value='서울 우수 야경' required="required" 
-                 autofocus="autofocus" class="form-control" style='width: 100%;'>
+       <label>날짜</label>
+       <input type="date" name='labeldate' min='2023-06-01'  max='2023-12-31' value="2023-07-01">
+       <input type='text' name='title' value='여름성수기' required="required" 
+                 autofocus="autofocus" class="form-control" style='width: 100%;' placeholder="일정 입력 기기.">
     </div>
     <div>
        <label>내용</label>
-       <textarea name='content' required="required" class="form-control" rows="12" style='width: 100%;'>한강 야경보며 멍때리기</textarea>
-    </div>
-    <div>
-       <label>검색어</label>
-       <input type='text' name='word' value='서울,야경,힐링,산책,한강,전철,여행,응봉산,응봉역' required="required" 
-                 class="form-control" style='width: 100%;'>
-    </div>   
-    <div>
-       <label>이미지</label>
-       <input type='file' class="form-control" name='file1MF' id='file1MF' 
-                 value='' placeholder="파일 선택">
-    </div>   
+       <textarea name='content' required="required" class="form-control" rows="10" style='width: 100%;'>한강 야경보며 멍때리기</textarea>
+    </div> 
     <div>
        <label>패스워드</label>
        <input type='password' name='passwd' value='1234' required="required" 
@@ -81,7 +71,7 @@
     </div>   
     <div class="content_body_bottom">
       <button type="submit" class="btn btn-primary">등록</button>
-      <button type="button" onclick="location.href='./list_by_calendarno.do?calendarno=${param.calendarno}'" class="btn btn-primary">목록</button>
+      <button type="button" onclick="location.href='./list_by_restcateno=${param.calendarno}'" class="btn btn-primary">목록</button>
     </div>
   
   </FORM>

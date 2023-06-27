@@ -5,8 +5,17 @@
 <mapper namespace="dev.mvc.calendar.CalendarDAOInter">
   <!-- 등록: 추가한 레코드 갯수를 리턴 -->
   <insert id="create" parameterType="dev.mvc.calendar.CalendarVO">
-    INSERT INTO calendar(calendarno, labeldate, label, title, content, cnt, rdate, memberno)
-    VALUES(calendar_seq.nextval, #{labeldate}, #{label}, #{title}, #{content}, #{cnt}, sysdate, #{memberno})
+    INSERT INTO calendar(calendarno, labeldate, title, content,rdate,passwd, memberno)
+    VALUES(calendar_seq.nextval, #{labeldate},  #{title}, #{content},  sysdate,#{passwd}, #{memberno})
   </insert>
+  
+    <!-- 목록(관리자 접근): CateVO 객체를 생성하여 변수에 컬럼의 값을 저장 후, 
+               ArrayList<CateVO> 객체를 생성한후 add까지 자동 진행하여 ArrayList 객체를 return -->
+  <select id="list_all" resultType="dev.mvc.calendar.CalendarVO">
+    SELECT calendarno, labeldate, title, content,  rdate, memberno
+    FROM calendar
+    ORDER BY calendarno DESC
+  </select>
+  
   
 </mapper>

@@ -27,19 +27,27 @@
  
 <DIV class='title_line'>공지사항</DIV>
 
-<DIV class='content_body'>
-  <DIV id='panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
-    <FORM name='frm_create' id='frm_create' method='POST' action='./create.do'>
-      <label>카테고리 이름</label>
-      <input type='text' name='name' value='' required="required" style='width: 25%; margin-right: 10px;' autofocus="autofocus">
-      <label> 출력 순서</label>
-      <input type='number' name='seqno' min="1" value='1' required="required" style='width: 5%;'>
-  
-      <button type="submit" id='submit' class='btn btn-info btn-sm' style='height: 28px; margin-bottom: 5px;'>등록</button>
-      <button type="button" onclick="location.href='/notescate/list_all.do'" class='btn btn-info btn-sm' style='height: 28px; margin-bottom: 5px;'>취소</button>
-    </FORM>
-  </DIV>
-  
+ <DIV class='content_body'>
+ 
+ 
+<%--  <c:if test="${sessionScope.admin_id != null }"> --%>
+      <c:if test="${not empty sessionScope.admin_id}">
+    <div id=
+   
+'panel_create' style='padding: 10px 0px 10px 0px; background-color: #F9F9F9; width: 100%; text-align: center;'>
+        <form name='frm_create' id='frm_create' method='POST' action='./create.do'>
+            <label>카테고리 이름</label>
+            <input type='text' name='name' value='' required="required" style='width: 25%; margin-right: 10px;' autofocus="autofocus">
+            <label> 출력 순서</label>
+            <input type=
+           
+'number' name='seqno' min="1" value='1' required="required" style='width: 5%;'>
+        
+            <button type="submit" id='submit' class='btn btn-info btn-sm' style='height: 28px; margin-bottom: 5px;'>등록</button>
+            <button type="button" onclick="location.href='/notescate/list_all.do'" class='btn btn-info btn-sm' style='height: 28px; margin-bottom: 5px;'>취소</button>
+        </form>
+    </div>
+</c:if>
   
  <!-- 테스트 -->
   
@@ -59,7 +67,7 @@
       <c:if test="${param.word.length() > 0 }">
         <button type='button' class='btn btn-info btn-sm' 
                     onclick="location.href='./list_by_notescateno.do?notescateno=${notescateVO.notescateno}&word='">검색 취소</button>  
-      </c:if>    
+      </c:if>   
     </form>
   </DIV>
 

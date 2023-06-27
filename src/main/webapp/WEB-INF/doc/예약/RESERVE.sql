@@ -10,7 +10,9 @@ CREATE TABLE calendar(
   content     CLOB          NOT NULL, -- 글 내용
   cnt         NUMBER(7)    DEFAULT 0, -- 조회수
   rdate       DATE         NOT NULL,  -- 등록날짜
+  passwd     VARCHAR(60)   NOT NULL, -- 패스워드, 영숫자 조합
   MEMBERNO   NUMBER(10)		 NOT NULL,  -- 레코드를 구분하는 컬럼
+  
   FOREIGN KEY (memberno) REFERENCES member (memberno)
 );
 
@@ -22,6 +24,7 @@ COMMENT ON COLUMN calendar.title is '제목';
 COMMENT ON COLUMN calendar.content is '글 내용';
 COMMENT ON COLUMN calendar.cnt is '조회수';
 COMMENT ON COLUMN calendar.rdate is '등록날짜';
+COMMENT ON COLUMN calendar.passwd is '패스워드';
 COMMENT ON COLUMN calendar.memberno is '회원번호 , 레코드를 구분하는 컬럼';
 
 DROP SEQUENCE calendar_seq;
