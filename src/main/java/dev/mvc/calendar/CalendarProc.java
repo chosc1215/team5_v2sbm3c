@@ -19,7 +19,7 @@ public class CalendarProc implements CalendarProcInter {
   @Override
   public ArrayList<CalendarVO> list_all() {
     ArrayList<CalendarVO>list=this.calendarDAO.list_all();
-    return null;
+    return list;
   }
 
 }
