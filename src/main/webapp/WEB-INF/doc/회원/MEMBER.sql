@@ -26,7 +26,7 @@ COMMENT ON COLUMN MEMBER.ZIPCODE is '우편번호';
 COMMENT ON COLUMN MEMBER.ADDRESS1 is '주소1';
 COMMENT ON COLUMN MEMBER.ADDRESS2 is '주소2';
 COMMENT ON COLUMN MEMBER.MDATE is '가입일';
-COMMENT ON COLUMN MEMBER.GRADE is '등급';
+COMMENT ON COLUMN MEMBER.GRADE is '등급'; -- 등급(1~10: 관리자, 11~20: 회원, 40~49: 정지 회원, 99: 탈퇴 회원)
 
 DROP SEQUENCE member_seq;
 CREATE SEQUENCE member_seq
@@ -115,7 +115,6 @@ SET id='user5', mname='아로미', tel='111-1111-1111', zipcode='00000',
 WHERE memberno=1;
 
 COMMIT;
-
  
 5. 삭제
 1) 모두 삭제
@@ -153,5 +152,10 @@ WHERE id='user1@gmail.com' AND passwd='1234';
 SELECT memberno, id, passwd, mname, tel, zipcode, address1, address2, mdate, grade
 FROM member
 WHERE memberno= 12;
+
+8. 회원 탈퇴
+UPDATE member 
+SET grade=99
+WHERE memberno=5;
 
 

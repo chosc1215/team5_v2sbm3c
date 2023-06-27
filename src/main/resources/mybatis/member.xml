@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper
-PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
  
 <mapper namespace = "dev.mvc.member.MemberDAOInter">
   <select id="checkID" resultType="int" parameterType="String">
@@ -49,12 +48,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE memberno=#{memberno}
   </delete>
   
-  <!-- 회원정보 삭제(회원 탈퇴) -->
-  <delete id="delete_m" parameterType="int">
-    DELETE FROM member
-    WHERE memberno=#{memberno}
-  </delete>
-  
   <!--  현재 패스워드 검사 -->
   <select id="passwd_check" parameterType="HashMap" resultType="int">
     SELECT COUNT(memberno) as cnt
@@ -63,7 +56,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   </select>
   
   <!-- 패스워드 변경 -->
-  <update id="passwd_update" parameterType="HashMap">
+  <update id="passwd_update"  parameterType="HashMap">
     UPDATE member
     SET passwd=#{passwd}
     WHERE memberno=#{memberno}
@@ -76,12 +69,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE id=#{id} AND passwd=#{passwd}
   </select>
   
-<!--   <select id ="id_find" >
-    SELECT memberno, id, passwd, mname, tel, zipcode, address1, address2, mdate, grade
-    FROM member
-    WHERE memberno=12
-    ORDER BY grade ASC, id ASC
-  </select>   -->
+  <!-- 회원 탈퇴(탈퇴회원등급으로 수정) -->
+  <update id="member_delete" parameterType="int">
+    UPDATE member 
+    SET grade=#{grade}
+    WHERE memberno=#{memberno}
+  </update>
+
+  
 
        
 </mapper> 

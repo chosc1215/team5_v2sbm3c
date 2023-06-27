@@ -61,7 +61,7 @@ public class MemberProc implements MemberProcInter {
         grade = (int)session.getAttribute("grade");
       }
       
-      if (id != null && grade <= 20){ // 관리자 + 회원
+      if (id != null && grade >=11 && grade <= 20){ // 관리자 + 회원
         sw = true;  // 로그인 한 경우
       }
     }
@@ -82,12 +82,6 @@ public class MemberProc implements MemberProcInter {
   }
   
   @Override
-  public int delete_m(int memberno) {
-    int cnt = this.memberDAO.delete_m(memberno);
-    return cnt;
-  }
-  
-  @Override
   public int passwd_check(HashMap<Object, Object> map) {
     int cnt = this.memberDAO.passwd_check(map);
     return cnt;
@@ -102,6 +96,15 @@ public class MemberProc implements MemberProcInter {
   @Override
   public int login(HashMap<String, Object> map) {
     int cnt = this.memberDAO.login(map);
+    return cnt;
+  }
+
+  /**
+   * 회원탈퇴(등급:99)
+   */
+  @Override
+  public int member_delete(int memberno) {
+    int cnt = this.memberDAO.member_delete(memberno);
     return cnt;
   }
   

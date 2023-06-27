@@ -226,7 +226,6 @@ public class AdminCont {
                             HttpSession session,
                             AdminVO adminVO) {
     ModelAndView mav = new ModelAndView();
-    System.out.println("->로그인성공유무: " + this.adminProc.isAdmin(session));
    
     int cnt = adminProc.login(adminVO);
     if (cnt == 1) { // 로그인 성공

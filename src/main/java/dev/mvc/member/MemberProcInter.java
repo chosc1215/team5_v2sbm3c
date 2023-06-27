@@ -65,13 +65,6 @@ public interface MemberProcInter {
   public int delete(int memberno);
   
   /**
-   * 회원 탈퇴
-   * @param memberno
-   * @return
-   */
-  public int delete_m(int memberno);  
-  
-  /**
    * 현재 패스워드 검사
    * @param map
    * @return 0: 일치하지 않음, 1: 일치함
@@ -89,5 +82,13 @@ public interface MemberProcInter {
    * 로그인 처리
    */
   public int login(HashMap<String, Object> map);
+  
+  /**
+   * 회원탈퇴 (grade:99)
+   * @param memberno
+   * @return
+   */
+  public int member_delete(int memberno);
+  
   
 }
