@@ -2,18 +2,18 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:set var="notesnotescontentsno" value="${notesnotescontentsVO.notesnotescontentsno }" />
-<c:set var="notesnotescateno" value="${notesnotescontentsVO.notesnotescateno }" />
-<c:set var="title" value="${notesnotescontentsVO.title }" />        
-<c:set var="file1" value="${notesnotescontentsVO.file1 }" />
-<c:set var="file1saved" value="${notesnotescontentsVO.file1saved }" />
-<c:set var="thumb1" value="${notesnotescontentsVO.thumb1 }" />
-<c:set var="content" value="${notesnotescontentsVO.content }" />
-<c:set var="map" value="${notesnotescontentsVO.map }" />
-<c:set var="youtube" value="${notesnotescontentsVO.youtube }" />
-<c:set var="word" value="${notesnotescontentsVO.word }" />
-<c:set var="size1_label" value="${notesnotescontentsVO.size1_label }" />
-<c:set var="rdate" value="${notesnotescontentsVO.rdate.substring(0, 16) }" />
+<c:set var="notescontentsno" value="${notescontentsVO.notescontentsno }" />
+<c:set var="notescateno" value="${notescontentsVO.notescateno }" />
+<c:set var="title" value="${notescontentsVO.title }" />        
+<c:set var="file1" value="${notescontentsVO.file1 }" />
+<c:set var="file1saved" value="${notescontentsVO.file1saved }" />
+<c:set var="thumb1" value="${notescontentsVO.thumb1 }" />
+<c:set var="content" value="${notescontentsVO.content }" />
+<c:set var="map" value="${notescontentsVO.map }" />
+<c:set var="youtube" value="${notescontentsVO.youtube }" />
+<c:set var="word" value="${notescontentsVO.word }" />
+<c:set var="size1_label" value="${notescontentsVO.size1_label }" />
+<c:set var="rdate" value="${notescontentsVO.rdate.substring(0, 16) }" />
  
 <!DOCTYPE html> 
 <html lang="ko"> 
@@ -35,41 +35,41 @@
 <body>
 <c:import url="/menu/top.do" />
  
-<DIV class='title_line'><A href="./list_by_notesnotescateno.do?notesnotescateno=${notesnotescateno }" class='title_link'>${notesnotescateVO.name }</A></DIV>
+<DIV class='title_line'><A href="./list_by_notescateno.do?notescateno=${notescateno }" class='title_link'>${notescateVO.name }</A></DIV>
 
 <DIV class='content_body'>
   <ASIDE class="aside_right">
     <%-- 관리자로 로그인해야 메뉴가 출력됨 --%>
     <c:if test="${sessionScope.admin_id != null }">
       <%--
-      http://localhost:9091/notesnotescontents/create.do?notesnotescateno=1
-      http://localhost:9091/notesnotescontents/create.do?notesnotescateno=2
-      http://localhost:9091/notesnotescontents/create.do?notesnotescateno=3
+      http://localhost:9091/notescontents/create.do?notescateno=1
+      http://localhost:9091/notescontents/create.do?notescateno=2
+      http://localhost:9091/notescontents/create.do?notescateno=3
       --%>
-      <A href="./create.do?notesnotescateno=${notesnotescateVO.notesnotescateno }">등록</A>
+      <A href="./create.do?notescateno=${notescateVO.notescateno }">등록</A>
       <span class='menu_divide' >│</span>
-      <A href="./update_text.do?notesnotescontentsno=${notesnotescontentsno}&now_page=${param.now_page}&word=${param.word }">글 수정</A>
+      <A href="./update_text.do?notescontentsno=${notescontentsno}&now_page=${param.now_page}&word=${param.word }">글 수정</A>
       <span class='menu_divide' >│</span>
-      <A href="./update_file.do?notesnotescontentsno=${notesnotescontentsno}&now_page=${param.now_page}">파일 수정</A>  
+      <A href="./update_file.do?notescontentsno=${notescontentsno}&now_page=${param.now_page}">파일 수정</A>  
       <span class='menu_divide' >│</span>
-      <A href="./map.do?notesnotescateno=${notesnotescateno }&notesnotescontentsno=${notesnotescontentsno}">지도</A>
+      <A href="./map.do?notescateno=${notescateno }&notescontentsno=${notescontentsno}">지도</A>
       <span class='menu_divide' >│</span>
-      <A href="./youtube.do?notesnotescateno=${notesnotescateno }&notesnotescontentsno=${notesnotescontentsno}">Youtube</A>
+      <A href="./youtube.do?notescateno=${notescateno }&notescontentsno=${notescontentsno}">Youtube</A>
       <span class='menu_divide' >│</span>
-      <A href="./delete.do?notesnotescontentsno=${notesnotescontentsno}&now_page=${param.now_page}&notesnotescateno=${notesnotescateno}">삭제</A>  
+      <A href="./delete.do?notescontentsno=${notescontentsno}&now_page=${param.now_page}&notescateno=${notescateno}">삭제</A>  
       <span class='menu_divide' >│</span>
     </c:if>
 
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>    
-    <A href="./list_by_notesnotescateno.do?notesnotescateno=${notesnotescateno }&now_page=${param.now_page}&word=${param.word }">기본 목록형</A>    
+    <A href="./list_by_notescateno.do?notescateno=${notescateno }&now_page=${param.now_page}&word=${param.word }">기본 목록형</A>    
     <span class='menu_divide' >│</span>
-    <A href="./list_by_notesnotescateno_grid.do?notesnotescateno=${notesnotescateno }&now_page=${param.now_page}&word=${param.word }">갤러리형</A>
+    <A href="./list_by_notescateno_grid.do?notescateno=${notescateno }&now_page=${param.now_page}&word=${param.word }">갤러리형</A>
   </ASIDE> 
   
   <DIV style="text-align: right; clear: both;">  
-    <form name='frm' id='frm' method='get' action='./list_by_notesnotescateno.do'>
-      <input type='hidden' name='notesnotescateno' value='${notesnotescateVO.notesnotescateno }'>  <%-- 게시판의 구분 --%>
+    <form name='frm' id='frm' method='get' action='./list_by_notescateno.do'>
+      <input type='hidden' name='notescateno' value='${notescateVO.notescateno }'>  <%-- 게시판의 구분 --%>
       
       <c:choose>
         <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
@@ -82,7 +82,7 @@
       <button type='submit' class='btn btn-info btn-sm'>검색</button>
       <c:if test="${param.word.length() > 0 }">
         <button type='button' class='btn btn-info btn-sm' 
-                    onclick="location.href='./list_by_notesnotescateno.do?notesnotescateno=${notesnotescateVO.notesnotescateno}&word='">검색 취소</button>  
+                    onclick="location.href='./list_by_notescateno.do?notescateno=${notescateVO.notescateno}&word='">검색 취소</button>  
       </c:if>    
     </form>
   </DIV>
@@ -95,11 +95,11 @@
         <DIV style="width: 100%; word-break: break-all;">
           <c:choose>
             <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}">
-              <%-- /static/notesnotescontents/storage/ --%>
-              <img src="/notesnotescontents/storage/${file1saved }" style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'> 
+              <%-- /static/notescontents/storage/ --%>
+              <img src="/notescontents/storage/${file1saved }" style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'> 
             </c:when>
             <c:otherwise> <!-- 기본 이미지 출력 -->
-              <img src="/notesnotescontents/images/none1.png" style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'> 
+              <img src="/notescontents/images/none1.png" style='width: 50%; float: left; margin-top: 0.5%; margin-right: 1%;'> 
             </c:otherwise>
           </c:choose>
 
@@ -134,7 +134,7 @@
       <li class="li_none">
         <DIV>
           <c:if test="${file1.trim().length() > 0 }"> <%-- ServletRegister.java: registrationBean.addUrlMappings("/download"); --%>
-            첨부 파일: <a href='/download?dir=/notesnotescontents/storage&filename=${file1saved}&downname=${file1}'>${file1}</a> (${size1_label})  
+            첨부 파일: <a href='/download?dir=/notescontents/storage&filename=${file1saved}&downname=${file1}'>${file1}</a> (${size1_label})  
           </c:if>
         </DIV>
       </li>   

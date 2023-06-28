@@ -55,19 +55,10 @@
     <form name='frm' id='frm' method='get' action='./list_by_notescateno.do'>
       <input type='hidden' name='notescateno' value='${notescateVO.notescateno }'>  <%-- 게시판의 구분 --%>
       
-      <c:choose>
-        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='word' id='word' value='${param.word }' class='input_word'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='word' id='word' value='' class='input_word'>
-        </c:otherwise>
-      </c:choose>
-      <button type='submit' class='btn btn-info btn-sm'>검색</button>
-      <c:if test="${param.word.length() > 0 }">
-        <button type='button' class='btn btn-info btn-sm' 
-                    onclick="location.href='./list_by_notescateno.do?notescateno=${notescateVO.notescateno}&word='">검색 취소</button>  
-      </c:if>   
+      
+        
+      
+      
     </form>
   </DIV>
 
@@ -108,18 +99,7 @@
           <A href="./update_seqno_decrease.do?notescateno=<%=notescateVO.getNotescateno() %>" title="우선순위 높이기"><IMG src="/notescate/images/decrease.png" class="icon"></A>
           <A href="./update_seqno_increase.do?notescateno=<%=notescateVO.getNotescateno() %>" title="우선순위 낮추기"><IMG src="/notescate/images/increase.png" class="icon"></A>
  
-          <%
-          if (notescateVO.getVisible().equals("Y")) {
-          %>
-            <A href="./update_visible_n.do?notescateno=<%=notescateVO.getNotescateno() %>"><IMG src="/notescate/images/show.png" class="icon"></A>
-          <%  
-          } else { // N
-          %>
-            <A href="./update_visible_y.do?notescateno=<%=notescateVO.getNotescateno() %>"><IMG src="/notescate/images/hide.png" class="icon"></A>
-          <%  
-          }
-          %>
-                    
+
         </TD>
       </TR>
     <%  

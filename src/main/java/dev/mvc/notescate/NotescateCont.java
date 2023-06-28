@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.admin.AdminProcInter;
+import dev.mvc.notescate.NotescateVO;
+import dev.mvc.notescontents.Notescontents;
+import dev.mvc.notescontents.NotescontentsVO;
+import dev.mvc.notescontents.NotescontentsProcInter;
 import dev.mvc.tool.Tool;
 
 @Controller
@@ -24,6 +28,10 @@ public class NotescateCont {
   @Autowired
   @Qualifier("dev.mvc.admin.AdminProc") 
   private AdminProcInter adminProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.notescontents.NotescontentsProc") 
+  private NotescontentsProcInter notescontentsProc;
   
  
   
@@ -170,81 +178,84 @@ public class NotescateCont {
   }
  
   // 삭제폼, 수정폼을 복사하여 개발 
-  // http://localhost:9091/notescate/read_delete.do?notescateno=1
-  /*
-   * @RequestMapping(value="/notescate/read_delete.do", method=RequestMethod.GET)
-   * public ModelAndView read_delete(HttpSession session, int notescateno) {
-   * ModelAndView mav = new ModelAndView();
-   * 
-   * if (this.adminProc.isAdmin(session) == true) { NotescateVO notescateVO =
-   * this.notescateProc.read(notescateno); // 수정용 데이터 mav.addObject("notescateVO",
-   * notescateVO);
-   * 
-   * ArrayList<NotescateVO> list = this.notescateProc.list_all(); // 목록 출력용 데이터
-   * mav.addObject("list", list);
-   * 
-   * // 특정 카테고리에 속한 레코드 갯수를 리턴 int count_by_notescateno =
-   * this.contentsProc.count_by_notescateno(notescateno);
-   * mav.addObject("count_by_notescateno", count_by_notescateno);
-   * 
-   * mav.setViewName("/notescate/read_delete"); //
-   * /WEB-INF/views/notescate/read_delete.jsp
-   * 
-   * } else { mav.setViewName("/admin/login_need"); //
-   * /WEB-INF/views/admin/login_need.jsp }
-   * 
-   * return mav; }
-   */
+  // http://localhost:9091/notescate/read_delete.do?cateno=1
+  @RequestMapping(value="/notescate/read_delete.do", method=RequestMethod.GET)
+  public ModelAndView read_delete(HttpSession session, int notescateno) {
+    ModelAndView mav = new ModelAndView();
+    
+    if (this.adminProc.isAdmin(session) == true) {
+      NotescateVO notescateVO = this.notescateProc.read(notescateno); // 수정용 데이터
+      mav.addObject("notescateVO", notescateVO);
+      
+      ArrayList<NotescateVO> list = this.notescateProc.list_all(); // 목록 출력용 데이터
+      mav.addObject("list", list);
+      
+      // 특정 카테고리에 속한 레코드 갯수를 리턴
+      int count_by_notescateno = this.notescontentsProc.count_by_notescateno(notescateno);
+      mav.addObject("count_by_notescateno", count_by_notescateno);
+      
+      mav.setViewName("/notescate/read_delete"); // /WEB-INF/views/cate/read_delete.jsp
+      
+    } else {
+      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+    }
+    
+    return mav;
+  }
   
   // 삭제 처리, 수정 처리를 복사하여 개발
   // 자식 테이블 레코드 삭제 -> 부모 테이블 레코드 삭제
   /**
    * 카테고리 삭제
    * @param session
-   * @param notescateno 삭제할 카테고리 번호
+   * @param cateno 삭제할 카테고리 번호
    * @return
    */
-  /*
-   * @RequestMapping(value="/notescate/delete.do", method=RequestMethod.POST)
-   * public ModelAndView delete(HttpSession session, int notescateno) { // <form>
-   * 태그의 값이 자동으로 저장됨 // System.out.println("-> notescateno: " +
-   * notescateVO.getNotescateno()); // System.out.println("-> name: " +
-   * notescateVO.getName());
-   * 
-   * ModelAndView mav = new ModelAndView();
-   * 
-   * if (this.adminProc.isAdmin(session) == true) { ArrayList<ContentsVO> list =
-   * this.contentsProc.list_by_notescateno(notescateno); // 자식 레코드 목록 읽기
-   * 
-   * for(ContentsVO contentsVO : list) { // 자식 레코드 관련 파일 삭제 //
-   * ------------------------------------------------------------------- // 파일 삭제
-   * 시작 // -------------------------------------------------------------------
-   * String file1saved = contentsVO.getFile1saved(); String thumb1 =
-   * contentsVO.getThumb1();
-   * 
-   * String uploadDir = Contents.getUploadDir(); Tool.deleteFile(uploadDir,
-   * file1saved); // 실제 저장된 파일삭제 Tool.deleteFile(uploadDir, thumb1); // preview
-   * 이미지 삭제 // -------------------------------------------------------------------
-   * // 파일 삭제 종료 //
-   * ------------------------------------------------------------------- }
-   * 
-   * this.contentsProc.delete_by_notescateno(notescateno); // 자식 레코드 삭제
-   * 
-   * int cnt = this.notescateProc.delete(notescateno); // 카테고리 삭제
-   * 
-   * if (cnt == 1) { mav.setViewName("redirect:/notescate/list_all.do"); // 자동 주소
-   * 이동, Spring 재호출
-   * 
-   * } else { mav.addObject("code", "delete_fail");
-   * mav.setViewName("/notescate/msg"); // /WEB-INF/views/notescate/msg.jsp }
-   * 
-   * mav.addObject("cnt", cnt);
-   * 
-   * } else { mav.setViewName("/admin/login_need"); //
-   * /WEB-INF/views/admin/login_need.jsp }
-   * 
-   * return mav; }
-   */
+  @RequestMapping(value="/notescate/delete.do", method=RequestMethod.POST)
+  public ModelAndView delete(HttpSession session, int notescateno) { // <form> 태그의 값이 자동으로 저장됨
+//    System.out.println("-> cateno: " + cateVO.getCateno());
+//    System.out.println("-> name: " + cateVO.getName());
+    
+    ModelAndView mav = new ModelAndView();
+    
+    if (this.adminProc.isAdmin(session) == true) {
+      ArrayList<NotescontentsVO> list = this.notescontentsProc.list_by_notescateno(notescateno);// 자식 레코드 목록 읽기
+      
+      for(NotescontentsVO notescontentsVO : list) { // 자식 레코드 관련 파일 삭제
+        // -------------------------------------------------------------------
+        // 파일 삭제 시작
+        // -------------------------------------------------------------------
+        String file1saved = notescontentsVO.getFile1saved();
+        String thumb1 = notescontentsVO.getThumb1();
+        
+        String uploadDir = Notescontents.getUploadDir();
+        Tool.deleteFile(uploadDir, file1saved);  // 실제 저장된 파일삭제
+        Tool.deleteFile(uploadDir, thumb1);     // preview 이미지 삭제
+        // -------------------------------------------------------------------
+        // 파일 삭제 종료
+        // -------------------------------------------------------------------
+      }
+      
+      this.notescontentsProc.delete_by_notescateno(notescateno); // 자식 레코드 삭제     
+            
+      int cnt = this.notescateProc.delete(notescateno); // 카테고리 삭제
+      
+      if (cnt == 1) {
+        mav.setViewName("redirect:/notescate/list_all.do");       // 자동 주소 이동, Spring 재호출
+        
+      } else {
+        mav.addObject("code", "delete_fail");
+        mav.setViewName("/notescate/msg"); // /WEB-INF/views/cate/msg.jsp
+      }
+      
+      mav.addObject("cnt", cnt);
+      
+    } else {
+      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+    }
+    
+    return mav;
+  }
   
   /**
    * 출력 순서 올림(상향, 10 등 -> 1 등), seqno: 10 -> 1
