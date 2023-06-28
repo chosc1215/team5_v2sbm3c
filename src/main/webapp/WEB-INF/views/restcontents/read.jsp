@@ -145,7 +145,7 @@
     if (check_login() !=false) { // 로그인 한 경우만 처리
       var params = frm_reply.serialize(); // 직렬화: 키=값&키=값&...
       // alert(params);
-      // return;
+      // return; 
 
       // 자바스크립트: 영숫자, 한글, 공백, 특수문자: 글자수 1로 인식
       // 오라클: 한글 1자가 3바이트임으로 300자로 제한

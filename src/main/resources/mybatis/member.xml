@@ -73,7 +73,7 @@
   <update id="member_delete" parameterType="int">
     UPDATE member 
     SET grade=#{grade}
-    WHERE memberno=#{memberno}
+    WHERE memberno=#{memberno} 
   </update>
 
   
