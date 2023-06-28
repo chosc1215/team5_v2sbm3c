@@ -63,11 +63,7 @@ function recommend(){
                   <li class="nav-item dropdown"> <%-- 회원 서브 메뉴 --%>
                       <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">회원</a>
                       <div class="dropdown-menu">
-<<<<<<< HEAD
-                          <a class="dropdown-item" href="http://43.201.106.87:8000//ais/recommend_form/?memberno=${sessionScope.memberno }">관심분야 등록하고 추천받기</a>
-=======
                           <a class="dropdown-item" href="javascript:recommend();">관심분야 등록하고 추천받기</a>
->>>>>>> 8b1e2c867c6b25410f9e20dc81bb44badf14b66e
                           <a class="dropdown-item" href="/member/create.do">회원 가입</a>
                           <a class="dropdown-item" href="/member/read.do">가입 정보 조회/수정</a>
                           <a class="dropdown-item" href="#">아이디 찾기</a>
