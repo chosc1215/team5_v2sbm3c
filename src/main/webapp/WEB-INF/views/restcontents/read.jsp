@@ -44,42 +44,6 @@
     
   });
 
-  function update_recom_ajax(restcontentsno) {
-    // console.log('-> restcontentsno:' + restcontentsno);
-    var params = "";
-    // params = $('#frm').serialize(); // 직렬화, 폼의 데이터를 키와 값의 구조로 조합
-    params = 'restcontentsno=' + restcontentsno; // 공백이 값으로 있으면 안됨.
-    $.ajax(
-      {
-        url: '/restcontents/update_recom_ajax.do',
-        type: 'post',  // get, post
-        cache: false, // 응답 결과 임시 저장 취소
-        async: true,  // true: 비동기 통신
-        dataType: 'json', // 응답 형식: json, html, xml...
-        data: params,      // 데이터
-        success: function(rdata) { // 응답이 온경우
-          // console.log('-> rdata: '+ rdata);
-          var str = '';
-          if (rdata.cnt == 1) {
-            // console.log('-> btn_recom: ' + $('#btn_recom').val());  // X
-            // console.log('-> btn_recom: ' + $('#btn_recom').html());
-            $('#btn_recom').html('♥('+rdata.recom+')');
-            $('#span_animation').hide();
-          } else {
-            $('#span_animation').html("지금은 추천을 할 수 없습니다.");
-          }
-        },
-        // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
-        error: function(request, status, error) { // callback 함수
-          console.log(error);
-        }
-      }
-    );  //  $.ajax END
-
-    // $('#span_animation').css('text-align', 'center');
-    $('#span_animation').html("<img src='/restcontents/images/ani04.gif' style='width: 8%;'>");
-    $('#span_animation').show(); // 숨겨진 태그의 출력
-  }
 
   function loadDefault() {
     $('#id').val('user1');
