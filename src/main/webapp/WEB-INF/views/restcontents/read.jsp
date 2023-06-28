@@ -352,7 +352,7 @@
             </form>
           </div>
           <div class="modal-footer">
-            <button type='button' class='btn btn-danger' 
+            <button type="submit" class='btn btn-danger' 
                          onclick="reply_delete_proc(frm_reply_delete.replyno.value); frm_reply_delete.passwd.value='';">삭제</button>
     
             <button type="button" class="btn btn-default" data-dismiss="modal" 
@@ -534,7 +534,8 @@
         
         <textarea name='content' id='content' style='width: 100%; height: 60px;' placeholder="댓글 작성, 로그인해야 등록 할 수 있습니다."></textarea>
         <input type='password' name='passwd' id='passwd' placeholder="비밀번호">
-        <button type='button' id='btn_create'>등록</button>
+        <button type="button" id='btn_create'>등록</button>
+
     </FORM>
     <HR>
     <DIV id='reply_list' data-replypage='0'>  <%-- 댓글 목록 --%>

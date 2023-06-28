@@ -65,7 +65,7 @@
       </otherwise>
     </choose>
   </select>
-  
+   
   <!-- 카테고리별 검색 + 페이징 목록 -->
   <select id="list_by_restcateno_search_paging" resultType="dev.mvc.restcontents.RestcontentsVO" parameterType="dev.mvc.restcontents.RestcontentsVO">
    SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, rdate, file1, file1saved, thumb1, size1, map, youtube, r
