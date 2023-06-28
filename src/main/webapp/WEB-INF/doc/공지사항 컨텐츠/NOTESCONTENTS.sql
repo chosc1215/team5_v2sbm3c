@@ -7,10 +7,11 @@ CREATE TABLE NOTESCONTENTS(
 		TITLE                         		VARCHAR2(200)		 NOT NULL,
 		CONTENT                       		CLOB		 NOT NULL,
 		WORD                          		VARCHAR2(300)		 NULL ,
+        RDATE                         		DATE		 NOT NULL,
 		FILE1                         		VARCHAR2(100)		 NULL ,
 		FILE1SAVED                    		VARCHAR2(100)		 NULL ,
 		THUMB1                        		VARCHAR2(100)		 NULL ,
-		SIZE1                         		NUMBER(10)		 NULL ,
+		SIZE1                         		NUMBER(10)		 NULL ,   
 		MAP                           		VARCHAR2(1000)		 NULL ,
 		NOTESCATENO                   		NUMBER(10)		 NOT NULL ,
 		ADMINNO                       		NUMBER(10)		 NOT NULL,
@@ -23,6 +24,7 @@ COMMENT ON COLUMN NOTESCONTENTS.NOTESCONTENTSNO is '공지사항컨텐츠번호'
 COMMENT ON COLUMN NOTESCONTENTS.TITLE is '제목';
 COMMENT ON COLUMN NOTESCONTENTS.CONTENT is '내용';
 COMMENT ON COLUMN NOTESCONTENTS.WORD is '검색어';
+COMMENT ON COLUMN NOTESCONTENTS.RDATE is '등록일';
 COMMENT ON COLUMN NOTESCONTENTS.FILE1 is '메인 이미지';
 COMMENT ON COLUMN NOTESCONTENTS.FILE1SAVED is '실제 저장된 메인 이미지';
 COMMENT ON COLUMN NOTESCONTENTS.THUMB1 is '메인 이미지 Preview';
@@ -43,8 +45,8 @@ CREATE SEQUENCE notescontents_seq
   NOCYCLE;                      -- 다시 1부터 생성되는 것을 방지
 
 -- 등록 화면 유형 1: 커뮤니티(공지사항, 게시판, 자료실, 갤러리,  Q/A...)글 등록
-INSERT INTO notescontents(notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno )
-VALUES(notescontents_seq.nextval, '공지사항 컨텐츠', '공지사항 내용', '검색어', 'space.jpg', 'space_1.jpg', 'space_t.jpg', 1000,1,3 );
+INSERT INTO notescontents(notescontentsno, title, content, word,rdate, file1, file1saved, thumb1, size1,notescateno, adminno )
+VALUES(notescontents_seq.nextval, '공지사항 컨텐츠', '공지사항 내용', '검색어',sysdate, 'space.jpg', 'space_1.jpg', 'space_t.jpg', 1000,1,2 );
 
 -- SELECT READ
 SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno

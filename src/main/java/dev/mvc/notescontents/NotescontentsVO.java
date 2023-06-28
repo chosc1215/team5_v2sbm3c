@@ -32,22 +32,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class NotescontentsVO {
     /** 컨텐츠 번호 */
-    private int contentsno;
+    private int notescontentsno;
     /** 관리자 번호 */
     private int adminno;
-    public int getContentsno() {
-      return contentsno;
-    }
-
-    public void setContentsno(int contentsno) {
-      this.contentsno = contentsno;
-    }
-
     /** 카테고리 번호 */
     private int notescateno;
     /** 제목 */
     private String title = "";
     /** 내용 */
+
     private String content = "";
     /** 추천수 */
     private int recom;
@@ -107,12 +100,15 @@ public class NotescontentsVO {
     /** 현재 페이지 */
     private int now_page = 1;
 
+    
+    
+
     public int getNotescontentsno() {
-      return contentsno;
+      return notescontentsno;
     }
 
-    public void setNotescontentsno(int contentsno) {
-      this.contentsno = contentsno;
+    public void setNotescontentsno(int notescontentsno) {
+      this.notescontentsno = notescontentsno;
     }
 
     public int getAdminno() {
@@ -122,6 +118,7 @@ public class NotescontentsVO {
     public void setAdminno(int adminno) {
       this.adminno = adminno;
     }
+    
 
     public int getNotescateno() {
       return notescateno;
@@ -138,6 +135,8 @@ public class NotescontentsVO {
     public void setTitle(String title) {
       this.title = title;
     }
+    
+    
 
     public String getContent() {
       return content;
@@ -322,6 +321,7 @@ public class NotescontentsVO {
     public void setNow_page(int now_page) {
       this.now_page = now_page;
     }
+    
     
 
 }

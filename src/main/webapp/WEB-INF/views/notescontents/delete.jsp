@@ -39,8 +39,7 @@
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
     <A href="./list_by_notescateno_search_paging.do?notescateno=${notescateno }">기본 목록형</A>    
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_notescateno_grid.do?notescateno=${notescateno }">갤러리형</A>
+
     <span class='menu_divide' >│</span>
     <A href="./update_text.do?notescontentsno=${notescontentsno}">수정</A>
     <span class='menu_divide' >│</span>

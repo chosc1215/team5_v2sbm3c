@@ -37,8 +37,7 @@
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>
     <A href="./list_by_notescateno.do?notescateno=${notescateno }">기본 목록형</A>    
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_notescateno_grid.do?notescateno=${notescateno }">갤러리형</A>
+
   </ASIDE> 
   
   <DIV style="text-align: right; clear: both;">  

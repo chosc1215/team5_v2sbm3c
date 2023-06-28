@@ -84,7 +84,7 @@
         
         <button type='button' onclick="location.href='./create.do?notescateno=${notescateno}'" class="btn btn-info btn-sm">새로운 컨텐츠 등록</button>
         <button type='button' onclick="location.href='./list_by_notescateno.do?notescateno=${notescateno}'" class="btn btn-info btn-sm">목록</button>
-        <button type='button' onclick="location.href='./list_by_notescateno_grid.do?notescateno=${notescateno}'" class="btn btn-info btn-sm">갤러리 목록</button>
+
       </LI>
     </UL>
   </fieldset>

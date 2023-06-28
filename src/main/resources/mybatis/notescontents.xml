@@ -6,20 +6,20 @@
 
 <!-- 등록한 레코드 갯수 1 리턴 --> 
   <insert id="create" parameterType="dev.mvc.notescontents.NotescontentsVO">
-    INSERT INTO notescontents(notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno )
-    VALUES(notescontents_seq.nextval, #{title} ,#{content},#{word}, #{file1}, #{file1saved}, #{thumb1}, #{size1},#{notescateno},#{adminno} )
+    INSERT INTO notescontents(notescontentsno, title,rdate, content, word, file1, file1saved, thumb1, size1,notescateno, adminno )
+    VALUES(notescontents_seq.nextval, #{title} ,sysdate,#{content},#{word}, #{file1}, #{file1saved}, #{thumb1}, #{size1},#{notescateno},#{adminno} )
   </insert>
   
   <!-- 모든 카테고리의 등록된 글목록 -->
   <select id="list_all" resultType="dev.mvc.notescontents.NotescontentsVO">
-    SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+    SELECT notescontentsno, title,rdate, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
     FROM notescontents
     ORDER BY notescontentsno DESC
   </select> 
   
   <!-- 특정 카테고리의 등록된 글목록 -->
   <select id="list_by_notescateno" resultType="dev.mvc.notescontents.NotescontentsVO" parameterType="int">
-    SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+    SELECT notescontentsno, title,rdate, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
     FROM notescontents
     WHERE notescateno=#{notescateno}
     ORDER BY notescontentsno DESC
@@ -28,7 +28,7 @@
  
   <!-- 일반적인 조회 -->
   <select id="read" resultType="dev.mvc.notescontents.NotescontentsVO" parameterType="int">
-    SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+    SELECT notescontentsno,rdate, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
     FROM notescontents
     WHERE notescontentsno = #{notescontentsno}
   </select>
@@ -43,7 +43,7 @@
 
   <!-- 카테고리별 검색 목록 -->
   <select id="list_by_notescateno_search" resultType="dev.mvc.notescontents.NotescontentsVO" parameterType="dev.mvc.notescontents.NotescontentsVO">
-    SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+    SELECT notescontentsno,rdate, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
     FROM notescontents
     <choose>
       <when test="word == null or word == ''"> <!-- 검색하지 않는 경우, 모든 레코드 -->
@@ -76,11 +76,11 @@
   
   <!-- 카테고리별 검색 + 페이징 목록 -->
   <select id="list_by_notescateno_search_paging" resultType="dev.mvc.notescontents.NotescontentsVO" parameterType="dev.mvc.notescontents.NotescontentsVO">
-   SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+   SELECT notescontentsno, title,rdate, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
     FROM  (
-              SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno, rownum as r
+              SELECT notescontentsno, title,rdate, content, word, file1, file1saved, thumb1, size1,notescateno, adminno, rownum as r
               FROM (
-                        SELECT notescontentsno, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+                        SELECT notescontentsno, title,rdate, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
                         FROM notescontents
                         <choose>
                           <when test="word == null or word == ''"> <!-- 검색하지 않는 경우 -->

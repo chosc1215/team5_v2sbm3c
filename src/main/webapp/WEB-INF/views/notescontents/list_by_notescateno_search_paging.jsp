@@ -43,8 +43,7 @@
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>    
     <A href="./list_by_notescateno.do?notescateno=${param.notescateno }&now_page=${param.now_page == null ? 1 : param.now_page}&word=${param.word }">기본 목록형</A>    
-    <span class='menu_divide' >│</span>
-    <A href="./list_by_notescateno_grid.do?notescateno=${param.notescateno }&now_page=${param.now_page == null ? 1 : param.now_page}&word=${param.word }">갤러리형</A>
+    
   </ASIDE>
   
   <DIV style="text-align: right; clear: both;">  
