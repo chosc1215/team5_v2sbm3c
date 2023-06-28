@@ -1,6 +1,7 @@
 package dev.mvc.admin;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -50,10 +51,6 @@ public class AdminProc implements AdminProcInter {
     
     return admin_sw;
   }
-  
-  
-  
-  
 
   @Override
   public AdminVO read(int adminno) {
@@ -66,6 +63,32 @@ public class AdminProc implements AdminProcInter {
     ArrayList<AdminVO> list = this.adminDAO.list();
     return list;
   }
+
+  @Override
+  public AdminVO admin_read(int adminno) {
+    AdminVO adminVO = this.adminDAO.admin_read(adminno);
+    return adminVO;
+  }
+
+  @Override
+  public int update(AdminVO adminVO) {
+    int cnt = this.adminDAO.update(adminVO);
+    return cnt;
+  }
+
+  @Override
+  public int passwd_check(HashMap<Object, Object> map) {
+    int cnt = this.adminDAO.passwd_check(map);
+    return cnt;
+  }
+
+  @Override
+  public int passwd_update(HashMap<Object, Object> map) {
+    int cnt = this.adminDAO.passwd_update(map);
+    return cnt;
+  }
+
+
 
   
   

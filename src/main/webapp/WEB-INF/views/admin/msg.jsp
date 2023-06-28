@@ -52,7 +52,7 @@
                          onclick="location.href='/'"
                          class="btn btn-primary">시작 화면</button>
             <button type='button' 
-                         onclick="location.href='/member/list.do'"
+                         onclick="location.href='/admin/list.do'"
                          class="btn btn-primary">목록</button>                   
           </LI>                                                                       
         </c:when>

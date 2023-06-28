@@ -80,15 +80,14 @@
           <c:when test="${grade >= 40 and grade <= 49}"><img src='/admin/images/x.png' title="탈퇴 회원" class="icon"></c:when>
         </c:choose>  
       </TD>
-      <TD class='td_left'><A href="./read.do?adminno=${adminno}">${id}</A></TD>
-      <TD class='td_left'><A href="./read.do?adminno=${adminno}">${mname}</A></TD>
+      <TD class='td_left'><A href="./admin_read.do?adminno=${adminno}">${id}</A></TD>
+      <TD class='td_left'><A href="./admin_read.do?adminno=${adminno}">${mname}</A></TD>
       <TD class='td_left'></TD>
       <TD class='td_left'></TD>
       <TD class='td_basic'>${mdate.substring(0, 10)}</TD> <%-- 년월일 --%>
       <TD class='td_basic'>
         <A href="./passwd_update.do?adminno=${adminno}"><IMG src='/admin/images/passwd.png' title='패스워드 변경' class="icon"></A>
-        <A href="./read.do?adminno=${adminno}"><IMG src='/admin/images/update.png' title='수정' class="icon"></A>
-        <A href="./delete.do?adminno=${adminno}"><IMG src='/admin/images/delete.png' title='삭제' class="icon"></A>
+        <A href="./admin_read.do?adminno=${adminno}"><IMG src='/admin/images/update.png' title='수정' class="icon"></A>
       </TD>
       
     </TR>

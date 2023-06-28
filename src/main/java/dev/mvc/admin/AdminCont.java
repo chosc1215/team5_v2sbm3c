@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
-import dev.mvc.member.MemberVO;
 import dev.mvc.tool.Tool; 
 
 @Controller
@@ -298,6 +296,108 @@ public class AdminCont {
     System.out.println("-> mname: " + this.adminProc.read(adminno).getMname());
     return "";
   
+  }
+  /**
+   * 관리자 조회
+   * @param session
+   * @param adminno
+   * @return
+   */
+  @RequestMapping(value = "/admin/admin_read.do", method = RequestMethod.GET)
+  public ModelAndView admin_read(HttpSession session, int adminno) {
+    ModelAndView mav = new ModelAndView();
+
+    if (this.adminProc.isAdmin(session) == true) {
+      mav.setViewName("/admin/admin_read");
+      
+      AdminVO adminVO = this.adminProc.admin_read(adminno);
+      mav.addObject("adminVO", adminVO);
+
+    } else {
+      mav.setViewName("/admin/login_need");
+    }
+    
+    return mav;   
+
+  }
+  /**
+   * 관리자 정보 수정
+   * @param adminVO
+   * @return
+   */
+  @RequestMapping(value="/admin/update.do", method=RequestMethod.POST)
+  public ModelAndView update(AdminVO adminVO) {
+    ModelAndView mav = new ModelAndView();
+    
+    int cnt= adminProc.update(adminVO);
+    
+    if (cnt == 1) {
+      mav.addObject("code", "update_success");
+      mav.addObject("mname", adminVO.getMname());  // 홍길동님(user4) 회원 정보를 변경했습니다.
+      mav.addObject("id", adminVO.getId());
+    } else {
+      mav.addObject("code", "update_fail");
+    }
+
+    mav.addObject("cnt", cnt); // request.setAttribute("cnt", cnt)
+    mav.addObject("url", "/admin/msg");  // /member/msg -> /member/msg.jsp
+    
+    mav.setViewName("redirect:/admin/msg.do");
+    
+    return mav;
+  }
+  
+  /**
+   * 패스워드 변경 폼
+   * @param adminno
+   * @return
+   */
+  @RequestMapping(value = "/admin/passwd_update.do", method = RequestMethod.GET)
+  public ModelAndView passwd_update(int adminno) {
+    ModelAndView mav = new ModelAndView();
+    mav.setViewName("/admin/passwd_update");
+    
+    return mav;
+  } 
+  
+  @RequestMapping(value="/admin/passwd_update.do", method=RequestMethod.POST)
+  public ModelAndView passwd_update(int adminno, String current_passwd, String new_passwd){
+    ModelAndView mav = new ModelAndView();
+    
+    AdminVO adminVO = this.adminProc.read(adminno); // 패스워드를 변경하려는 회원 정보를 읽음
+    mav.addObject("mname", adminVO.getMname());  
+    mav.addObject("id", adminVO.getId());
+    
+    // 현재 패스워드 검사용 데이터
+    HashMap<Object, Object> map = new HashMap<Object, Object>();
+    map.put("adminno", adminno); // 키, 값
+    map.put("passwd", current_passwd);
+    
+    int cnt = adminProc.passwd_check(map); // 현재 패스워드 검사
+    int update_cnt = 0; // 변경된 패스워드 수
+    
+    if (cnt == 1) { // 현재 패스워드가 일치하는 경우
+      map.put("passwd", new_passwd); // 새로운 패스워드를 저장
+      update_cnt = this.adminProc.passwd_update(map); // 패스워드 변경 처리
+      
+      if (update_cnt == 1) {
+        mav.addObject("code", "passwd_update_success"); // 패스워드 변경 성공
+      } else {
+        cnt = 0;  // 패스워드는 일치했으나 변경하지는 못함.
+        mav.addObject("code", "passwd_update_fail");       // 패스워드 변경 실패
+      }
+      
+      mav.addObject("update_cnt", update_cnt);  // 변경된 패스워드의 갯수    
+    } else {
+      mav.addObject("code", "passwd_fail"); // 패스워드가 일치하지 않는 경우
+    }
+
+    mav.addObject("cnt", cnt); // 패스워드 일치 여부
+    mav.addObject("url", "/admin/msg");  // /admin/msg -> /admin/msg.jsp
+    
+    mav.setViewName("redirect:/admin/msg.do");
+    
+    return mav;
   }
   
 }

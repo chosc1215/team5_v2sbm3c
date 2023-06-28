@@ -561,25 +561,6 @@
   </DIV>
   <%-- ******************** Ajax 기반 로그인 폼 종료 ******************** --%>
 
-  <fieldset class="fieldset_basic">
-    <ul>
-      <li class="li_none">
-        <c:set var="file1saved" value="${file1saved.toLowerCase() }" />
-        <DIV style="width: 50%; float: left; margin-right: 10px;">
-            <c:choose>
-              <c:when test="${thumb1.endsWith('jpg') || thumb1.endsWith('png') || thumb1.endsWith('gif')}">
-                <%-- /static/restcontents/storage/ --%>
-                
-              </c:when>
-              <c:otherwise> <!-- 기본 이미지 출력 -->
-                <IMG src="/restcontents/images/none1.png" style="width: 100%;"> 
-              </c:otherwise>
-            </c:choose> 
-        </DIV>
-        
-       
-        
-
 <!-- ------------------------------ 댓글 영역 시작 ------------------------------ -->
 <DIV style='width: 80%; margin: 0px auto;'>
     <HR>
