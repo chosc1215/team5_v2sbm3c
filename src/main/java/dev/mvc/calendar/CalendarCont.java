@@ -33,7 +33,7 @@ public class CalendarCont {
   @RequestMapping(value = "/calendar/create.do", method = RequestMethod.GET)
   public ModelAndView create() {
     // System.out.println("-> CalendarCont create()");
-    ModelAndView mav = new ModelAndView();
+    ModelAndView mav = new ModelAndView(); 
     mav.setViewName("/calendar/create"); // /WEB-INF/views/calendar/create.jsp
 
     return mav;
