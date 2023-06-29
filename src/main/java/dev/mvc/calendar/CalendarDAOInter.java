@@ -13,6 +13,10 @@ public interface CalendarDAOInter {
    */
   public int create(CalendarVO calendarVO); // 추상 메소드
   
+  /**
+   * 목록
+   * @return
+   */
   public ArrayList<CalendarVO>list_all();
   
 

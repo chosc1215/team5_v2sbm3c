@@ -21,8 +21,9 @@ public class CalendarVO {
   private String content;
   /** 글 등록일 */
   private String rdate;
-  /** 회원 번호 */
+  /** 패스워드 */
   private String passwd=""; 
+  /** 회원 번호 */
   private int memberno;
   
   
@@ -56,7 +57,6 @@ public class CalendarVO {
   public void setRdate(String rdate) {
     this.rdate = rdate;
   }
-  
   public String getPasswd() {
     return passwd;
   }

@@ -5,8 +5,8 @@
 <mapper namespace="dev.mvc.calendar.CalendarDAOInter">
   <!-- 등록: 추가한 레코드 갯수를 리턴 -->
   <insert id="create" parameterType="dev.mvc.calendar.CalendarVO">
-    INSERT INTO calendar(calendarno, labeldate, title, content,rdate,passwd, memberno)
-    VALUES(calendar_seq.nextval, #{labeldate},  #{title}, #{content},  sysdate,#{passwd}, #{memberno})
+    INSERT INTO calendar(calendarno, labeldate, title, content, rdate, passwd, memberno)
+    VALUES(calendar_seq.nextval, #{labeldate},  #{title}, #{content},  sysdate, #{passwd}, #{memberno})
   </insert>
   
     <!-- 목록(관리자 접근): CateVO 객체를 생성하여 변수에 컬럼의 값을 저장 후, 

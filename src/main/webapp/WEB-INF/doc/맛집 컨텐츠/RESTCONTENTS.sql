@@ -89,7 +89,7 @@ WHERE restcontentsno = 1;
 
 -- 삭제
 DELETE FROM restcontents
-WHERE restcontentsno = 1;
+WHERE restcontentsno = 2;
 commit;
 
 -------------------------------------------------------

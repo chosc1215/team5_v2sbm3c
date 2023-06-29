@@ -51,9 +51,11 @@
             <button type='button' 
                          onclick="location.href='/'"
                          class="btn btn-primary">시작 화면</button>
-            <button type='button' 
+            <c:if test="${sessionScope.admin_id != null }">
+              <button type='button' 
                          onclick="location.href='/member/list.do'"
-                         class="btn btn-primary">회원 목록</button>                   
+                         class="btn btn-primary">회원 목록</button>
+            </c:if>             
           </LI>                                                                       
         </c:when>
                 
