@@ -30,7 +30,7 @@ int cnt = (int)request.getAttribute("cnt");
 <DIV class='title_line'>일정 > 알림</DIV>
 <DIV class='message'>
   <fieldset class='fieldset_basic'>
-    <UL>
+    <UL> 
       <%
       if (code.equals("create_success")) {
       %>
