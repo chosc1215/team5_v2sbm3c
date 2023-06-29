@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.admin.AdminProcInter;
+import dev.mvc.member.MemberProc;
+import dev.mvc.member.MemberProcInter;
 
 @Controller
 public class CalendarCont {
@@ -23,6 +25,10 @@ public class CalendarCont {
   @Autowired
   @Qualifier("dev.mvc.calendar.CalendarProc")
   private CalendarProcInter calendarProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.member.MemberProc")
+  private MemberProcInter memberProc;
 
   public CalendarCont() {
     System.out.println("-> CalendarCont created.");
@@ -49,21 +55,28 @@ public class CalendarCont {
     ModelAndView mav = new ModelAndView();
     mav.setViewName("/calendar/msg"); // /WEB-INF/views/calendar/msg.jsp
 
-    int memberno = (int)session.getAttribute("memberno"); // 본인의 회원 정보 조회
-    calendarVO.setMemberno(memberno);
+    if (this.memberProc.isMember(session) == true) {
+      
+      int memberno = (int)session.getAttribute("memberno"); // 본인의 회원 정보 조회
+      calendarVO.setMemberno(memberno);
 
-    int cnt = this.calendarProc.create(calendarVO);
+      int cnt = this.calendarProc.create(calendarVO);
 
-    if (cnt == 1) {
-      // request.setAttribute("code", "create_success"); // 고전적인 jsp 방법
-      mav.addObject("code", "create_success");
+      if (cnt == 1) {
+        // request.setAttribute("code", "create_success"); // 고전적인 jsp 방법
+        mav.addObject("code", "create_success");
+      } else {
+        // request.setAttribute("code", "create_fail");
+        mav.addObject("code", "create_fail");
+      }
+
+      // request.setAttribute("cnt", cnt);
+      mav.addObject("cnt", cnt); 
     } else {
-      // request.setAttribute("code", "create_fail");
-      mav.addObject("code", "create_fail");
+      mav.setViewName("/member/login_need"); // /WEB-INF/views/admin/login_need.jsp
     }
+    
 
-    // request.setAttribute("cnt", cnt);
-    mav.addObject("cnt", cnt);
 
     return mav;
   }
@@ -73,13 +86,13 @@ public class CalendarCont {
   public ModelAndView list_all(HttpSession session) {
     ModelAndView mav = new ModelAndView();
 
-    if (this.adminProc.isAdmin(session) == true) {
+    if (this.memberProc.isMember(session) == true) {
       mav.setViewName("/calendar/list_all"); // /WEB-INF/views/calendar/list_all.jsp
 
       ArrayList<CalendarVO> list = this.calendarProc.list_all();
       mav.addObject("list", list);
     } else {
-      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+      mav.setViewName("/member/login_need"); // /WEB-INF/views/admin/login_need.jsp
     }
 
     return mav;
