@@ -37,7 +37,7 @@ public class CalendarCont {
     mav.setViewName("/calendar/create"); // /WEB-INF/views/calendar/create.jsp
 
     return mav;
-  }
+  } 
 
   // 등록 처리
   // http://localhost:9091/calendar/create.do
