@@ -47,7 +47,7 @@ ORDER BY calendarno DESC;
 -- 6월달만 출력, SUBSTR(labeldate, 1, 7): 첫번재부터 7개의 문자 추출
 SELECT calendarno, labeldate, title, content, rdate, memberno
 FROM calendar
-WHERE SUBSTR(labeldate, 1, 8) = '2023-06'
+WHERE SUBSTR(labeldate, 1, 7) = '2023-06'
 ORDER BY calendarno ASC;
 
 -- 특정 날짜만 출력

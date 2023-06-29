@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.rating.RatingDAOInter">
+
+  <!-- 평점 등록 -->
+  <insert id="create" parameterType="dev.mvc.rating.RatingVO">
+    INSERT INTO rating (ratingno, restcontentsno, memberno, score, rdate)
+    VALUES(rating_seq.nextval, #{restcontentsno}, #{memberno}, #{score}, sysdate)
+  </insert>
+
+</mapper>
