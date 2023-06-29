@@ -8,7 +8,7 @@
     INSERT INTO calendar(calendarno, labeldate, title, content, rdate, passwd, memberno)
     VALUES(calendar_seq.nextval, #{labeldate},  #{title}, #{content},  sysdate, #{passwd}, #{memberno})
   </insert>
-  
+   
     <!-- 목록(관리자 접근): CateVO 객체를 생성하여 변수에 컬럼의 값을 저장 후, 
                ArrayList<CateVO> 객체를 생성한후 add까지 자동 진행하여 ArrayList 객체를 return -->
   <select id="list_all" resultType="dev.mvc.calendar.CalendarVO">
@@ -16,6 +16,16 @@
     FROM calendar
     ORDER BY calendarno DESC
   </select>
+  
+  <!-- 6월달만 출력, SUBSTR(labeldate, 1, 7) 첫번재부터 7개의 문자 추출 -->
+  <select id = "list_by_label" resultType="dev.mvc.calendar.CalendarVO" parameterType="String">
+      SELECT calendarno, labeldate, title, content, rdate, memberno
+      FROM calendar
+      WHERE SUBSTR(labeldate, 1, 7) = #{date}
+      ORDER BY calendarno ASC
+  </select>
+  
+  
   
   
 </mapper>
