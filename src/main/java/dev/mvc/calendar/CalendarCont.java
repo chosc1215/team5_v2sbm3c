@@ -33,6 +33,19 @@ public class CalendarCont {
   public CalendarCont() {
     System.out.println("-> CalendarCont created.");
   }
+  
+  /**
+   * POST 요청시 JSP 페이지에서 JSTL 호출 기능 지원, 새로고침 방지, EL에서 param으로 접근
+   * @return
+   */
+  @RequestMapping(value="/calendar/msg.do", method=RequestMethod.GET)
+  public ModelAndView msg(String url){
+    ModelAndView mav = new ModelAndView();
+
+    mav.setViewName(url); // forward
+    
+    return mav; // forward
+  }
 
   // 등록폼
   // http://localhost:9091/calendar/create.do
@@ -53,7 +66,9 @@ public class CalendarCont {
     // System.out.println("-> name: " + calendarVO.getName());
 
     ModelAndView mav = new ModelAndView();
-    mav.setViewName("/calendar/msg"); // /WEB-INF/views/calendar/msg.jsp
+    
+   
+    mav.setViewName("/calendar/msg"); // /WEB-INF/views/calendar/msg.jsp  ---------
 
     if (this.memberProc.isMember(session) == true) {
       
@@ -65,6 +80,9 @@ public class CalendarCont {
       if (cnt == 1) {
         // request.setAttribute("code", "create_success"); // 고전적인 jsp 방법
         mav.addObject("code", "create_success");
+        
+        
+        
       } else {
         // request.setAttribute("code", "create_fail");
         mav.addObject("code", "create_fail");
@@ -73,7 +91,8 @@ public class CalendarCont {
       // request.setAttribute("cnt", cnt);
       mav.addObject("cnt", cnt); 
     } else {
-      mav.setViewName("/member/login_need"); // /WEB-INF/views/admin/login_need.jsp
+      mav.addObject("url", "/member/login_need"); // login_need.jsp, redirect parameter 적용---------
+      mav.setViewName("redirect:/calendar/msg.do"); // GET
     }
     
 
