@@ -146,8 +146,7 @@
     UPDATE restcontents
     SET replycnt = replycnt - 1
     WHERE restcontentsno = #{restcontentsno}
-  </update>
-         
+  </update> 
   
     
 </mapper>
