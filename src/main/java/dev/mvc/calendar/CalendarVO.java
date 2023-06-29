@@ -22,6 +22,7 @@ public class CalendarVO {
   /** 글 등록일 */
   private String rdate;
   /** 회원 번호 */
+  private String passwd=""; 
   private int memberno;
   
   
@@ -54,6 +55,13 @@ public class CalendarVO {
   }
   public void setRdate(String rdate) {
     this.rdate = rdate;
+  }
+  
+  public String getPasswd() {
+    return passwd;
+  }
+  public void setPasswd(String passwd) {
+    this.passwd = passwd;
   }
   public int getMemberno() {
     return memberno;
