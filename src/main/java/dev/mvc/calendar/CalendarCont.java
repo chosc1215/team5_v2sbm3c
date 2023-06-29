@@ -13,13 +13,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.admin.AdminProcInter;
 
-
 @Controller
 public class CalendarCont {
   
   @Autowired
   @Qualifier("dev.mvc.admin.AdminProc")
   private AdminProcInter adminProc;
+
   
   @Autowired
   @Qualifier("dev.mvc.calendar.CalendarProc")
