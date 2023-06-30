@@ -25,8 +25,7 @@ public class CalendarVO {
   private String passwd=""; 
   /** 회원 번호 */
   private int memberno;
-  /* 컨텐츠 번호 */
-  private int restcontentsno;
+
   
   
   public int getCalendarno() {
@@ -71,12 +70,7 @@ public class CalendarVO {
   public void setMemberno(int memberno) {
     this.memberno = memberno;
   }
-  public int getRestcontentsno() {
-    return restcontentsno;
-  }
-  public void setRestcontentsno(int restcontentsno) {
-    this.restcontentsno = restcontentsno;
-  }
+
 
   
 

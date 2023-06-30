@@ -21,7 +21,7 @@
   <select id = "list_by_label" resultType="dev.mvc.calendar.CalendarVO" parameterType="String">
       SELECT calendarno, labeldate, title, content, rdate, memberno
       FROM calendar
-      WHERE SUBSTR(labeldate, 1, 7) = #{date}
+      WHERE SUBSTR(labeldate, 1, 7) = #{labelsdate}
       ORDER BY calendarno ASC
   </select>
   

@@ -23,7 +23,7 @@ public interface CalendarDAOInter {
    * 6월달만 출력
    * @return
    */
-  public ArrayList<CalendarVO>list_by_label();
+  public ArrayList<CalendarVO>list_by_label(String labeldate);
   
   
   
