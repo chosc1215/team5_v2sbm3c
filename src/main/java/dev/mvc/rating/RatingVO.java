@@ -15,6 +15,8 @@ public class RatingVO {
   private int memberno;
   /** 점수 */
   private int score;
+  /** 리뷰 내용 */
+  private String content = "";
   /** 등록일 */
   private String rdate;
   
@@ -42,6 +44,12 @@ public class RatingVO {
   }
   public void setScore(int score) {
     this.score = score;
+  }
+  public String getContent() {
+    return content;
+  }
+  public void setContent(String content) {
+    this.content = content;
   }
   public String getRdate() {
     return rdate;

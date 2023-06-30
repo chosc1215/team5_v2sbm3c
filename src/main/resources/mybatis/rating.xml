@@ -6,8 +6,8 @@
 
   <!-- 평점 등록 -->
   <insert id="create" parameterType="dev.mvc.rating.RatingVO">
-    INSERT INTO rating (ratingno, restcontentsno, memberno, score, rdate)
-    VALUES(rating_seq.nextval, #{restcontentsno}, #{memberno}, #{score}, sysdate)
+    INSERT INTO rating (ratingno, restcontentsno, memberno, score, content, rdate)
+    VALUES(rating_seq.nextval, #{restcontentsno}, #{memberno}, #{score}, #{content}, sysdate)
   </insert>
 
 </mapper>
