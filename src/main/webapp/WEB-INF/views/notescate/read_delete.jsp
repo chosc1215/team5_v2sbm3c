@@ -45,7 +45,7 @@ NotescateVO notescateVO_read = (NotescateVO)request.getAttribute("notescateVO");
           </div>
             
           <label>관련 카테고리 이름</label>: <%=notescateVO_read.getName() %> 
-          <a href="../contents/list_by_notescate.do?notescate=${notescateVO.notescate }" title="관련 카테고리로 이동"><img src='/notescate/images/link.png'></a>
+          <a href="../notescontents/list_by_notescate.do?notescate=${notescateVO.notescate }" title="관련 카테고리로 이동"><img src='/notescate/images/link.png'></a>
           &nbsp;      
           <button type="submit" id='submit' class='btn btn-danger btn-sm' style='height: 28px; margin-bottom: 5px;'>관련 자료와 함게 카테고리 삭제</button>
           

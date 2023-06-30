@@ -303,13 +303,13 @@ public class NotescontentsProc implements NotescontentsProcInter {
     @Override
     public int count_by_notescateno(int notescateno) {
       int cnt = this.notescontentsDAO.count_by_notescateno(notescateno);
-      return 0;
+      return cnt;
     }
 
     @Override
     public int delete_by_notescateno(int notescateno) {
       int cnt = this.notescontentsDAO.delete_by_notescateno(notescateno);
-      return 0;
+      return cnt;
     }
 
     
