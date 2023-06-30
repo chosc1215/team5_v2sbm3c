@@ -541,9 +541,9 @@
     <DIV id='reply_list' data-replypage='0'>  <%-- 댓글 목록 --%>
     
     </DIV>
-    <DIV id='reply_list_btn' style='border: solid 1px #EEEEEE; margin: 0px auto; width: 100%; background-color: #EEFFFF;'>
+    <!-- <DIV id='reply_list_btn' style='border: solid 1px #EEEEEE; margin: 0px auto; width: 100%; background-color: #EEFFFF;'>
         <button id='btn_add' style='width: 100%;'>더보기 ▽</button>
-    </DIV>  
+    </DIV>   -->
 </DIV>
 
 <!-- ------------------------------ 댓글 영역 종료 ------------------------------ -->

@@ -19,5 +19,13 @@ public interface CalendarDAOInter {
    */
   public ArrayList<CalendarVO>list_all();
   
+  /**
+   * 6월달만 출력
+   * @return
+   */
+  public ArrayList<CalendarVO>list_by_label();
+  
+  
+  
 
 }

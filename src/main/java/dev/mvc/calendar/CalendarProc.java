@@ -22,5 +22,11 @@ public class CalendarProc implements CalendarProcInter {
     return list;
   }
 
+  @Override
+  public ArrayList<CalendarVO> list_by_label() {
+    ArrayList<CalendarVO>labeldate=this.calendarDAO.list_by_label();
+    return labeldate;
+  }
+
 }
  
