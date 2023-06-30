@@ -7,12 +7,15 @@
 <head> 
 <meta charset="UTF-8"> 
 <meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=3.0, width=device-width" /> 
-<title>Resort world</title>
- 
+<<title>동서울 터미널과 함께하는 맛집리스트</title>
+<link rel="shortcut icon" href="/images/star.jpg" /> <%-- /static 기준 --%>
 <link href="/css/style.css" rel="Stylesheet" type="text/css">
+  
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
  
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </head> 
  
 <body>
@@ -36,21 +39,7 @@
   
   <DIV style="text-align: right; clear: both;">  
     <form name='frm' id='frm' method='get' action='./list_by_label.do'>
-      <input type='hidden' name='labeldate' value='${calendarVO.labeldate }'>  <%-- 게시판의 구분 --%>
-      
-      <c:choose>
-        <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
-          <input type='text' name='word' id='word' value='${param.word }' class='input_word'>
-        </c:when>
-        <c:otherwise> <%-- 검색하지 않는 경우 --%>
-          <input type='text' name='word' id='word' value='' class='input_word'>
-        </c:otherwise>
-      </c:choose>
-      <button type='submit' class='btn btn-info btn-sm'>검색</button>
-      <c:if test="${param.word.length() > 0 }">
-        <button type='button' class='btn btn-info btn-sm' 
-                    onclick="location.href='./list_by_labeldate.do?labeldate=${calendarVO.labeldate}&word='">검색 취소</button>  
-      </c:if>    
+      <input type='hidden' name='labeldate' value='${calendarVO.labeldate }'>  <%-- 게시판의 구분 --%>  
     </form>
   </DIV>
 

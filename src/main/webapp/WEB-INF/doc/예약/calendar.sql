@@ -1,17 +1,18 @@
 /**********************************/
-/* Table Name: 설문조사항목 */
+/* Table Name: 예약일정 */
 /**********************************/
 DROP TABLE calendar;
 CREATE TABLE calendar(
-  calendarno  NUMBER(8)     NOT NULL   PRIMARY KEY,
-  labeldate   VARCHAR(10)   NOT NULL,  -- 출력할 날짜 2013-10-20 
-  title       VARCHAR(100)  NOT NULL,  -- 제목(*)
-  content     CLOB          NOT NULL,  -- 글 내용
-  rdate       DATE          NOT NULL,   -- 등록 날짜
-  passwd     VARCHAR(60)   NOT NULL, -- 패스워드, 영숫자 조합
-  memberno    NUMBER(10) NOT NULL,     -- 회원 번호, 레코드를 구분하는 컬럼
-  
+    calendarno  NUMBER(8)     NOT NULL   PRIMARY KEY,
+    labeldate   VARCHAR(10)   NOT NULL,  -- 출력할 날짜 2013-10-20 
+    title       VARCHAR(100)  NOT NULL,  -- 제목(*)
+    content     CLOB          NOT NULL,  -- 글 내용
+    rdate       DATE          NOT NULL,   -- 등록 날짜
+    passwd     VARCHAR(60)   NOT NULL, -- 패스워드, 영숫자 조합
+    memberno    NUMBER(10) NOT NULL,     -- 회원 번호, 레코드를 구분하는 컬럼
+    restcontentsno    NUMBER(20)     NOT NULL, -- 맛집 컨텐츠 번호
   FOREIGN KEY (memberno) REFERENCES member (memberno)
+  FOREIGN KEY (restcontentsno) REFERENCES restcontents (restcontentsno)
 );
 
 COMMENT ON TABLE calendar is '일정';
@@ -22,6 +23,7 @@ COMMENT ON COLUMN calendar.content is '글 내용';
 COMMENT ON COLUMN calendar.rdate is '등록 날짜';
 COMMENT ON COLUMN calendar.passwd is '패스워드';
 COMMENT ON COLUMN calendar.memberno is '회원 번호';
+COMMENT ON COLUMN calendar.restcontentsno is '맛집 컨텐츠 번호';
 
 DROP SEQUENCE calendar_seq;
 
