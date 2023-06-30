@@ -46,7 +46,7 @@ RestcateVO restcateVO_read = (RestcateVO)request.getAttribute("restcateVO");
           <label>관련 카테고리 이름</label>: <%=restcateVO_read.getName() %> 
           <a href="../restcontents/list_by_restcateno.do?restcateno=${restcateVO.restcateno }" title="관련 카테고리로 이동"><img src='/restcate/images/link.png'></a>
           &nbsp;      
-          <button type="submit" id='submit' class='btn btn-danger btn-sm' style='height: 28px; margin-bottom: 5px;'>관련 자료와 함게 카테고리 삭제</button>
+          <button type="submit" id='submit' class='btn btn-danger btn-sm' style='height: 28px; margin-bottom: 5px;'>관련 자료와 함께 카테고리 삭제</button>
           
         </c:when>
         <c:otherwise>
