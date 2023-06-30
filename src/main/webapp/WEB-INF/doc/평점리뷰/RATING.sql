@@ -32,16 +32,21 @@ CREATE SEQUENCE RATING_seq
   
 -- 평점리뷰 등록  
 INSERT INTO rating (ratingno, restcontentsno, memberno, score, content, rdate)
-VALUES(rating_seq.nextval, 11, 3, 5,'맛있어요' ,sysdate);
+VALUES(rating_seq.nextval, 11, 4, 3,'조금 짜요' ,sysdate);
 
 
 --특정 컨텐츠별 평점 목록
 SELECT ratingno, restcontentsno, memberno, score, content, rdate
 FROM rating
-WHERE restcontentsno = 11;
+WHERE restcontentsno = 11
+ORDER BY ratingno DESC;
 
+--평점 삭제
 delete FROM rating
 WHERE ratingno =1; 
+
+--평점 수정
+
 
 commit;
 
