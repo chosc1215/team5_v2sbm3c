@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
         contentsno                            NUMBER(10)         NOT NULL         PRIMARY KEY,
         adminno                              NUMBER(10)     NOT NULL ,
         notescateno                                NUMBER(10)         NOT NULL ,
-        title                                 VARCHAR2(300)         NOT NULL,
+        title                                 VARCHAR2(300)         NOT NfULL,
         content                               CLOB                  NOT NULL,
         recom                                 NUMBER(7)         DEFAULT 0         NOT NULL,
         cnt                                   NUMBER(7)         DEFAULT 0         NOT NULL,
