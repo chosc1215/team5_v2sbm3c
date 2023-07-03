@@ -105,20 +105,21 @@
         </DIV>
       </li>
       
-            <c:if test="${map.trim().length() > 0 }">
+      <c:if test="${map.trim().length() > 0 }">    
         <li class="li_none" style="clear: both; padding-top: 5px; padding-bottom: 5px;">
           <DIV style='text-align: center; width:640px; height: 360px; margin: 0px auto;'>
             ${map }
           </DIV>
           <br><br><br><br>
         </li>
-      </c:if>
+        
+       </c:if>    
       
     
       <li class="li_none" style="clear: both;">
         <DIV style='text-decoration: none;'>
           <br>
-          검색어(키워드): ${word }
+          검색어(키워드): ${word } 
         </DIV>
       </li>
       <li class="li_none">

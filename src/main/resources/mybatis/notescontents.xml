@@ -28,7 +28,7 @@
  
   <!-- 일반적인 조회 -->
   <select id="read" resultType="dev.mvc.notescontents.NotescontentsVO" parameterType="int">
-    SELECT notescontentsno,rdate, title, content, word, file1, file1saved, thumb1, size1,notescateno, adminno
+    SELECT notescontentsno,rdate, title, content, word, file1, file1saved, thumb1, size1,map,notescateno, adminno
     FROM notescontents
     WHERE notescontentsno = #{notescontentsno}
   </select>

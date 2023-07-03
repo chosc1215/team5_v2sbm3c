@@ -23,8 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
         saleprice                            NUMBER(10)      DEFAULT 0 NULL,  
         point                                 NUMBER(10)      DEFAULT 0 NULL,  
         salecnt                               NUMBER(10)      DEFAULT 0 NULL,  
-        map                                  VARCHAR2(1000)            NULL,
-        youtube                             VARCHAR2(1000)            NULL,        
+        map                                  VARCHAR2(1000)            NULL,      
  */
 
 public class NotescontentsVO {
