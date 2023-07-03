@@ -130,7 +130,6 @@
             <c:when test="${sessionScope.admin_id != null }"> 
               <td style='vertical-align: middle; text-align: center;'>
                 <A href="/notescontents/map.do?notescateno=${notescateno }&notescontentsno=${notescontentsno}&now_page=${param.now_page == null ? 1 : param.now_page}" title="지도"><IMG src="/notescontents/images/map.png" class="icon"></A>
-                <A href="/notescontents/youtube.do?notescateno=${notescateno }&notescontentsno=${notescontentsno}&now_page=${param.now_page == null ? 1 : param.now_page}" title="Youtube"><IMG src="/notescontents/images/youtube.png" class="icon"></A>
                 <A href="/notescontents/delete.do?notescateno=${notescateno }&notescontentsno=${notescontentsno}&now_page=${param.now_page == null ? 1 : param.now_page}" title="삭제"><IMG src="/notescontents/images/delete.png" class="icon"></A>
               </td>
             </c:when>
