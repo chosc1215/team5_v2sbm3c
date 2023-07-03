@@ -79,7 +79,7 @@
           <c:when test="${grade >= 1 and grade <= 10}"><img src='/member/images/admin.png' title="관리자" class="icon"></c:when> <%-- /static 기준 --%>    
           <c:when test="${grade >= 11 and grade <= 20}"><img src='/member/images/user.png' title="회원" class="icon"></c:when>
           <c:when test="${grade >= 30 and grade <= 39}"><img src='/member/images/pause.png' title="정지 회원" class="icon"></c:when>
-          <c:when test="${grade >= 40 and grade <= 49}"><img src='/member/images/x.png' title="탈퇴 회원" class="icon"></c:when>
+          <c:when test="${grade == 99}"><img src='/member/images/x.png' title="탈퇴 회원" class="icon"></c:when>
         </c:choose>  
       </TD>
       <TD class='td_left'><A href="./read.do?memberno=${memberno}">${id}</A></TD>

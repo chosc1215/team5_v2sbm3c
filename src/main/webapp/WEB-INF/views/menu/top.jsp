@@ -69,7 +69,7 @@ function recommend(){
                           <a class="dropdown-item" href="#">아이디 찾기</a>
                           <a class="dropdown-item" href="#">비밀번호 찾기</a>
                           <a class="dropdown-item" href="/member/passwd_update.do?memberno=${memberno }">비밀번호 변경</a>
-                          <a class="dropdown-item" href="#">회원 탈퇴</a>
+                          <a class="dropdown-item" href="/member/member_delete.do?memberno=${memberno }">회원 탈퇴</a>
                       </div>
                   </li>
                 </c:if>  

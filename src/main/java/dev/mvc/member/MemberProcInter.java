@@ -88,7 +88,7 @@ public interface MemberProcInter {
    * @param memberno
    * @return
    */
-  public int member_delete(int memberno);
+  public int member_delete(MemberVO memberVO);
   
   
 }

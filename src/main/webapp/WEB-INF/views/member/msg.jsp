@@ -75,17 +75,6 @@
                          class="btn btn-primary">회원 목록</button>
           </LI>                                                                     
         </c:when>    
-        
-        <c:when test="${param.code == 'delete_mem_success'}"> <%-- Java if --%>
-          <LI class='li_none'>
-            <span class="span_success">${param.mname }님(${param.id }) 회원 탈퇴에 성공했습니다.</span>
-          </LI>   
-          <LI class='li_none'>
-            <button type='button' 
-                         onclick="location.href='/member/logout.do'"
-                         class="btn btn-primary">시작화면 가기</button>
-          </LI>                                                                     
-        </c:when>    
             
         <c:when test="${code == 'delete_fail'}"> <%-- Java if --%>
           <LI class='li_none'>
@@ -93,14 +82,27 @@
           </LI>                                                                      
         </c:when> 
         
+        <c:when test="${param.code == 'member_delete_success'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_fail">회원 탈퇴에 성공했습니다.</span>
+          </LI>                                                                      
+          <LI class = 'li_none'>
+            <button type='button' onclick="location.href='/member/logout.do'" class="btn btn-primary">시작메뉴</button>
+          </LI>
+        </c:when>
+        
+        <c:when test="${param.code == 'member_delete_fail'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_fail">회원 탈퇴에 실패했습니다. 다시 시도해주세요.</span>
+          </LI>                                                                      
+        </c:when>
+        
         <c:when test="${param.code == 'passwd_update_success'}"> <%-- Java if --%>
           <LI class='li_none'>
             <span class="span_success">${param.mname }님(${param.id }) 패스워드를 변경했습니다.</span>
           </LI>   
           <LI class='li_none'>
-            <button type='button' 
-                         onclick="location.href='/'"
-                         class="btn btn-primary">확인</button>
+            <button type='button' onclick="location.href='/'" class="btn btn-primary">확인</button>
           </LI>                                                                     
         </c:when>   
         

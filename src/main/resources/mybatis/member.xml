@@ -70,9 +70,9 @@
   </select>
   
   <!-- 회원 탈퇴(탈퇴회원등급으로 수정) -->
-  <update id="member_delete" parameterType="int">
+  <update id="member_delete" parameterType="dev.mvc.member.MemberVO">
     UPDATE member 
-    SET grade=#{grade}
+    SET grade= 99
     WHERE memberno=#{memberno} 
   </update>
 

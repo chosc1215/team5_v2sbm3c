@@ -63,6 +63,8 @@ public class MemberProc implements MemberProcInter {
       
       if (id != null && grade >=11 && grade <= 20){ // 관리자 + 회원
         sw = true;  // 로그인 한 경우
+      } else {
+        sw = false; // 회원 등급이 99인 경우 로그인 불가능
       }
     }
     
@@ -103,8 +105,8 @@ public class MemberProc implements MemberProcInter {
    * 회원탈퇴(등급:99)
    */
   @Override
-  public int member_delete(int memberno) {
-    int cnt = this.memberDAO.member_delete(memberno);
+  public int member_delete(MemberVO memberVO) {
+    int cnt = this.memberDAO.member_delete(memberVO);
     return cnt;
   }
   

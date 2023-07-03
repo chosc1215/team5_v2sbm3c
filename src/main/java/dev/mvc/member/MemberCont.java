@@ -510,6 +510,56 @@ public class MemberCont {
     return mav;
   } 
   
+  /**
+   * 회원 탈퇴 폼
+   * @param session
+   * @param memberno
+   * @return
+   */
+  @RequestMapping(value="/member/member_delete.do", method=RequestMethod.GET)
+  public ModelAndView member_delete(HttpSession session, MemberVO memberVO){
+    ModelAndView mav = new ModelAndView();
+    if (this.memberProc.isMember(session) == true) {
+      
+      this.memberProc.read(memberVO.getMemberno());
+      mav.addObject("memberVO", memberVO);
+      mav.setViewName("/member/member_delete"); // passwd_update.jsp
+    } else {
+      mav.setViewName("/member/login_need"); // /WEB-INF/views/admin/login_need.jsp
+    }     
+    
+    return mav;
+  }
+  
+  /**
+   * 회원 탈퇴 처리 ( 등급 99 )
+   * @param memberVO
+   * @return
+   */
+  @RequestMapping(value="/member/member_delete.do", method=RequestMethod.POST)
+  public ModelAndView member_delete(MemberVO memberVO){
+    ModelAndView mav = new ModelAndView();
+    
+    // System.out.println("id: " + memberVO.getId());
+    
+    int cnt= this.memberProc.member_delete(memberVO);
+    
+    if (cnt == 1) {
+      mav.addObject("code", "member_delete_success");
+      mav.addObject("mname", memberVO.getMname());  // 홍길동님(user4) 회원 정보를 변경했습니다.
+      mav.addObject("id", memberVO.getId());
+    } else {
+      mav.addObject("code", "member_delete_fail");
+    }
+
+    mav.addObject("cnt", cnt); // request.setAttribute("cnt", cnt)
+    mav.addObject("url", "/member/msg");  // /member/msg -> /member/msg.jsp
+    
+    mav.setViewName("redirect:/member/msg.do");
+    
+    return mav;
+  }
+  
   
   
     
