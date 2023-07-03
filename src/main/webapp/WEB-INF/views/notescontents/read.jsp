@@ -48,13 +48,11 @@
       --%>
       <A href="./create.do?notescateno=${notescateVO.notescateno }">등록</A>
       <span class='menu_divide' >│</span>
-      <A href="./update_text.do?notescontentsno=${notescontentsno}&now_page=${param.now_page}&word=${param.word }">글 수정</A>
+      <A href="./update_text.do?notesconte ntsno=${notescontentsno}&now_page=${param.now_page}&word=${param.word }">글 수정</A>
       <span class='menu_divide' >│</span>
       <A href="./update_file.do?notescontentsno=${notescontentsno}&now_page=${param.now_page}">파일 수정</A>  
       <span class='menu_divide' >│</span>
       <A href="./map.do?notescateno=${notescateno }&notescontentsno=${notescontentsno}">지도</A>
-      <span class='menu_divide' >│</span>
-      <A href="./youtube.do?notescateno=${notescateno }&notescontentsno=${notescontentsno}">Youtube</A>
       <span class='menu_divide' >│</span>
       <A href="./delete.do?notescontentsno=${notescontentsno}&now_page=${param.now_page}&notescateno=${notescateno}">삭제</A>  
       <span class='menu_divide' >│</span>
@@ -63,7 +61,7 @@
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>    
     <A href="./list_by_notescateno.do?notescateno=${notescateno }&now_page=${param.now_page}&word=${param.word }">기본 목록형</A>    
-
+    <span class='menu_divide' >│</span>
   </ASIDE> 
   
   <DIV style="text-align: right; clear: both;">  
@@ -116,14 +114,16 @@
         </li>
       </c:if>
       
-      <c:if test="${map.trim().length() > 0 }">
+            <c:if test="${map.trim().length() > 0 }">
         <li class="li_none" style="clear: both; padding-top: 5px; padding-bottom: 5px;">
           <DIV style='text-align: center; width:640px; height: 360px; margin: 0px auto;'>
             ${map }
           </DIV>
+          <br><br><br><br>
         </li>
       </c:if>
       
+    
       <li class="li_none" style="clear: both;">
         <DIV style='text-decoration: none;'>
           <br>

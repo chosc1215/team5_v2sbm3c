@@ -25,9 +25,7 @@ public class CalendarVO {
   private String passwd=""; 
   /** 회원 번호 */
   private int memberno;
-
-  
-  
+ 
   public int getCalendarno() {
     return calendarno;
   }
