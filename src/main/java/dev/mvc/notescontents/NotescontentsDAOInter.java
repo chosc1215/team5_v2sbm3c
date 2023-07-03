@@ -42,12 +42,6 @@ public interface NotescontentsDAOInter {
    */
   public int map(NotescontentsVO notescontentsVO);
 
-  /**
-   * Youtube
-   * @param notescontentsVO
-   * @return
-   */
-  public int youtube(NotescontentsVO notescontentsVO);
 
   /**
    *  특정 카테고리의 검색된 글목록

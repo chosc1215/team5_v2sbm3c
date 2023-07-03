@@ -63,10 +63,7 @@ public class NotescontentsVO {
     
     /** 지도 */
     private String map;
-    
-    /** Youtube */
-    private String youtube;
-    
+
     /**
      이미지 파일
      <input type='file' class="form-control" name='file1MF' id='file1MF' 
@@ -215,14 +212,6 @@ public class NotescontentsVO {
 
     public void setMap(String map) {
       this.map = map;
-    }
-
-    public String getYoutube() {
-      return youtube;
-    }
-
-    public void setYoutube(String youtube) {
-      this.youtube = youtube;
     }
 
     public MultipartFile getFile1MF() {

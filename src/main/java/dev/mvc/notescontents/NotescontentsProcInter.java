@@ -43,13 +43,6 @@ public interface NotescontentsProcInter {
   public int map(NotescontentsVO notescontentsVO);
 
   /**
-   * Youtube
-   * @param notescontentsVO
-   * @return
-   */
-  public int youtube(NotescontentsVO notescontentsVO);
-
-  /**
    *  특정 카테고리의 검색된 글목록
    *  spring framework이 JDBC 관련 코드를 모두 생성해줌
    * @return

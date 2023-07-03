@@ -10,7 +10,6 @@
 <c:set var="thumb1" value="${notescontentsVO.thumb1 }" />
 <c:set var="content" value="${notescontentsVO.content }" />
 <c:set var="map" value="${notescontentsVO.map }" />
-<c:set var="youtube" value="${notescontentsVO.youtube }" />
 <c:set var="word" value="${notescontentsVO.word }" />
 <c:set var="size1_label" value="${notescontentsVO.size1_label }" />
 <c:set var="rdate" value="${notescontentsVO.rdate.substring(0, 16) }" />
@@ -105,14 +104,6 @@
           ${content }
         </DIV>
       </li>
-      
-      <c:if test="${youtube.trim().length() > 0 }">
-        <li class="li_none" style="clear: both; padding-top: 5px; padding-bottom: 5px;">
-          <DIV style="text-align: center;">
-            ${youtube }
-          </DIV>
-        </li>
-      </c:if>
       
             <c:if test="${map.trim().length() > 0 }">
         <li class="li_none" style="clear: both; padding-top: 5px; padding-bottom: 5px;">

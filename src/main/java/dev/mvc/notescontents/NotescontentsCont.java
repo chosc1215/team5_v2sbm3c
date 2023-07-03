@@ -267,54 +267,7 @@ public class NotescontentsCont {
     
     return mav; 
   }
-  
-  /**
-   * Youtube 등록/수정/삭제 폼
-   * http://localhost:9091/notescontents/youtube.do?notescontentsno=1
-   * @return
-   */
-  @RequestMapping(value="/notescontents/youtube.do", method=RequestMethod.GET )
-  public ModelAndView youtube(int notescontentsno) {
-    ModelAndView mav = new ModelAndView();
-
-    NotescontentsVO notescontentsVO = this.notescontentsProc.read(notescontentsno); // map 정보 읽어 오기
-    mav.addObject("notescontentsVO", notescontentsVO); // request.setAttribute("notescontentsVO", notescontentsVO);
-
-    NotescateVO notescateVO = this.notescateProc.read(notescontentsVO.getNotescateno()); // 그룹 정보 읽기
-    mav.addObject("notescateVO", notescateVO); 
-
-    mav.setViewName("/notescontents/youtube"); // /WEB-INF/views/notescontents/youtube.jsp
-        
-    return mav;
-  }
-  
-  /**
-   * Youtube 등록/수정/삭제 처리
-   * http://localhost:9091/notescontents/map.do
-   * @param notescontentsVO
-   * @return
-   */
-  @RequestMapping(value="/notescontents/youtube.do", method = RequestMethod.POST)
-  public ModelAndView youtube_update(NotescontentsVO notescontentsVO) {
-    ModelAndView mav = new ModelAndView();
-    
-    if (notescontentsVO.getYoutube().trim().length() > 0) { // 삭제 중인지 확인, 삭제가 아니면 youtube 크기 변경
-      // youtube 영상의 크기를 width 기준 640 px로 변경 
-      String youtube = Tool.youtubeResize(notescontentsVO.getYoutube());
-      notescontentsVO.setYoutube(youtube);
-    }
-    
-    this.notescontentsProc.youtube(notescontentsVO);
-
-    // youtube 크기 조절
-    // <iframe width="1019" height="573" src="https://www.youtube.com/embed/Aubh5KOpz-4" title="교보문고에서 가장 잘나가는 일본 추리소설 베스트셀러 10위부터 1위까지 소개해드려요📚" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-    
-    
-    mav.setViewName("redirect:/notescontents/read.do?notescontentsno=" + notescontentsVO.getNotescontentsno()); 
-    // /webapp/WEB-INF/views/notescontents/read.jsp
-    
-    return mav;
-  }
+ 
   
 //  /**
 //   * 특정 카테고리의 검색된 글목록

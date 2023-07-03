@@ -75,11 +75,6 @@ public class NotescontentsProc implements NotescontentsProcInter {
     return cnt;
   }
 
-  @Override
-  public int youtube(NotescontentsVO notescontentsVO) {
-    int cnt = this.notescontentsDAO.youtube(notescontentsVO);
-    return cnt;
-  }
 
   @Override
   public ArrayList<NotescontentsVO> list_by_notescateno_search(NotescontentsVO notescontentsVO) {
