@@ -2,8 +2,6 @@ package dev.mvc.notescontents;
 
 import org.springframework.web.multipart.MultipartFile;
 
-
-
 /*
         contentsno                            NUMBER(10)         NOT NULL         PRIMARY KEY,
         adminno                              NUMBER(10)     NOT NULL ,
@@ -28,7 +26,6 @@ import org.springframework.web.multipart.MultipartFile;
         map                                  VARCHAR2(1000)            NULL,
         youtube                             VARCHAR2(1000)            NULL,        
  */
-
 
 public class NotescontentsVO {
     /** 컨텐츠 번호 */
@@ -63,17 +60,6 @@ public class NotescontentsVO {
     private String thumb1 = "";
     /** 메인 이미지 크기 */
     private long size1;
-
-    /** 정가 */
-    private int price;
-    /** 할인률 */
-    private int dc;
-    /** 판매가 */
-    private int saleprice;
-    /** 포인트 */
-    private int point;
-    /** 재고 수량 */
-    private int salecnt;
     
     /** 지도 */
     private String map;
@@ -99,9 +85,6 @@ public class NotescontentsVO {
     
     /** 현재 페이지 */
     private int now_page = 1;
-
-    
-    
 
     public int getNotescontentsno() {
       return notescontentsno;
@@ -224,46 +207,6 @@ public class NotescontentsVO {
 
     public void setSize1(long size1) {
       this.size1 = size1;
-    }
-
-    public int getPrice() {
-      return price;
-    }
-
-    public void setPrice(int price) {
-      this.price = price;
-    }
-
-    public int getDc() {
-      return dc;
-    }
-
-    public void setDc(int dc) {
-      this.dc = dc;
-    }
-
-    public int getSaleprice() {
-      return saleprice;
-    }
-
-    public void setSaleprice(int saleprice) {
-      this.saleprice = saleprice;
-    }
-
-    public int getPoint() {
-      return point;
-    }
-
-    public void setPoint(int point) {
-      this.point = point;
-    }
-
-    public int getSalecnt() {
-      return salecnt;
-    }
-
-    public void setSalecnt(int salecnt) {
-      this.salecnt = salecnt;
     }
 
     public String getMap() {
