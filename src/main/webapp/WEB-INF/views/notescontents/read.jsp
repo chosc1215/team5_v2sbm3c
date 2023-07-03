@@ -48,7 +48,7 @@
       --%>
       <A href="./create.do?notescateno=${notescateVO.notescateno }">등록</A>
       <span class='menu_divide' >│</span>
-      <A href="./update_text.do?notesconte ntsno=${notescontentsno}&now_page=${param.now_page}&word=${param.word }">글 수정</A>
+      <A href="./update_text.do?notescontentsno=${notescontentsno}&now_page=${param.now_page}&word=${param.word }">글 수정</A>
       <span class='menu_divide' >│</span>
       <A href="./update_file.do?notescontentsno=${notescontentsno}&now_page=${param.now_page}">파일 수정</A>  
       <span class='menu_divide' >│</span>
