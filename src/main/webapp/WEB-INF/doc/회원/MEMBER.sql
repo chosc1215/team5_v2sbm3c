@@ -158,4 +158,20 @@ UPDATE member
 SET grade=99
 WHERE memberno=5;
 
+-- 로그인시 정지회원
+SELECT COUNT(*) as cnt
+FROM member
+WHERE id='user1@gmail.com' AND grade >= 40; AND grade <= 49;
+-- 0: 아님
+-- 1: 맞음
+
+-- 탈퇴 회원인지 확인
+SELECT COUNT(*) as cnt
+FROM member
+WHERE id='user5@gmail.com' AND grade = 99;
+
+-- 컨트롤러에서 정지회원 갯수도 0 탈퇴회원 갯수도 0일 경우 로그인 처리
+
+
+
 

@@ -48,13 +48,17 @@ public class RestcontentsCont {
    * @return
    */
   @RequestMapping(value="/restcontents/create.do", method = RequestMethod.GET)
-  public ModelAndView create(int restcateno) {
+  public ModelAndView create(HttpSession session, int restcateno) {
     ModelAndView mav = new ModelAndView();
     
-    RestcateVO restcateVO = this.restcateProc.read(restcateno);
-    mav.addObject("restcateVO", restcateVO);
-    
-    mav.setViewName("/restcontents/create");
+    if (adminProc.isAdmin(session)) {
+      RestcateVO restcateVO = this.restcateProc.read(restcateno);
+      mav.addObject("restcateVO", restcateVO);
+      mav.setViewName("/restcontents/create");
+    } else {
+      mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+      mav.setViewName("redirect:/restcontents/msg.do"); 
+    }    
     
     return mav;
   }
@@ -213,16 +217,23 @@ public class RestcontentsCont {
    * @return
    */
   @RequestMapping(value = "/restcontents/map.do", method = RequestMethod.GET)
-  public ModelAndView map(int restcontentsno) {
+  public ModelAndView map(HttpSession session, int restcontentsno) {
     ModelAndView mav = new ModelAndView();
     
-    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
-    mav.addObject("restcontentsVO", restcontentsVO);
+    if (adminProc.isAdmin(session)) {
+      
+      RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+      mav.addObject("restcontentsVO", restcontentsVO);
+      
+      RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+      mav.addObject("restcateVO", restcateVO);
+      
+      mav.setViewName("/restcontents/map");
+    } else {
+      mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+      mav.setViewName("redirect:/restcontents/msg.do"); 
+    }
     
-    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
-    mav.addObject("restcateVO", restcateVO);
-    
-    mav.setViewName("/restcontents/map");
     return mav;
         
   }
@@ -247,16 +258,23 @@ public class RestcontentsCont {
    * @return
    */
   @RequestMapping(value = "/restcontents/youtube.do", method = RequestMethod.GET)
-  public ModelAndView youtube(int restcontentsno) {
+  public ModelAndView youtube(HttpSession session, int restcontentsno) {
     ModelAndView mav = new ModelAndView();
     
-    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
-    mav.addObject("restcontentsVO", restcontentsVO);
+    if (adminProc.isAdmin(session)) {
+      RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+      mav.addObject("restcontentsVO", restcontentsVO);
+      
+      RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+      
+      mav.addObject("restcateVO", restcateVO);
+      mav.setViewName("/restcontents/youtube");
+      
+    } else {
+      mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+      mav.setViewName("redirect:/restcontents/msg.do"); 
+    }
     
-    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
-    mav.addObject("restcateVO", restcateVO);
-    
-    mav.setViewName("/restcontents/youtube");
     return mav;
         
   }
@@ -377,18 +395,22 @@ public class RestcontentsCont {
    * @return
    */
   @RequestMapping(value = "/restcontents/update_text.do", method = RequestMethod.GET)
-  public ModelAndView update_text(int restcontentsno) {
+  public ModelAndView update_text(HttpSession session, int restcontentsno) {
     ModelAndView mav = new ModelAndView();
     
-    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
-    mav.addObject("restcontentsVO", restcontentsVO);
-    
-    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
-    mav.addObject("restcateVO", restcateVO);
-    
-    mav.setViewName("/restcontents/update_text"); // /WEB-INF/views/contents/update_text.jsp
-    // String content = "장소:\n인원:\n준비물:\n비용:\n기타:\n";
-    // mav.addObject("content", content);
+    if (adminProc.isAdmin(session)) {
+      RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+      mav.addObject("restcontentsVO", restcontentsVO);
+      
+      RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+      mav.addObject("restcateVO", restcateVO);
+      
+      mav.setViewName("/restcontents/update_text"); // /WEB-INF/views/contents/update_text.jsp
+      // mav.addObject("content", content);      
+    } else {
+      mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+      mav.setViewName("redirect:/restcontents/msg.do"); 
+    }
 
     return mav; // forward
   }
@@ -459,17 +481,22 @@ public class RestcontentsCont {
    * @return
    */
   @RequestMapping(value = "/restcontents/update_file.do", method = RequestMethod.GET)
-  public ModelAndView update_file(int restcontentsno) {
+  public ModelAndView update_file(HttpSession session, int restcontentsno) {
     ModelAndView mav = new ModelAndView();
     
-    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
-    mav.addObject("restcontentsVO", restcontentsVO);
+    if (adminProc.isAdmin(session)) {
+      RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+      mav.addObject("restcontentsVO", restcontentsVO);
+      
+      RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+      mav.addObject("restcateVO", restcateVO);
+      
+      mav.setViewName("/restcontents/update_file"); // /WEB-INF/views/contents/update_file.jsp
+    } else {
+      mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+      mav.setViewName("redirect:/restcontents/msg.do"); 
+    }
     
-    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
-    mav.addObject("restcateVO", restcateVO);
-    
-    mav.setViewName("/restcontents/update_file"); // /WEB-INF/views/contents/update_file.jsp
-
     return mav; // forward
   }
   
@@ -561,18 +588,22 @@ public class RestcontentsCont {
    * @return
    */
   @RequestMapping(value = "/restcontents/delete.do", method = RequestMethod.GET)
-  public ModelAndView delete(int restcontentsno) {
+  public ModelAndView delete(HttpSession session, int restcontentsno) {
     ModelAndView mav = new ModelAndView();
     
-    // 삭제할 정보를 조회하여 확인
-    RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
-    mav.addObject("restcontentsVO", restcontentsVO);
-    
-    RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
-    mav.addObject("restcateVO", restcateVO);
-    
-    mav.setViewName("/restcontents/delete"); // /webapp/WEB-INF/views/restcontents/delete.jsp
-    
+    if (adminProc.isAdmin(session)) {
+      // 삭제할 정보를 조회하여 확인
+      RestcontentsVO restcontentsVO = this.restcontentsProc.read(restcontentsno);
+      mav.addObject("restcontentsVO", restcontentsVO);
+      
+      RestcateVO restcateVO = this.restcateProc.read(restcontentsVO.getRestcateno());
+      mav.addObject("restcateVO", restcateVO);
+      mav.setViewName("/restcontents/delete"); // /webapp/WEB-INF/views/restcontents/delete.jsp
+    } else {
+      mav.addObject("url", "/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+      mav.setViewName("redirect:/restcontents/msg.do"); 
+    }
+        
     return mav;
   }
   
@@ -626,22 +657,7 @@ public class RestcontentsCont {
     
     return mav;
   } 
-  
-  
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   @RequestMapping(value = "/restcontents/count_by_restcateno.do", method = RequestMethod.GET)
   public String count_by_restcateno(int restcateno) {
     System.out.println("-> count: " + this.restcontentsProc.count_by_restcateno(restcateno));

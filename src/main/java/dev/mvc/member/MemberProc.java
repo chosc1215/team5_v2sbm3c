@@ -107,6 +107,18 @@ public class MemberProc implements MemberProcInter {
     int cnt = this.memberDAO.member_delete(memberVO);
     return cnt;
   }
+
+  /**
+   * 탈퇴회원 확인
+   */
+  @Override
+  public int member_99(String id) {
+    int cnt = this.memberDAO.member_99(id);
+    return cnt;
+  }
+
+
+
   
   
   

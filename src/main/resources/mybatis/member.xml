@@ -56,7 +56,7 @@
   </select>
   
   <!-- 패스워드 변경 -->
-  <update id="passwd_update"  parameterType="HashMap">
+  <update id="passwd_update" parameterType="HashMap">
     UPDATE member
     SET passwd=#{passwd}
     WHERE memberno=#{memberno}
@@ -75,8 +75,20 @@
     SET grade= 99
     WHERE memberno=#{memberno} 
   </update>
-
   
+  <!--  탈퇴 회원 인지 확인 -->
+  <select id="member_99" resultType="int" parameterType="String">
+    SELECT COUNT(*) as cnt
+    FROM member
+    WHERE id=#{id} AND grade = 99
+  </select>
+
+
+<!-- 로그인시 정지회원 -->
+<!-- SELECT COUNT(*) as cnt
+FROM member
+WHERE id='user1@gmail.com' AND grade >= 40; AND grade <= 49;
+ -->  
 
        
 </mapper> 

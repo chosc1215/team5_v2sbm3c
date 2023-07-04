@@ -87,4 +87,11 @@ public interface MemberDAOInter {
    */
   public int member_delete(MemberVO memberVO);
   
+  /**
+   * 탈퇴회원인지 확인
+   * @param memberVO
+   * @return
+   */
+  public int member_99(String id);
+  
 }

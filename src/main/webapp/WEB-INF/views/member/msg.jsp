@@ -112,6 +112,12 @@
           </LI>                                                                      
         </c:when>  
         
+        <c:when test="${param.code == 'grade_99'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_fail">정지된 회원 입니다. 로그인 할 수 없습니다. 문의 번호:031-222-3333</span>
+          </LI>                                                                      
+        </c:when>
+        
         <c:otherwise>
           <LI class='li_none_left'>
             <span class="span_fail">알 수 없는 에러로 작업에 실패했습니다.</span>

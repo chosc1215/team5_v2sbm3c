@@ -62,7 +62,7 @@
           <Label>
             <input type='checkbox' name='passwd_save' value='Y' ${ck_passwd_save == 'Y' ? "checked='checked'" : "" }> 저장
           </Label>                    
-        </div>   
+        </div>
      
         <div class="form_input">
           <button type="submit" class="btn btn-info btn-sm">로그인</button>
