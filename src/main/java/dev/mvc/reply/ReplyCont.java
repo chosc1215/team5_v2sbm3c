@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.restcate.RestcateProcInter;
+import dev.mvc.restcontents.RestcontentsProcInter;
+import dev.mvc.restcontents.RestcontentsVO;
+import dev.mvc.tool.Tool;
 import dev.mvc.admin.AdminProc;
 import dev.mvc.admin.AdminProcInter;
 import dev.mvc.member.MemberProc;
@@ -35,6 +38,9 @@ public class ReplyCont {
   @Qualifier("dev.mvc.admin.AdminProc") 
   private AdminProcInter adminProc;
   
+  @Autowired
+  @Qualifier("dev.mvc.restcontents.RestcontentsProc") 
+  private RestcontentsProcInter restcontentsProc;
   
   public ReplyCont(){
     System.out.println("-> ReplyCont created.");
@@ -175,42 +181,88 @@ public class ReplyCont {
     return obj.toString();
   }
   
+  /* 시도 */
   /**
-   * {"list":[
-          {"memberno":1,
-        "rdate":"2019-12-18 16:46:35",
-      "passwd":"123",
-      "replyno":1,
-      "id":"user1",
-      "content":"댓글 1",
-      "contentsno":1}
-    ,
-        {"memberno":1,
-       "rdate":"2019-12-18 16:46:35",
-       "passwd":"123",
-       "replyno":1,
-       "id":"user1",
-       "content":"댓글 1",
-       "contentsno":1}
-    ]
-  }
-
-   * http://localhost:9093/reply/list_by_restcontentsno_join_add.do?restcontentsno=5
-   * @param restcontentsno
+   * 수정 폼
+   * http://localhost:9093/reply/update_text.do?replyno=1
+   * 
    * @return
    */
-  /*
-   * @ResponseBody
-   * 
-   * @RequestMapping(value = "/reply/list_by_restcontentsno_join_add.do", method =
-   * RequestMethod.GET, produces = "text/plain;charset=UTF-8") public String
-   * list_by_restcontentsno_join_add(int restcontentsno) { // String
-   * msg="JSON 출력"; // return msg; List<ReplyMemberVO> list =
-   * this.replyProc.lis_by_restcontentsno_join_add(restcontentsno);
-   * 
-   * JSONObject obj = new JSONObject(); obj.put("list", list);
-   * 
-   * return obj.toString(); }
-   */
+  @RequestMapping(value = "/reply/update_text.do", method = RequestMethod.GET)
+  public ModelAndView update_text(int replyno) {
+    ModelAndView mav = new ModelAndView();
+    
+    ReplyVO replyVO = this.replyProc.read(replyno);
+    mav.addObject("replyVO", replyVO);
+    
+    RestcontentsVO restcontentsVO = this.restcontentsProc.read(replyVO.getRestcontentsno());
+    mav.addObject("restcontentsVO", restcontentsVO);
+    
+    mav.setViewName("/reply/update_text"); // /WEB-INF/views/contents/update_text.jsp
+    // String content = "장소:\n인원:\n준비물:\n비용:\n기타:\n";
+    // mav.addObject("content", content);
+
+    return mav; // forward
+  }
   
+  /**
+   * 수정 처리
+   * http://localhost:9091/contents/update_text.do?contentsno=1
+   * 
+   * @return
+   */
+  @RequestMapping(value = "/reply/update_text.do", method = RequestMethod.POST)
+  public ModelAndView update_text(HttpSession session, ReplyVO replyVO) {
+    ModelAndView mav = new ModelAndView();
+    
+    // System.out.println("-> word: " + contentsVO.getWord());
+    
+    if (this.adminProc.isAdmin(session)) { // 관리자 로그인
+      this.replyProc.update_reply(replyVO);  
+      
+      mav.addObject("replyno", replyVO.getReplyno());
+      mav.addObject("restcontentsno", replyVO.getRestcontentsno());
+      mav.setViewName("redirect:/reply/read.do");
+    } else { // 정상적인 로그인이 아닌 경우
+      if (this.replyProc.password_check(replyVO) == 1) {
+        this.replyProc.update_reply(replyVO);  
+         
+        // mav 객체 이용
+        mav.addObject("replyno", replyVO.getReplyno());
+        mav.addObject("restcontentsno", replyVO.getRestcontentsno());
+        mav.setViewName("redirect:/reply/read.do");
+      } else {
+        mav.addObject("url", "/reply/passwd_check"); // /WEB-INF/views/contents/passwd_check.jsp
+        mav.setViewName("redirect:/reply/msg.do");  // POST -> GET -> JSP 출력
+      }    
+    }
+    
+    
+    
+    // URL에 파라미터의 전송
+    // mav.setViewName("redirect:/contents/read.do?contentsno=" + contentsVO.getReplyno() + "&cateno=" + contentsVO.getrestcontentsno());             
+    
+    return mav; // forward
+  }
+  
+  /**
+   * replyno, passwd를 GET 방식으로 전달받아 패스워드 일치 검사를하고 결과 1또는 0을 Console에 출력하세요.
+   * http://localhost:9093/reply/password_check.do?replyno=2&passwd=123
+   * @return
+   */
+  @RequestMapping(value="/reply/password_check.do", method=RequestMethod.GET )
+  public ModelAndView password_check(ReplyVO replyVO) {
+    ModelAndView mav = new ModelAndView();
+
+    int cnt = this.replyProc.password_check(replyVO);
+    System.out.println("-> cnt: " + cnt);
+    
+    if (cnt == 0) {
+      mav.setViewName("/reply/passwd_check"); // /WEB-INF/views/reply/passwd_check.jsp
+    }
+        
+    return mav;
+  }    
+  
+ 
 }

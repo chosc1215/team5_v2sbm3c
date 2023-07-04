@@ -26,6 +26,12 @@ public interface ReplyDAOInter {
    */
 //  public List<ReplyMemberVO>lis_by_restcontentsno_join_add(int restcontentsno);
   
+  public ReplyVO read(int replyno);
+  
+  public int password_check(ReplyVO replyVO);
+  
+  public int update_reply(ReplyVO replyVO);
+  
   
 
   

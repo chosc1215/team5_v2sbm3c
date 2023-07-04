@@ -122,3 +122,18 @@ WHERE replyno=1 AND passwd='1234';
 9) 삭제
 DELETE FROM reply
 WHERE replyno=1;
+
+select*from reply;
+
+-- 패스워드 검사, id="password_check"
+SELECT COUNT(*) as cnt 
+FROM reply
+WHERE replyno=54 AND passwd='123';
+
+--read
+SELECT replyno, restcontentsno, memberno, content, passwd, rdate FROM reply WHERE replyno=53;
+
+-- UPDATE
+UPDATE reply SET content='허걱' WHERE replyno=53;
+commit;
+SELECT * FROM reply;

@@ -81,6 +81,9 @@
             </td>
             <td style='text-align: center; vertical-align: middle;'>
               <a href="./delete.do?replyno=${replyno}"><img src="/reply/images/delete.png" title="삭제"  border='0' /></a>
+              <span class='menu_divide' >│</span>
+              <A href="./update_text.do?replyno=${replyno}"><img src="/reply/images/update.png" title="수정"  border='0' />글 수정</A>  
+              
             </td>
           </tr>
         </c:forEach>

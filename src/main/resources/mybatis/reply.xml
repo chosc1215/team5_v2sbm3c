@@ -51,21 +51,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     WHERE replyno=#{replyno} 
   </delete>
   
-<!--   <select id="list_by_restcontentsno_join_add" resultType="dev.mvc.reply.ReplyMemberVO" parameterType="int">
-    SELECT id, replyno, restcontentsno, memberno, content, passwd, rdate, r
-    FROM (
-        SELECT id, replyno, restcontentsno, memberno, content, passwd, rdate, rownum as r
-        FROM (
-            SELECT m.id, r.replyno, r.restcontentsno, r.memberno, r.content, r.passwd, r.rdate
-            FROM member m,  reply r
-            WHERE (m.memberno = r.memberno) AND r.restcontentsno=#{restcontentsno}
-            ORDER BY r.replyno DESC
-        )
-    )
-    WHERE r &lt;= 1000
-  </select> -->
+    <!-- 패스워드 검사 -->
+  <select id="password_check" resultType="int" parameterType="dev.mvc.restcontents.RestcontentsVO">
+    SELECT COUNT(*) as cnt 
+    FROM reply
+    WHERE replyno = #{replyno} AND passwd=#{passwd}
+  </select>
   
   
+    <!-- 읽기 -->   
+  <select id="read" resultType="dev.mvc.reply.ReplyVO" parameterType="int">
+    SELECT replyno, restcontentsno, memberno, content, passwd, rdate 
+    FROM reply 
+    WHERE replyno=#{replyno}
+  </select>
+  
+  
+	<update id="update_reply" parameterType="dev.mvc.reply.ReplyVO">  
+	UPDATE reply 
+	SET content=#{content}
+	WHERE replyno=#{replyno}
+	
+	</update>
+	  
+
   
   
   

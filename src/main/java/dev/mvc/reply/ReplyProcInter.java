@@ -18,11 +18,12 @@ public interface ReplyProcInter {
   
   public List<ReplyMemberVO> list_member_join();
   
-  /**
-   * 특정글 관련 전체 댓글 목록
-   * @param contentsno
-   * @return
-   */
- // public List<ReplyMemberVO>lis_by_restcontentsno_join_add(int restcontentsno);
+  public ReplyVO read(int replyno);
+  
+  public int password_check(ReplyVO replyVO);
+  
+  public int update_reply(ReplyVO replyVO);
+
+
   
 }

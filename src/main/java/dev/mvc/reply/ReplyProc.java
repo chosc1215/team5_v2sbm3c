@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import dev.mvc.restcontents.RestcontentsVO;
 import dev.mvc.tool.Tool;
 
 @Component("dev.mvc.reply.ReplyProc")
@@ -78,6 +79,30 @@ public class ReplyProc implements ReplyProcInter {
     
     return list;
   }
+  
+  @Override
+  public ReplyVO read(int replyno) {
+    ReplyVO replyVO = this.replyDAO.read(replyno);
+    return replyVO;
+  }
+
+
+  @Override
+  public int update_reply(ReplyVO replyVO) {
+    int cnt = this.replyDAO.update_reply(replyVO);
+    return cnt;
+  }
+
+  @Override
+  public int password_check(ReplyVO replyVO) {
+    int cnt = this.replyDAO.password_check(replyVO);
+    return cnt;
+  }
+
+
+  
+
+
 
   /*
    * @Override public List<ReplyMemberVO> lis_by_restcontentsno_join_add(int
