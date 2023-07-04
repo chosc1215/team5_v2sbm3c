@@ -114,7 +114,9 @@
         
         <c:when test="${param.code == 'grade_99'}"> <%-- Java if --%>
           <LI class='li_none'>
-            <span class="span_fail">정지된 회원 입니다. 로그인 할 수 없습니다. 문의 번호:031-222-3333</span>
+            <span class="span_fail">탈퇴된 회원 입니다. 로그인 할 수 없습니다. 문의 번호: 02-222-3333</span>
+              <br><br>
+            <button type='button' onclick="location.href='/'" class="btn btn-primary">확인</button>
           </LI>                                                                      
         </c:when>
         
