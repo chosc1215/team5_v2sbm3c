@@ -184,12 +184,12 @@ public class ReplyCont {
   /* 시도 */
   /**
    * 수정 폼
-   * http://localhost:9093/reply/update_text.do?replyno=1
+   * http://localhost:9093/reply/update_reply.do?replyno=1
    * 
    * @return
    */
-  @RequestMapping(value = "/reply/update_text.do", method = RequestMethod.GET)
-  public ModelAndView update_text(int replyno) {
+  @RequestMapping(value = "/reply/update_reply.do", method = RequestMethod.GET)
+  public ModelAndView update_reply(int replyno) {
     ModelAndView mav = new ModelAndView();
     
     ReplyVO replyVO = this.replyProc.read(replyno);
@@ -198,7 +198,7 @@ public class ReplyCont {
     RestcontentsVO restcontentsVO = this.restcontentsProc.read(replyVO.getRestcontentsno());
     mav.addObject("restcontentsVO", restcontentsVO);
     
-    mav.setViewName("/reply/update_text"); // /WEB-INF/views/contents/update_text.jsp
+    mav.setViewName("/reply/update_reply"); // /WEB-INF/views/contents/update_reply.jsp
     // String content = "장소:\n인원:\n준비물:\n비용:\n기타:\n";
     // mav.addObject("content", content);
 
@@ -207,12 +207,12 @@ public class ReplyCont {
   
   /**
    * 수정 처리
-   * http://localhost:9091/contents/update_text.do?contentsno=1
+   * http://localhost:9091/contents/update_reply.do?contentsno=1
    * 
    * @return
    */
-  @RequestMapping(value = "/reply/update_text.do", method = RequestMethod.POST)
-  public ModelAndView update_text(HttpSession session, ReplyVO replyVO) {
+  @RequestMapping(value = "/reply/update_reply.do", method = RequestMethod.POST)
+  public ModelAndView update_reply(HttpSession session, ReplyVO replyVO) {
     ModelAndView mav = new ModelAndView();
     
     // System.out.println("-> word: " + contentsVO.getWord());

@@ -206,6 +206,7 @@
           
           if ('${sessionScope.memberno}' == row.memberno) { // 글쓴이 일치여부 확인, 본인의 글만 삭제 가능함 ★
             msg += " <A href='javascript:reply_delete("+row.replyno+")'><IMG src='/reply/images/delete.png'></A>";
+            msg += " <A href='javascript:reply_update_reply("+row.replyno+")'><IMG src='/reply/images/update_reply.png'></A>";
           }
           msg += "  " + "<br>";
           msg += row.content;
@@ -229,6 +230,14 @@
     $('#replyno', frm_reply_delete).val(replyno); // 삭제할 댓글 번호 저장
     $('#modal_panel_delete').modal();             // 삭제폼 다이얼로그 출력
   }
+
+  //댓글 수정 레이어 출력
+  function reply_update_reply(replyno) {
+    // alert('replyno: ' + replyno);
+    var frm_reply_update_reply = $('#frm_reply_update_reply');
+    $('#replyno', frm_reply_update_reply).val(replyno); // 삭제할 댓글 번호 저장
+    $('#modal_panel_update_reply').modal();             // 삭제폼 다이얼로그 출력
+  } 
 
   // 댓글 삭제 처리
   function reply_delete_proc(replyno) {
@@ -265,6 +274,51 @@
           $('#modal_panel_delete_msg').html(msg);
 
           $('#passwd', '#frm_reply_delete').focus();  // frm_reply_delete 폼의 passwd 태그로 focus 설정
+          
+        }
+      },
+      // Ajax 통신 에러, 응답 코드가 200이 아닌경우, dataType이 다른경우 
+      error: function(request, status, error) { // callback 함수
+        console.log(error);
+      }
+    });
+  }
+
+  // 댓글 수정 처리
+  function reply_update_reply_proc(replyno) {
+    // alert('replyno: ' + replyno);
+    var params = $('#frm_reply_update_reply').serialize();
+    $.ajax({
+      url: "../reply/update_reply.do", // action 대상 주소
+      type: "post",           // get, post
+      cache: false,          // 브러우저의 캐시영역 사용안함.
+      async: true,           // true: 비동기
+      dataType: "json",   // 응답 형식: json, xml, html...
+      data: params,        // 서버로 전달하는 데이터
+      success: function(rdata) { // 서버로부터 성공적으로 응답이 온경우
+        // alert(rdata);
+        var msg = "";
+        
+        if (rdata.passwd_cnt ==1) { // 패스워드 일치
+          if (rdata.delete_cnt == 1) { // 삭제 성공
+
+            $('#btn_frm_reply_update_reply_close').trigger("click"); // 삭제폼 닫기, click 발생 
+            
+            $('#' + replyno).remove(); // 태그 삭제
+              
+            return; // 함수 실행 종료
+          } else {  // 삭제 실패
+            msg = "패스 워드는 일치하나 댓글 삭제에 실패했습니다. <br>";
+            msg += " 다시한번 시도해주세요."
+          }
+        } else { // 패스워드 일치하지 않음.
+          // alert('패스워드 불일치');
+          // return;
+          
+          msg = "패스워드가 일치하지 않습니다.";
+          $('#modal_panel_update_reply_msg').html(msg);
+
+          $('#passwd', '#frm_reply_update_reply').focus();  // frm_reply_delete 폼의 passwd 태그로 focus 설정
           
         }
       },
