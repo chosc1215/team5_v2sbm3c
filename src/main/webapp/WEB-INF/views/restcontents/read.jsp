@@ -300,7 +300,7 @@
         var msg = "";
         
         if (rdata.passwd_cnt ==1) { // 패스워드 일치
-          if (rdata.delete_cnt == 1) { // 삭제 성공
+          if (rdata.update_reply_cnt == 1) { // 삭제 성공
 
             $('#btn_frm_reply_update_reply_close').trigger("click"); // 삭제폼 닫기, click 발생 
             
@@ -416,6 +416,37 @@
       </div>
     </div>
     <!-- -------------------- 댓글 삭제폼 종료 -------------------- -->
+    
+    
+        <!-- -------------------- 댓글 수정폼 시작 -------------------- -->
+    <div class="modal fade" id="modal_panel_update_reply" role="dialog">
+      <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">댓글 수정</h4><!-- 제목 -->
+          </div>
+          <div class="modal-body">
+            <form name='frm_reply_update_reply' id='frm_reply_update_reply'>
+              <input type='hidden' name='replyno' id='replyno' value=''>
+              
+              <label>패스워드</label>
+              <input type='password' name='passwd' id='passwd' class='form-control'>
+              <DIV id='modal_panel_update_reply_msg' style='color: #AA0000; font-size: 1.1em;'></DIV>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class='btn btn-danger' 
+                         onclick="reply_update_reply_proc(frm_reply_update_reply.replyno.value); frm_reply_update_reply.passwd.value='';">수정</button>
+    
+            <button type="button" class="btn btn-default" data-dismiss="modal" 
+                         id='btn_frm_reply_update_reply_close'>Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- -------------------- 댓글 수정폼 종료 -------------------- -->
  
 <DIV class='title_line'><A href="./list_by_restcateno.do?restcateno=${restcateno }" class='title_link'>${restcateVO.name }</A></DIV>
 
@@ -453,7 +484,7 @@
     <form name='frm' id='frm' method='get' action='./list_by_restcateno.do'>
       <input type='hidden' name='restcateno' value='${restcateVO.restcateno }'>  <%-- 게시판의 구분 --%>
       
-      <c:choose>
+      <c:choose> 
         <c:when test="${param.word != '' }"> <%-- 검색하는 경우 --%>
           <input type='text' name='word' id='word' value='${param.word }' class='input_word'>
         </c:when>
@@ -575,7 +606,7 @@
       </div>
     </div>   
     
-  </FORM>
+  </FORM> 
   </DIV>
   <%-- ******************** Ajax 기반 로그인 폼 종료 ******************** --%>
 

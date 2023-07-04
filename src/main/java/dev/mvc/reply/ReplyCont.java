@@ -181,6 +181,38 @@ public class ReplyCont {
     return obj.toString();
   }
   
+  
+  /**
+   * 패스워드를 검사한 후 수정 
+   * http://localhost:9090/resort/reply/delete.do?replyno=1&passwd=1234
+   * {"delete_cnt":0,"passwd_cnt":0}
+   * {"delete_cnt":1,"passwd_cnt":1}
+   * @param replyno
+   * @param passwd
+   * @return
+   */
+  @ResponseBody
+  @RequestMapping(value = "/reply/update_reply.do", 
+                              method = RequestMethod.POST,
+                              produces = "text/plain;charset=UTF-8")
+  public String update_reply(int replyno, String passwd, ReplyVO replyVO) {
+    Map<String, Object> map = new HashMap<String, Object>();
+    map.put("replyno", replyno);
+    map.put("passwd", passwd);
+    
+    int passwd_cnt = replyProc.checkPasswd(map); // 패스워드 일치 여부, 1: 일치, 0: 불일치
+    int update_reply_cnt = 0;                                    // 삭제된 댓글
+    if (passwd_cnt == 1) { // 패스워드가 일치할 경우
+      update_reply_cnt = replyProc.update_reply(replyVO); // 댓글 삭제
+    }
+    
+    JSONObject obj = new JSONObject();
+    obj.put("passwd_cnt", passwd_cnt); // 패스워드 일치 여부, 1: 일치, 0: 불일치
+    obj.put("delete_cnt", update_reply_cnt); // 삭제된 댓글
+    
+    return obj.toString();
+  }
+  
   /* 시도 */
   /**
    * 수정 폼
