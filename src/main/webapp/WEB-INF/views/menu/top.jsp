@@ -3,6 +3,7 @@
 
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="dev.mvc.restcate.RestcateVO" %>
+<%@ page import="dev.mvc.notescate.NotescateVO" %>
 
 <<script type="text/javascript">
 function recommend(){

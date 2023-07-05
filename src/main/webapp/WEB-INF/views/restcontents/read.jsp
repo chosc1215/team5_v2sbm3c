@@ -45,6 +45,9 @@
   });
 
 
+  
+
+
   function loadDefault() {
     $('#id').val('user1');
     $('#passwd').val('1234');
@@ -431,8 +434,13 @@
             <form name='frm_reply_update_reply' id='frm_reply_update_reply'>
               <input type='hidden' name='replyno' id='replyno' value=''>
               
-              <label>패스워드</label>
-              <input type='password' name='passwd' id='passwd' class='form-control'>
+              
+              
+              <textarea name='content' id='content' style='width: 100%; height: 60px;' placeholder="댓글 작성, 로그인해야 등록 할 수 있습니다."></textarea>
+
+              
+              <!-- <label>패스워드</label>
+              <input type='password' name='passwd' id='passwd' class='form-control'> -->
               <DIV id='modal_panel_update_reply_msg' style='color: #AA0000; font-size: 1.1em;'></DIV>
             </form>
           </div>
@@ -471,8 +479,10 @@
       <span class='menu_divide' >│</span>
       <A href="./delete.do?restcontentsno=${restcontentsno}&now_page=${param.now_page}&restcateno=${restcateno}">삭제</A>  
       <span class='menu_divide' >│</span>
+      
     </c:if>
-
+    <A href="/calendar/create.do?restcontentsno=${restcontentsno }&now_page=${param.now_page == null ? 1 : param.now_page}"  >예약</A>
+    <span class='menu_divide' >│</span> 
     <A href="javascript:location.reload();">새로고침</A>
     <span class='menu_divide' >│</span>    
     <A href="./list_by_restcateno.do?restcateno=${restcateno }&now_page=${param.now_page}&word=${param.word }">기본 목록형</A>    
