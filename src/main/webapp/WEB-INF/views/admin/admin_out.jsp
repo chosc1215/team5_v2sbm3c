@@ -21,14 +21,14 @@
 <c:import url="/menu/top.do" />
  
   <DIV class='title_line'>
-    회원 탈퇴
+    [관리자]회원 탈퇴
   </DIV>
 
   <DIV class='content_body'>
     <ASIDE class="aside_right">
       <A href="javascript:location.reload();">새로고침</A>
       <span class='menu_divide' >│</span> 
-      <A href='./create.do'>회원 가입</A>
+      <A href='./create.do'>관리자 회원 가입</A>
       <span class='menu_divide' >│</span> 
       <A href='./list.do'>목록</A>
     </ASIDE> 
@@ -37,9 +37,9 @@
    
    
     <DIV class='message'>
-      <FORM name='frm' method='POST' action='./member_delete.do'>
-        '${memberVO.mname }(${memberVO.id })'정말로 탈퇴하시겠습니까?<br><br>         
-        <input type='hidden' name='memberno' value='${memberVO.memberno}'>     
+      <FORM name='frm' method='POST' action='./admin_out.do'>
+        '${adminVO.mname }(${adminVO.id })'정말로 탈퇴하시겠습니까?<br><br>         
+        <input type='hidden' name='adminno' value='${adminVO.adminno}'>     
             
         <button type="submit" class="btn btn-info">탈퇴</button>
         <button type="button" onclick="history.back()" class="btn btn-info">취소</button>

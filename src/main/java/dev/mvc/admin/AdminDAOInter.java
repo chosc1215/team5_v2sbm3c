@@ -77,6 +77,12 @@ public interface AdminDAOInter {
    */
   public int passwd_update(HashMap<Object, Object> map);
 
+  /**
+   * 관리자 탈퇴
+   * @param adminVO
+   * @return
+   */
+  public int admin_out(AdminVO adminVO);
   
 }
 

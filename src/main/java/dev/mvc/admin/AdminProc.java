@@ -88,6 +88,12 @@ public class AdminProc implements AdminProcInter {
     return cnt;
   }
 
+  @Override
+  public int admin_out(AdminVO adminVO) {
+    int cnt = this.adminDAO.admin_out(adminVO);
+    return cnt;
+  }
+
 
 
   

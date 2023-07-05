@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-
+import dev.mvc.member.MemberVO;
 import dev.mvc.tool.Tool; 
 
 @Controller
@@ -399,6 +399,59 @@ public class AdminCont {
     
     return mav;
   }
+  /**
+   * 관리자 탈퇴 폼
+   * http://localhost:9093/admin/admin_out.do?adminno=1
+   * @param session
+   * @param adminno
+   * @return
+   */
+  @RequestMapping(value="/admin/admin_out.do", method=RequestMethod.GET)
+  public ModelAndView admin_delete(HttpSession session, int adminno){
+    ModelAndView mav = new ModelAndView();
+    
+    if(this.adminProc.isAdmin(session) == true) {
+      AdminVO adminVO = this.adminProc.read(adminno);
+      mav.addObject("adminVO", adminVO);
+      mav.setViewName("admin/admin_out");
+    } else {
+      mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+    }
+    
+    return mav;
+  }
+  
+  /**
+   * 관리자 탈퇴 처리
+   * @param session
+   * @param adminVO
+   * @return
+   */
+  @RequestMapping(value="/admin/admin_out.do", method=RequestMethod.POST)
+  public ModelAndView admin_out(HttpSession session, AdminVO adminVO){
+    ModelAndView mav = new ModelAndView();
+    
+    // System.out.println("id: " + memberVO.getId());
+    
+    int cnt= this.adminProc.admin_out(adminVO);
+    
+    if (cnt == 1) {
+      mav.addObject("code", "admin_out_success");
+      mav.addObject("mname", adminVO.getMname());  // 홍길동님(user4) 회원 정보를 변경했습니다.
+      mav.addObject("id", adminVO.getId());
+      
+      session.invalidate();
+    } else {
+      mav.addObject("code", "admin_out_fail");
+    }
+    mav.addObject("cnt", cnt); // request.setAttribute("cnt", cnt)
+    mav.addObject("url", "/admin/msg");  // /member/msg -> /member/msg.jsp
+    
+    mav.setViewName("redirect:/admin/msg.do");
+    
+    return mav;
+  }
+    
   
 }
 

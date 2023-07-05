@@ -17,6 +17,7 @@ function recommend(){
 } 
 </script>
 
+
 <DIV class='container_main'> 
     <!-- 헤더 start -->
     <div class="header">
@@ -64,7 +65,6 @@ function recommend(){
                       <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">회원</a>
                       <div class="dropdown-menu">
                           <a class="dropdown-item" href="javascript:recommend();">관심분야 등록하고 추천받기</a>
-                          <a class="dropdown-item" href="/member/create.do">회원 가입</a>
                           <a class="dropdown-item" href="/member/read.do">가입 정보 조회/수정</a>
                           <a class="dropdown-item" href="#">아이디 찾기</a>
                           <a class="dropdown-item" href="#">비밀번호 찾기</a>
@@ -90,6 +90,7 @@ function recommend(){
                           <a class="dropdown-item" href="/admin/admin_read.do?adminno=${adminno }">관리자 정보 조회/수정</a>
                           <a class="dropdown-item" href='/admin/list.do'>관리자 회원 목록</a>
                           <a class="dropdown-item" href="/admin/passwd_update.do?adminno=${adminno }">비밀번호 변경</a>
+                          <!--<a class="dropdown-item" href="/admin/admin_out.do?adminno=${adminno }">관리자 회원 탈퇴</a>-->
                           <a class="dropdown-item" href='/admin/logout.do'>관리자 ${sessionScope.admin_id } 로그아웃</a>
                         </div>
                       </li>

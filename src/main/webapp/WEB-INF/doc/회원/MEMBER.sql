@@ -105,7 +105,7 @@ WHERE memberno = 1;
 
 SELECT memberno, id, passwd, mname, tel, zipcode, address1, address2, mdate, grade
 FROM member
-WHERE id = 'user1@gmail.com';
+WHERE id = 'user3@gmail.com';
  
     
 4. 수정
@@ -122,7 +122,7 @@ DELETE FROM member;
  
 2) 특정 회원 삭제
 DELETE FROM member
-WHERE memberno=15;
+WHERE memberno=21;
 
 COMMIT;
 

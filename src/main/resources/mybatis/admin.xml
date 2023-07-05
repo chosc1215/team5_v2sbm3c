@@ -70,6 +70,20 @@
     SET passwd=#{passwd}
     WHERE adminno=#{adminno}
   </update>
+    
+  <!-- 탈퇴처리로 등급을 탈퇴등급인 99로 변경 -->
+  <update id="admin_out" parameterType="dev.mvc.admin.AdminVO">
+    UPDATE admin
+    SET grade= 99
+    WHERE adminno=#{adminno} 
+  </update>
+  
+  <!--  탈퇴 회원 인지 확인 -->
+  <select id="admin_out_check" resultType="int" parameterType="String">
+    SELECT COUNT(*) as cnt
+    FROM admin
+    WHERE id=#{id} AND grade = 99
+  </select>
   
   
 </mapper>

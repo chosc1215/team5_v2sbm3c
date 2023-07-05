@@ -542,7 +542,7 @@ public class MemberCont {
       mav.addObject("memberVO", memberVO);
       mav.setViewName("/member/member_delete"); // passwd_update.jsp
     } else {
-      mav.setViewName("/member/login_need"); // /WEB-INF/views/admin/login_need.jsp
+      mav.setViewName("/member/login_need"); // /WEB-INF/views/member/login_need.jsp
     }     
     
     return mav;

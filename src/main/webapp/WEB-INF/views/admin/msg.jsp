@@ -97,6 +97,21 @@
           </LI>                                                                      
         </c:when>  
         
+        <c:when test="${param.code == 'admin_out_success'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_success">관리자 회원 탈퇴를 성공하였습니다.</span>
+          </LI>                                                                      
+          <Ll>
+          <button type='button' onclick="location.href='/'" class="btn btn-primary">확인</button>
+          </Ll>
+        </c:when>
+        
+        <c:when test="${param.code == 'admin_out_fail'}"> <%-- Java if --%>
+          <LI class='li_none'>
+            <span class="span_fail">${param.mname }님(${param.id }) 관리자 회원 탈퇴에 실패했습니다.</span>
+          </LI>                                                                      
+        </c:when>
+        
         <c:otherwise>
           <LI class='li_none_left'>
             <span class="span_fail">알 수 없는 에러로 작업에 실패했습니다.</span>

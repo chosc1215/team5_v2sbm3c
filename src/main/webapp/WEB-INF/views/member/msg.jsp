@@ -87,7 +87,7 @@
             <span class="span_fail">회원 탈퇴에 성공했습니다.</span>
           </LI>                                                                      
           <LI class = 'li_none'>
-            <button type='button' onclick="location.href='/member/logout.do'" class="btn btn-primary">시작메뉴</button>
+            <button type='button' onclick="location.href='/'" class="btn btn-primary">확인</button>
           </LI>
         </c:when>
         

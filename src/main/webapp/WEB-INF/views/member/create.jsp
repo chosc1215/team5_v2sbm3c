@@ -198,25 +198,25 @@
                 
     <div class="form-group"> <%-- label의 크기에따라 input 태그의 크기가 지정되는 형태 --%>
       <label>패스워드*: 
-        <input type='password' class="form-control form-control-sm" name='passwd' id='passwd' value='1234' required="required" placeholder="패스워드*">
+        <input type='password' class="form-control form-control-sm" name='passwd' id='passwd' value='' required="required" placeholder="패스워드*">
       </label>
     </div>   
 
     <div class="form-group"> <%-- label의 크기에따라 input 태그의 크기가 지정되는 형태 --%>
       <label>패스워드 확인*: 
-        <input type='password' class="form-control form-control-sm" name='passwd2' id='passwd2' value='1234' required="required" placeholder="패스워드 확인*">
+        <input type='password' class="form-control form-control-sm" name='passwd2' id='passwd2' value='' required="required" placeholder="패스워드 확인*">
       </label>
     </div>   
     
     <div class="form-group"> <%-- label의 크기에따라 input 태그의 크기가 지정되는 형태 --%>
       <label>성명*:
-        <input type='text' class="form-control form-control-sm" name='mname' id='mname' value='왕눈이' required="required" placeholder="성명*">
+        <input type='text' class="form-control form-control-sm" name='mname' id='mname' value='' required="required" placeholder="성명*">
       </label>
     </div>   
 
     <div class="form-group"> <%-- label의 크기에따라 input 태그의 크기가 지정되는 형태, 줄이 변경되지 않는 패턴 --%>
       <label>전화 번호:
-        <input type='text' class="form-control form-control-sm" name='tel' id='tel' value='010-0000-0000' required="required" placeholder="전화번호*">
+        <input type='text' class="form-control form-control-sm" name='tel' id='tel' value='' required="required" placeholder="전화번호*">
       </label>
       예) 010-0000-0000
     </div>   
