@@ -2,6 +2,7 @@ package dev.mvc.notescate;
 
 public class NotescateVO {
   private int notescateno;
+  private int restcateno;
   private String name;
   private int cnt;
   private String rdate;
@@ -44,6 +45,13 @@ public class NotescateVO {
   public void setVisible(String visible) {
     this.visible = visible;
   }
+  public int getRestcateno() {
+    return restcateno;
+  }
+  public void setRestcateno(int restcateno) {
+    this.restcateno = restcateno;
+  }
+  
     
   
 }
