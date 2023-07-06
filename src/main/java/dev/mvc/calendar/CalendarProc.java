@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-@Component("dev.mvc.calendar.CalendarProc") // Controller가 사용하는 이름
+import dev.mvc.restcate.RestcateVO;
+
+@Component("dev.mvc.calendar.CalendarProc")  // Controller가 사용하는 이름
 public class CalendarProc implements CalendarProcInter {
   @Autowired
   private CalendarDAOInter calendarDAO; // Spring이 CateDAOInter.java를 구현하여 객체를 자동 생성후 할당
@@ -26,6 +28,19 @@ public class CalendarProc implements CalendarProcInter {
   public ArrayList<CalendarVO> list_by_label(String labeldate) {
     ArrayList<CalendarVO>list=this.calendarDAO.list_by_label(labeldate);
     return list;
+  }
+  
+  @Override
+  public CalendarVO read(int calendarno) {
+    CalendarVO calendarVO = this.calendarDAO.read(calendarno);
+    
+    return calendarVO;
+  }
+
+  @Override
+  public int delete(int calendarno) {
+    int cnt = this.calendarDAO.delete(calendarno);
+    return cnt;
   }
 
 

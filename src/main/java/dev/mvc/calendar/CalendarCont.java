@@ -18,7 +18,9 @@ import dev.mvc.admin.AdminProcInter;
 import dev.mvc.member.MemberProc;
 import dev.mvc.member.MemberProcInter;
 import dev.mvc.restcate.RestcateVO;
+import dev.mvc.restcontents.Restcontents;
 import dev.mvc.restcontents.RestcontentsVO;
+import dev.mvc.tool.Tool;
 
 @Controller
 public class CalendarCont {
@@ -150,5 +152,78 @@ public ModelAndView list_by_label(String labeldate) {
   
   return mav;
 }
+
+//http://localhost:9091/calendar/read.do?calendarno=1
+@RequestMapping(value="/calendar/read.do", method=RequestMethod.GET)
+public ModelAndView read(HttpSession session, int calendarno) {
+ ModelAndView mav = new ModelAndView();
+ 
+ if (this.adminProc.isAdmin(session) == true) {
+   mav.setViewName("/calendar/read"); // /WEB-INF/views/calendar/read.jsp
+   
+   CalendarVO calendarVO = this.calendarProc.read(calendarno);
+   mav.addObject("calendarVO", calendarVO);
+ } else {
+   mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+ }
+ 
+ return mav;
+}
+
+
+
+  // 삭제폼, 수정폼을 복사하여 개발 
+  // http://localhost:9091/cate/read_delete.do?cateno=1
+  @RequestMapping(value="/calendar/read_delete.do", method=RequestMethod.GET)
+  public ModelAndView read_delete(HttpSession session, int calendarno) {
+  ModelAndView mav = new ModelAndView();
+   
+  if (this.adminProc.isAdmin(session) == true) {
+    mav.setViewName("/calendar/read_delete"); // /WEB-INF/views/cate/read_delete.jsp
+    
+    CalendarVO calendarVO = this.calendarProc.read(calendarno); // 수정용 데이터
+    mav.addObject("calendarVO", calendarVO);
+    
+    ArrayList<CalendarVO> list = this.calendarProc.list_all(); // 목록 출력용 데이터
+    mav.addObject("list", list);
+    
+  } else {
+    mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+  }
+  
+  return mav;
+  }
+  
+  
+  
+  // 삭제 처리, 수정 처리를 복사하여 개발 
+  @RequestMapping(value="/calendar/delete.do", method=RequestMethod.POST)
+  public ModelAndView delete(HttpSession session, int calendarno) { // <form> 태그의 값이 자동으로 저장됨
+  //System.out.println("-> cateno: " + cateVO.getCateno());
+  //System.out.println("-> name: " + cateVO.getName());
+  
+  ModelAndView mav = new ModelAndView();
+  
+  if (this.adminProc.isAdmin(session) == true) {
+    int cnt = this.calendarProc.delete(calendarno);
+    
+    if (cnt == 1) {
+      mav.setViewName("redirect:/calendar/list_all.do");       // 자동 주소 이동, Spring 재호출
+      
+    } else {
+      mav.addObject("code", "delete_fail");
+      mav.setViewName("/calendar/msg"); // /WEB-INF/views/cate/msg.jsp
+    }
+    
+    mav.addObject("cnt", cnt);
+    
+  } else {
+    mav.setViewName("/admin/login_need"); // /WEB-INF/views/admin/login_need.jsp
+  }
+  
+  return mav;
+  }
+
+
  
 }

@@ -17,6 +17,13 @@
     ORDER BY calendarno DESC
   </select>
   
+    <!-- 읽기 -->
+  <select id="read" resultType="dev.mvc.calendar.CalendarVO" parameterType="int">
+    SELECT calendarno, labeldate, title, content,  rdate, memberno 
+    FROM calendar 
+    WHERE calendarno=#{calendarno}
+  </select>
+  
   <!-- 6월달만 출력, SUBSTR(labeldate, 1, 7) 첫번재부터 7개의 문자 추출 -->
   <select id = "list_by_label" resultType="dev.mvc.calendar.CalendarVO" parameterType="String">
       SELECT calendarno, labeldate, title, content, rdate, memberno
@@ -24,6 +31,12 @@
       WHERE SUBSTR(labeldate, 1, 7) = #{labelsdate}
       ORDER BY calendarno ASC
   </select>
+  
+    <!-- 삭제, 삭제된 레코드 갯수를 리턴 -->
+  <delete id="delete" parameterType="int">
+    DELETE FROM calendar 
+    WHERE calendarno=#{calendarno}
+  </delete>
   
   
   

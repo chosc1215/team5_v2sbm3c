@@ -68,6 +68,7 @@ public class CalendarVO {
   public void setMemberno(int memberno) {
     this.memberno = memberno;
   }
+  
 
 
   
