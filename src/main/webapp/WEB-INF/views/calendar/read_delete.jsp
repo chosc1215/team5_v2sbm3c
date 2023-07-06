@@ -37,22 +37,22 @@ CalendarVO calendarVO_read = (CalendarVO)request.getAttribute("calendarVO");
     <FORM name='frm_delete' id='frm_delete' method='POST' action='./delete.do'>
       <input type="hidden" name="calendarno" value="<%=calendarVO_read.getCalendarno() %>"> <%-- 삭제할 카테고리 번호 --%>
 
-<%--       <c:choose>
+       <c:choose>
         <c:when test="${count_by_calendarno >= 1 }"> 자식 레코드가 있는 상황
           <div class="msg_warning">
             관련 자료 ${count_by_calendarno } 건이 발견되었습니다.<br>
             관련 자료와 카테고리를 모두 삭제하시겠습니까?
-          </div> --%>
+          </div> 
             
-          <%-- <label>관련 카테고리 이름</label>: <%=calendarVO_read.get %> 
+           <label>관련 카테고리 이름</label>: <%=calendarVO_read.getTitle() %> 
           <a href="../notescontents/list_by_calendarno.do?calendarno=${calendarVO.calendarno }" title="관련 카테고리로 이동"><img src='/calendar/images/link.png'></a>
           &nbsp;      
           <button type="submit" id='submit' class='btn btn-danger btn-sm' style='height: 28px; margin-bottom: 5px;'>관련 자료와 함께 카테고리 삭제</button>
           
         </c:when>
         <c:otherwise>
-          <div class="msg_warning">카테고리를 삭제하면 복구 할 수 없습니다.</div>
-          <label>카테고리 이름</label>: <%=calendarVO_read.getName() %>
+          <div class="msg_warning">일정을 삭제하면 복구 할 수 없습니다.</div>
+          <label>카테고리 이름</label>: <%=calendarVO_read.getTitle() %>
       
           <button type="submit" id='submit' class='btn btn-warning btn-sm' style='height: 28px; margin-bottom: 5px;'>삭제</button>          
         </c:otherwise>
@@ -60,7 +60,7 @@ CalendarVO calendarVO_read = (CalendarVO)request.getAttribute("calendarVO");
 
       <button type="button" onclick="location.href='/calendar/list_all.do'" class='btn btn-info btn-sm' style='height: 28px; margin-bottom: 5px;'>취소</button>
     </FORM>
-  </DIV> --%>
+  </DIV> 
 
   <TABLE class='table table-hover'>
     <colgroup>
@@ -90,7 +90,7 @@ CalendarVO calendarVO_read = (CalendarVO)request.getAttribute("calendarVO");
     %>
       <TR>
         <TD class='td_bs'><%= calendarVO.getLabeldate() %></TD>
-        <TD><%=calendarVO.getTitle() %></TD>
+        <TD><%= calendarVO.getTitle() %></TD>
         <TD class='td_bs'><%=calendarVO.getContent() %></TD> 
         
         <TD class='td_bs'><%=calendarVO.getRdate().substring(0, 10) %></TD>
