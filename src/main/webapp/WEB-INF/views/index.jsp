@@ -30,7 +30,7 @@
         </DIV>
       </c:when>
       <c:otherwise>
-      <h1 style="text-align: center;">관심분야를 등록하고 추천 받아보세요! </h1>
+      <a class="dropdown-item" href="javascript:recommend();">관심분야 등록하고 추천받기</a>
         <c:if test="${recommend_sw==false }">
         <DIV style='width: 100%; margin: 30px auto; text-align: center;'> <%-- 로그인된 경우 추천 --%>
           <c:if test="${sessionScope.id != null}">
