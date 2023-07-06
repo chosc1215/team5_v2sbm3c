@@ -36,10 +36,33 @@ SELECT recommendno, memberno, restcateno, seq, rdate
 FROM recommend
 ORDER BY recommendno ASC;
 
+-- 조회
+SELECT recommendno, memberno, restcateno, seq, rdate 
+FROM recommend 
+WHERE memberno = 3;
+
 
 DELETE FROM recommend;
 DELETE FROM recommend WHERE memberno=3;
 commit;
+
+SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, rdate,
+           file1, file1saved, thumb1, size1, map, youtube, r
+FROM (
+           SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, rdate,
+                      file1, file1saved, thumb1, size1, map, youtube, rownum as r
+           FROM (
+                     SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, rdate,
+                                file1, file1saved, thumb1, size1, map, youtube
+                     FROM restcontents
+                     WHERE restcateno=1  
+                     ORDER BY rdate DESC
+           )          
+)
+WHERE r >= 1 AND r <= 5;
+commit;
+
+
 
 
 

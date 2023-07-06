@@ -83,7 +83,7 @@ WHERE replyno=1 AND passwd='1234';
    1
    
 -- 삭제
-DELETE FROM reply
+DELETE FROM replyno;
 WHERE replyno=63;
 
 6) restcontentsno에 해당하는 댓글 수 확인 및 삭제

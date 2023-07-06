@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.recommend.RecommendDAOInter">
+  <!-- 읽기 -->
+  <select id="recommend_read" resultType="dev.mvc.recommend.RecommendVO" parameterType="int">
+    SELECT recommendno, memberno, restcateno, seq, rdate 
+    FROM recommend 
+    WHERE memberno = #{memberno}
+  </select>
+
+
+</mapper>

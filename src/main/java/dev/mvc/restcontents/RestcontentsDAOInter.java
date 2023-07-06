@@ -115,6 +115,13 @@ public interface RestcontentsDAOInter {
    */   
   public int decreaseCommentscnt(int restcontentsno);
   
+  /**
+   * 특정 카테고리의 등록된 추천 목록 5건
+   * @param restcateno
+   * @return
+   */
+  public ArrayList<RestcontentsVO> recommend_rdate(int restcateno);
+  
   
   
 }

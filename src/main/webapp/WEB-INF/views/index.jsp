@@ -19,21 +19,32 @@
 </head>
 <body>
 <%--<jsp:include page="./menu/top.jsp" flush='false' /> --%> 
-<c:import url="/menu/top.do" /> 
-  
-  <DIV style='width: 100%; margin: 30px auto; text-align: center;'>
-    <%-- /static/images/main.jpg --%>
-    <IMG src='/images/main1.jpg' style='width: 95%; height: auto;'>
-    <!-- <IMG src='/images/main1.jpg' style='width: 1100px; height: 600px;'> -->
-  </DIV> 
-   
-  <DIV style='margin: 0px auto; width: 90%;'>
-    <DIV style='float: left; width: 50%;'>
-     </DIV>
-     <DIV style='float: left; width: 50%;'>
-    </DIV>  
-  </DIV>
+
+<c:import url="/menu/top.do" />
+
+  <c:choose>
+      <c:when test="${sessionScope.id == null}"> <%-- 로그인 안된 경우 기본 이미지만 출력 --%>
+        <DIV style='width: 100%; margin: 30px auto; text-align: center;'>
+          <%-- /static/images/resort01.jpg --%>
+          <IMG src='/images/main1.jpg' style='width: 95%; height: auto;'>
+        </DIV>
+      </c:when>
+      <c:otherwise>
+      <h1 style="text-align: center;">관심분야를 등록하고 추천 받아보세요! </h1>
+        <c:if test="${recommend_sw==false }">
+        <DIV style='width: 100%; margin: 30px auto; text-align: center;'> <%-- 로그인된 경우 추천 --%>
+          <c:if test="${sessionScope.id != null}">
+            <DIV style='width: 70%; margin: 10px auto;'>
+              <h2>${sessionScope.mname} 님을 추천 상품</h2>
+              <c:import url="/restcontents/recommend_rdate.do" />
+            </DIV>
+          </c:if>
+        </DIV>
+        </c:if>
+      </c:otherwise>
+  </c:choose>
  
+
   <DIV style='width: 94.8%; margin: 0px auto;'>
   </DIV>  
  

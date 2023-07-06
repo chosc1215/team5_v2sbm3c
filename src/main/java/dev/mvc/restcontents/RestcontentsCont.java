@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.admin.AdminProcInter;
+import dev.mvc.recommend.RecommendProcInter;
+import dev.mvc.recommend.RecommendVO;
 import dev.mvc.restcontents.Restcontents;
 import dev.mvc.restcontents.RestcontentsVO;
 import dev.mvc.restcate.RestcateProc;
@@ -36,6 +38,10 @@ public class RestcontentsCont {
   @Autowired
   @Qualifier("dev.mvc.restcontents.RestcontentsProc")
   private RestcontentsProcInter restcontentsProc;
+  
+  @Autowired
+  @Qualifier("dev.mvc.recommend.RecommendProc")
+  private RecommendProcInter recommendProc;
   
   public RestcontentsCont () {
     System.out.println("-> RestcontentsCont created.");
@@ -689,6 +695,40 @@ public class RestcontentsCont {
     
     return "";
    
+  }
+  
+  /**
+   * 목록 + 검색 + 페이징 + Grid(갤러리) 지원
+   * http://localhost:9093/restcontents/recommend_rdate.do?restcateno=1&word=&now_page=1
+   * 
+   * @param restcateno
+   * @param word
+   * @param now_page
+   * @return
+   */
+  /**
+   * 관심 카테고리의 좋아요(recom) 기준, 3번 회원이 3번 카테고리를 추천 받는 경우, 추천 상품이 5건일 경우
+   * http://localhost:9093/restcontents/recommend_rdate.do
+   * @return
+   */
+  @RequestMapping(value = "/restcontents/recommend_rdate.do", method = RequestMethod.GET)
+  public ModelAndView recommend_rdate(HttpSession session) {
+    ModelAndView mav = new ModelAndView();
+    
+    int memberno = (int)(session.getAttribute("memberno"));
+    //System.out.println("-> memberno:" + memberno);
+    
+    RecommendVO recommendVO = this.recommendProc.recommend_read(memberno);
+    //System.out.println("-> restcate:" + recommendVO.getRestcateno());
+    
+    //관심분야 목록 읽기
+    ArrayList<RestcontentsVO> list_rdate = this.restcontentsProc.recommend_rdate(recommendVO.getRestcateno());
+    
+    mav.addObject("list_rdate", list_rdate);
+    
+    mav.setViewName("/restcontents/recommend_rdate");
+    
+    return mav;
   }
   
   

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import dev.mvc.recommend.RecommendDAOInter;
 import dev.mvc.restcontents.RestcontentsVO;
 import dev.mvc.tool.Tool;
 
@@ -278,6 +279,15 @@ public class RestcontentsProc implements RestcontentsProcInter {
     int count = restcontentsDAO.decreaseCommentscnt(restcontentsno);
     return count;
   }
+/**
+ * 특정 카테고리의 등록된 추천 목록 5건
+ */
+  @Override
+  public ArrayList<RestcontentsVO> recommend_rdate(int restcateno) {
+    ArrayList<RestcontentsVO> list_rdate = this.restcontentsDAO.recommend_rdate(restcateno);
+    return list_rdate;
+  }
+
 
 
 }

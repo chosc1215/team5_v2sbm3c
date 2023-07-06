@@ -2,6 +2,8 @@ package dev.mvc.team5;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import dev.mvc.notescate.NotescateProcInter;
 import dev.mvc.notescate.NotescateVO;
+import dev.mvc.recommend.RecommendProcInter;
+import dev.mvc.recommend.RecommendVO;
 import dev.mvc.restcate.RestcateProcInter;
 import dev.mvc.restcate.RestcateVO;
 
@@ -25,6 +29,10 @@ public class HomeCont {
   @Qualifier("dev.mvc.notescate.NotescateProc")  // @Component("dev.mvc.restcate.RestcateProc")
   private NotescateProcInter notscateProc; // RestcateProc 객체가 자동 생성되어 할당됨.
   
+  @Autowired
+  @Qualifier("dev.mvc.recommend.RecommendProc")
+  private RecommendProcInter recommendProc;
+  
   public HomeCont() {
     System.out.println("-> HomeCont created.");
   }
@@ -32,10 +40,25 @@ public class HomeCont {
   // http://localhost:9091/
   // http://localhost:9091/index.do
   @RequestMapping(value= {"/", "/index.do"}, method=RequestMethod.GET)
-  public ModelAndView home() {
+  public ModelAndView home(HttpSession session) {
     ModelAndView mav = new ModelAndView();
     // spring.mvc.view.prefix=/WEB-INF/views/
     // spring.mvc.view.suffix=.jsp
+    boolean recommend_sw = false; // 추천 여부
+    
+    if(session.getAttribute("memberno") != null) {
+      int memberno = (int)(session.getAttribute("memberno"));
+      System.out.println("-> memberno:" + memberno);
+
+      //회원 추천 여부
+      RecommendVO recommendVO = this.recommendProc.recommend_read(memberno);
+      if(recommendVO == null) {
+        recommend_sw = true;
+      }
+    }
+    
+    mav.addObject("recommend_sw", recommend_sw);
+    
     mav.setViewName("/index"); // /WEB-INF/views/index.jsp
     
     return mav;

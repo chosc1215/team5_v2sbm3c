@@ -93,4 +93,31 @@ WHERE restcontentsno = 2;
 commit;
 
 -------------------------------------------------------
-DESC restcontents;
+--추천 rdate로 최신 상품기준 회원이 1번 카테고리를 추천받는 경우, 상품이 5건일 경우
+SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, rdate,
+           file1, file1saved, thumb1, size1, map, youtube, r
+FROM (
+           SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, rdate,
+                      file1, file1saved, thumb1, size1, map, youtube, rownum as r
+           FROM (
+                     SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, rdate,
+                                file1, file1saved, thumb1, size1, map, youtube
+                     FROM restcontents
+                     WHERE restcateno=1  
+                     ORDER BY rdate DESC
+           )          
+)
+WHERE r >= 1 AND r <= 5;
+
+
+
+
+
+
+
+
+
+
+
+
+

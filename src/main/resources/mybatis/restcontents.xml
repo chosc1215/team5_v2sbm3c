@@ -148,5 +148,23 @@
     WHERE restcontentsno = #{restcontentsno}
   </update> 
   
+  <!-- 회원이 카테고리1번을 추천받을 경우 + 페이징 목록 -->
+  <select id="recommend_rdate" resultType="dev.mvc.restcontents.RestcontentsVO" parameterType="int">
+    SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, rdate,
+               file1, file1saved, thumb1, size1, map, youtube, r
+    FROM (
+               SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, rdate,
+                          file1, file1saved, thumb1, size1, map, youtube, rownum as r
+               FROM (
+                         SELECT restcontentsno, adminno, restcateno, title, content, recom, cnt, replycnt, rdate,
+                                    file1, file1saved, thumb1, size1, map, youtube
+                         FROM restcontents
+                         WHERE restcateno=#{restcateno}  
+                         ORDER BY rdate DESC
+               )          
+    )
+    WHERE <![CDATA[ r >= 1 AND r <= 5 ]]>
+  </select>
+  
     
 </mapper>
