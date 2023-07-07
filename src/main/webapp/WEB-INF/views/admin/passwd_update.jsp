@@ -76,14 +76,14 @@
   </div> <!-- ---------- Modal END ---------- -->
  
   <DIV class='title_line'>
-    회원 패스워드 변경
+    관리자 패스워드 변경
   </DIV>
 
   <DIV class='content_body'>
     <ASIDE class="aside_right">
       <A href="javascript:location.reload();">새로고침</A>
       <span class='menu_divide' >│</span> 
-      <A href='./create.do'>회원 가입</A>
+      <A href='./create.do'>관리자 회원 가입</A>
       <span class='menu_divide' >│</span> 
       <A href='./list.do'>목록</A>
     </ASIDE> 

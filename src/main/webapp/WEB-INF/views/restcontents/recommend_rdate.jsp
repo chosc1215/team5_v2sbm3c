@@ -41,10 +41,10 @@
         
         <div style='font-size: 0.95em; word-break: break-all;'>
           <c:choose>         
-            <c:when test="${content.length() > 15 }"> <%-- 55 이상이면 55자만 출력 --%>
-              ${content.substring(0, 15)}.....
+            <c:when test="${content.length() > 12 }"> <%-- 55 이상이면 55자만 출력 --%>
+              ${content.substring(0, 12)}.....
             </c:when>
-            <c:when test="${content.length() <= 15 }">
+            <c:when test="${content.length() <= 12 }">
               ${content}
             </c:when>
           </c:choose>

@@ -44,15 +44,16 @@ public class HomeCont {
     ModelAndView mav = new ModelAndView();
     // spring.mvc.view.prefix=/WEB-INF/views/
     // spring.mvc.view.suffix=.jsp
+    
     boolean recommend_sw = false; // 추천 여부
     
     if(session.getAttribute("memberno") != null) {
       int memberno = (int)(session.getAttribute("memberno"));
-      System.out.println("-> memberno:" + memberno);
+      //System.out.println("-> memberno:" + memberno);
 
       //회원 추천 여부
       RecommendVO recommendVO = this.recommendProc.recommend_read(memberno);
-      if(recommendVO == null) {
+      if(recommendVO != null) {
         recommend_sw = true;
       }
     }
